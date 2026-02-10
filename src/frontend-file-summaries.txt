@@ -1,14 +1,18 @@
 {
-  "frontend/src/index.css": "Global styles with comic-inspired OKLCH color system (warm red/yellow palette), bold typography, and comic panel effects with thick borders and shadow animations.",
+  "frontend/src/index.css": "Global styles with comic-inspired OKLCH color system, bold typography, comic panel effects, and new styles for comic parts (caption boxes, speech bubbles, thought bubbles, SFX text with pulse animation, scene labels).",
   "frontend/tailwind.config.js": "Tailwind configuration extended with comic-style utilities including custom border widths, comic shadow effects, pop-in animations, and Inter font family.",
   "frontend/src/hooks/useQueries.ts": "React Query hook for calling the backend deduplicateComicText mutation with proper actor initialization and cache invalidation.",
-  "frontend/src/lib/deduplication.ts": "Frontend utility function that deduplicates text lines by keeping only the first occurrence of each unique line while preserving order.",
+  "frontend/src/lib/deduplication.ts": "Extended deduplication utilities supporting both simple text lines and structured panel parts, with functions to suppress repeated content while preserving panel order and counting total lines.",
   "frontend/src/contexts/ComicSettingsContext.tsx": "React context provider managing the repetition removal enabled state, accessible throughout the app via useComicSettings hook.",
-  "frontend/src/components/ComicPanel.tsx": "Reusable comic panel wrapper component with comic-style borders, shadows, and hover effects supporting default, highlight, and credits variants.",
-  "frontend/src/components/RepetitionRemovalControl.tsx": "Control component with English label and Switch toggle for enabling/disabling repetition removal, using shadcn/ui components.",
-  "frontend/src/components/Header.tsx": "App header with bold Spider-Verse branding, subtitle, and theme toggle button using comic-style borders.",
+  "frontend/src/components/ComicPanel.tsx": "Container component for comic panels with comic-style borders, shadows, hover effects, and support for story/highlight/credits variants, now designed to hold composed comic parts.",
+  "frontend/src/components/RepetitionRemovalControl.tsx": "Toggle control for enabling/disabling deduplication of captions, dialogue, and SFX across comic panels with updated helper text.",
+  "frontend/src/components/Header.tsx": "App header with Spider-Verse branding and subtitle updated to \"Comic Viewer\" with theme toggle button.",
   "frontend/src/components/Footer.tsx": "Footer with copyright, caffeine.ai attribution with UTM tracking, and comic creator credits.",
-  "frontend/src/components/ComicViewer.tsx": "Main comic viewer displaying deduplicated Spider-Verse script panels and credits in a scrollable area with stats badges showing panel count and duplicates removed.",
-  "frontend/src/App.tsx": "Root application component wrapping the app with ThemeProvider and ComicSettingsProvider, rendering header, main comic viewer with controls, and footer.",
-  "frontend/src/lib/utils.ts": "Utility function combining clsx and tailwind-merge for conditional className composition."
+  "frontend/src/components/ComicViewer.tsx": "Main comic viewer rendering structured panels with multiple visual comic parts (captions, speech bubbles, SFX, etc.) per panel, with deduplication toggle and stats display.",
+  "frontend/src/App.tsx": "Root application component with ThemeProvider and ComicSettingsProvider, rendering header, comic viewer with \"Full Comic Experience\" subtitle, and footer.",
+  "frontend/src/lib/utils.ts": "Utility function combining clsx and tailwind-merge for conditional className composition.",
+  "frontend/src/lib/comicModel.ts": "TypeScript types for structured comic panels with distinct parts (caption, dialogue, thought, SFX, scene) and helper functions to extract text lines for deduplication.",
+  "frontend/src/lib/comicData.ts": "Structured Spider-Verse comic data with 23 story panels and 5 credits panels, each containing multiple comic parts (captions, dialogue, SFX, etc.) with proper speaker attribution and visual variety.",
+  "frontend/src/components/ComicParts.tsx": "Reusable presentational components for distinct comic elements (CaptionBox, SpeechBubble, ThoughtBubble, SfxText, SceneLabel) with comic-style borders, colors, and typography.",
+  "frontend/index.html": "HTML entry point with updated title \"Spider-Verse Comic Viewer - Into the Spider-Verse\"."
 }

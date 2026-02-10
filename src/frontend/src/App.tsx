@@ -21,7 +21,7 @@ export default function App() {
                   Spider-Man: Into the Spider-Verse
                 </h2>
                 <p className="text-lg text-muted-foreground">
-                  A Full Comic Adaptation (Original Script Version)
+                  A Full Comic Experience
                 </p>
               </div>
 

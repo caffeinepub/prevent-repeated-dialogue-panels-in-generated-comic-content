@@ -1,12 +1,13 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 3,
-  "summary": "Generate a comic-style PDF using ReportLab (Platypus), with panel-based layout and credits pages.",
+  "projectStateVersion": 5,
+  "summary": "Generate a full comic-style PDF using ReportLab (Platypus), with true panel-based comic layout (not just dialogue), a consistent color scheme/theme, and credits/authoring details.",
   "architectural_notes": [
-    "Use ReportLab Platypus (SimpleDocTemplate, Paragraph, Table/TableStyle) to build comic-style panel layouts and credits pages."
+    "Use ReportLab Platypus (SimpleDocTemplate, Paragraph, Table/TableStyle) to build comic-style panel layouts and credits pages.",
+    "Extend ReportLab Platypus layout to support colored comic panel styling (background fills, borders, theme palette) so the PDF reads as a real comic rather than a dialogue transcript."
   ],
   "known_issues": [],
-  "isFixRequest": true,
+  "isFixRequest": false,
   "existing_features": [
     {
       "id": "feature-add-a-deduplication-step-for-comic-dialogue-panel-text-so-that-repeated-lines-are-removed-from-the-generated-comic-content-before-rendering-exporting",
@@ -31,12 +32,54 @@
         "REQ-3"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-replace-the-current-string-only-story-credits-data-model-with-a-structured-comic-panel-model-that-supports-distinct-comic-parts-e-g-panel-title-scene-label-narration-caption-boxes-speech-bubbles-thought-bubbles-and-sound-effect-text-so-the-ui-can-render-an-actual-comic-instead-of-a-transcript",
+      "title": "Replace the current string-only story/credits data model with a structured comic panel model that supports distinct comic parts (e.g., panel title/scene label, narration/caption boxes, speech bubbles, thought bubbles, and sound-effect text), so the UI can render an actual comic instead of a transcript.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-comic-reading-experience-to-visually-look-like-a-real-comic-render-panel-frames-with-consistent-comic-styling-and-within-each-panel-render-distinct-comic-parts-with-clear-visual-differentiation-caption-boxes-speech-bubbles-sfx-typography-and-a-coherent-intentional-color-scheme-across-panels",
+      "title": "Update the comic reading experience to visually look like a real comic: render panel frames with consistent comic styling, and within each panel render distinct comic parts with clear visual differentiation (caption boxes, speech bubbles, SFX typography) and a coherent, intentional color scheme across panels.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-existing-repetition-removal-behavior-remains-compatible-with-the-new-structured-panel-model-by-deduplicating-repeated-panel-text-content-in-a-predictable-way-e-g-deduplicate-repeated-dialogue-caption-sfx-lines-across-panels-while-preserving-the-first-occurrence",
+      "title": "Ensure the existing repetition-removal behavior remains compatible with the new structured panel model by deduplicating repeated panel text content in a predictable way (e.g., deduplicate repeated dialogue/caption/SFX lines across panels while preserving the first occurrence).",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
     {
       "id": "AR-1",
       "summary": "Ensure generated comic panels/dialogue do not contain repetition (deduplicate or avoid repeated lines).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Render an actual comic in the PDF with proper comic panels/parts and a coherent color scheme (not just pure dialogue/transcript).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Ensure the generated PDF remains screen-reader friendly / accessible for audio reading.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Include author credit/name in the PDF (Andy Romero Escobar J.).",
       "reqIds": [],
       "status": "pending"
     }

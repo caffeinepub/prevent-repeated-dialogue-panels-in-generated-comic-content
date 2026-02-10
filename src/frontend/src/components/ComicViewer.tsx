@@ -1,70 +1,60 @@
 import { useMemo } from 'react';
 import { ComicPanel } from './ComicPanel';
+import { CaptionBox, SpeechBubble, ThoughtBubble, SfxText, SceneLabel } from './ComicParts';
 import { useComicSettings } from '@/contexts/ComicSettingsContext';
-import { deduplicateTextLines } from '@/lib/deduplication';
+import { deduplicatePanelParts, countPanelTextLines } from '@/lib/deduplication';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
+import { STORY_PANELS, CREDITS_PANELS } from '@/lib/comicData';
+import type { PanelPart } from '@/lib/comicModel';
 
-const ORIGINAL_SCENES = [
-  "🕷️ Miles: Alright… let's do this. My name is Miles Morales.",
-  "Jefferson: You're going to be late! This school is important!",
-  "Miles: I know, Dad… I just need space.",
-  "Aaron: You don't have to be what everyone expects. Be yourself.",
-  "*A strange spider bites Miles in the subway tunnel.*",
-  "Miles: Why am I stuck to the ceiling?!",
-  "Kingpin: Activate the collider.",
-  "Peter Parker: That machine will tear reality apart!",
-  "*Battle erupts. Explosions shake the chamber.*",
-  "Peter Parker: Take this device. Finish what I started.",
-  "*Kingpin strikes. Silence falls.*",
-  "Miles: I should've helped him…",
-  "Gwen: You're not the only one like this.",
-  "Peter B. Parker: Kid, being Spider-Man isn't about perfection.",
-  "Prowler: You don't belong here.",
-  "Miles: Uncle…?",
-  "Aaron: You're going to be better than me.",
-  "*Gunshot echoes.*",
-  "Miles: I won't run anymore.",
-  "Peter B.: Then jump.",
-  "*Miles leaps from the skyscraper. The city rises toward him.*",
-  "Miles: I'm Spider-Man.",
-  "*Final battle inside the collider.*",
-  "Kingpin: You're nothing!",
-  "Miles: I'm not supposed to be you.",
-  "*Venom blast shatters the chamber.*",
-  "Gwen: You're amazing.",
-  "Peter B.: You've got this from here.",
-  "*Portals close one by one.*",
-  "Miles: Anyone can wear the mask. You just have to take the leap."
-];
-
-const CREDITS_PANELS = [
-  "Original Spider-Man created by Stan Lee & Steve Ditko",
-  "Miles Morales created by Brian Michael Bendis & Sara Pichelli",
-  "Inspired by the animated film Spider-Man: Into the Spider-Verse",
-  "Comic Script Adaptation Version",
-  "Thank you for reading."
-];
+function renderPanelPart(part: PanelPart, index: number) {
+  switch (part.type) {
+    case 'caption':
+      return <CaptionBox key={index}>{part.text}</CaptionBox>;
+    case 'dialogue':
+      return (
+        <SpeechBubble key={index}>
+          <span className="text-primary font-black uppercase text-xs">{part.speaker}:</span>{' '}
+          {part.text}
+        </SpeechBubble>
+      );
+    case 'thought':
+      return (
+        <ThoughtBubble key={index}>
+          <span className="text-secondary font-bold text-xs">{part.speaker}:</span>{' '}
+          {part.text}
+        </ThoughtBubble>
+      );
+    case 'sfx':
+      return <SfxText key={index}>{part.text}</SfxText>;
+    case 'scene':
+      return <SceneLabel key={index}>{part.text}</SceneLabel>;
+  }
+}
 
 export function ComicViewer() {
   const { repetitionRemovalEnabled } = useComicSettings();
 
-  const displayedScenes = useMemo(() => {
-    return repetitionRemovalEnabled ? deduplicateTextLines(ORIGINAL_SCENES) : ORIGINAL_SCENES;
-  }, [repetitionRemovalEnabled]);
+  const allPanels = useMemo(() => [...STORY_PANELS, ...CREDITS_PANELS], []);
+  
+  const displayedPanels = useMemo(() => {
+    return repetitionRemovalEnabled ? deduplicatePanelParts(allPanels) : allPanels;
+  }, [repetitionRemovalEnabled, allPanels]);
 
-  const displayedCredits = useMemo(() => {
-    return repetitionRemovalEnabled ? deduplicateTextLines(CREDITS_PANELS) : CREDITS_PANELS;
-  }, [repetitionRemovalEnabled]);
+  const storyPanels = displayedPanels.filter(p => p.kind === 'story');
+  const creditPanels = displayedPanels.filter(p => p.kind === 'credits');
 
-  const removedCount = ORIGINAL_SCENES.length - displayedScenes.length;
+  const originalLineCount = countPanelTextLines(allPanels);
+  const displayedLineCount = countPanelTextLines(displayedPanels);
+  const removedCount = originalLineCount - displayedLineCount;
 
   return (
     <div className="space-y-6">
       {/* Stats */}
       <div className="flex flex-wrap gap-3">
         <Badge variant="outline" className="text-sm border-3 px-4 py-2">
-          <strong className="mr-2">Total Panels:</strong> {displayedScenes.length}
+          <strong className="mr-2">Total Panels:</strong> {storyPanels.length}
         </Badge>
         {repetitionRemovalEnabled && removedCount > 0 && (
           <Badge variant="default" className="text-sm border-3 px-4 py-2">
@@ -77,26 +67,28 @@ export function ComicViewer() {
       <ScrollArea className="h-[600px] rounded-sm border-3 border-border p-4">
         <div className="space-y-4">
           <h2 className="text-xl font-black uppercase mb-4">Story Panels</h2>
-          {displayedScenes.map((scene, index) => (
+          {storyPanels.map((panel, index) => (
             <ComicPanel
-              key={`scene-${index}`}
-              variant={scene.startsWith('*') ? 'highlight' : 'default'}
+              key={`story-${index}`}
+              variant={panel.parts.some(p => p.type === 'sfx') ? 'highlight' : 'default'}
             >
-              {scene}
+              {panel.parts.map((part, partIndex) => renderPanelPart(part, partIndex))}
             </ComicPanel>
           ))}
 
           {/* Credits Section */}
-          <div className="pt-8 mt-8 border-t-3 border-border">
-            <h2 className="text-xl font-black uppercase mb-4">Credits</h2>
-            <div className="space-y-4">
-              {displayedCredits.map((credit, index) => (
-                <ComicPanel key={`credit-${index}`} variant="credits">
-                  {credit}
-                </ComicPanel>
-              ))}
+          {creditPanels.length > 0 && (
+            <div className="pt-8 mt-8 border-t-3 border-border">
+              <h2 className="text-xl font-black uppercase mb-4">Credits</h2>
+              <div className="space-y-4">
+                {creditPanels.map((panel, index) => (
+                  <ComicPanel key={`credit-${index}`} variant="credits">
+                    {panel.parts.map((part, partIndex) => renderPanelPart(part, partIndex))}
+                  </ComicPanel>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </ScrollArea>
     </div>

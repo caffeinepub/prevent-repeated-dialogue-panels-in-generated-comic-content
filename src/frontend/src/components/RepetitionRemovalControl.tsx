@@ -12,7 +12,7 @@ export function RepetitionRemovalControl() {
           Remove Repeated Lines
         </Label>
         <p className="text-sm text-muted-foreground">
-          Automatically deduplicate identical dialogue and panel text
+          Automatically deduplicate identical captions, dialogue, and SFX across panels
         </p>
       </div>
       <Switch

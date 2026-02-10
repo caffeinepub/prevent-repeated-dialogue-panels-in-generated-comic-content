@@ -14,7 +14,7 @@ export function Header() {
               🕷️ SPIDER-VERSE COMIC
             </h1>
             <p className="text-sm text-muted-foreground mt-1">
-              Into the Spider-Verse Script Viewer
+              Into the Spider-Verse Comic Viewer
             </p>
           </div>
           <Button

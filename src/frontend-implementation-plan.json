@@ -1,87 +1,104 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Deduplicate repeated comic text and apply comic-inspired UI theme",
+  "title": "Structured comic panels with true comic-style rendering",
   "requirements": [
     {
-      "id": "REQ-1",
-      "summary": "Deduplicate repeated dialogue/panel lines before rendering/exporting comic content (including credits panels) while preserving order.",
+      "id": "REQ-4",
+      "summary": "Introduce a structured comic panel data model (story + credits) with distinct panel parts so the UI renders a comic instead of string transcripts.",
       "acceptanceCriteria": [
-        "If the same exact line appears multiple times in the input script, only the first occurrence is kept in the final output.",
-        "If the same exact line appears consecutively (back-to-back), the final output contains only one instance.",
-        "Deduplication preserves the original ordering of the remaining lines.",
-        "Deduplication is applied consistently to both the main scene panels and the credits panels (if credits are generated from a list of lines)."
+        "Story content is represented as an array of panel objects (not only strings) with explicit fields for at least: panel kind/type (story/credits), and at least one of: caption/narration, dialogue (speaker + text), SFX text.",
+        "ComicViewer renders panels from the structured model without TypeScript errors.",
+        "Credits are still shown, but rendered using the same structured model rather than a plain string list."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/features/comic/deduplication.ts",
+          "path": "frontend/src/lib/comicModel.ts",
           "operation": "create",
-          "description": "Implement a frontend deduplication utility that applies the exact-line rules (keep first occurrence; preserve order) and can be used for both scene panels and credits lines."
+          "description": "Create TypeScript types for a structured comic model: panels with kind/type (story/credits) and parts (caption/narration, dialogue with speaker+text, thought, SFX). Include helpers for extracting all text lines from panels for later deduplication."
         },
         {
-          "path": "frontend/src/features/comic/useDeduplicatedComicText.ts",
+          "path": "frontend/src/lib/comicData.ts",
           "operation": "create",
-          "description": "Add a React hook that, when enabled, uses the backend capability available on the actor (deduplicateComicText) to produce deduplicated text lines, falling back to the local utility when the actor is unavailable; expose a single, reusable API for scene and credits text preparation."
+          "description": "Create structured seed data for the comic as an array of panel objects (story and credits) using the new model (not plain strings). Ensure each panel includes explicit parts (e.g., caption + dialogue, or dialogue + SFX) where applicable."
         },
         {
-          "path": "frontend/src/App.tsx",
-          "operation": "create",
-          "description": "Wire the deduplication step into the comic generation/render/export flow by ensuring all text line lists (scene panels and credits panels) pass through the shared deduplication hook/utility before display and any export preparation."
-        }
-      ]
-    },
-    {
-      "id": "REQ-2",
-      "summary": "Expose an English user-facing indication (label and optional toggle) that repetition removal is active, and ensure the rendered panels reflect the active setting.",
-      "acceptanceCriteria": [
-        "The UI contains an English label indicating repetition removal (and if configurable, an English toggle).",
-        "When repetition removal is enabled, the rendered list of panels in the UI does not display duplicate lines per the deduplication rules."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/features/comic/RepetitionRemovalControl.tsx",
-          "operation": "create",
-          "description": "Create a small control component with an English label (and toggle) for repetition removal; compose shadcn-ui components (e.g., Switch/Label) to present the control. Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/features/comic/comicSettingsContext.tsx",
-          "operation": "create",
-          "description": "Add a lightweight settings context/state container for the repetition removal enabled flag so multiple parts of the UI (preview list, credits preview, export preparation) can read the same setting."
-        },
-        {
-          "path": "frontend/src/App.tsx",
+          "path": "frontend/src/components/ComicViewer.tsx",
           "operation": "modify",
-          "description": "Integrate the repetition removal control into the existing UI and connect its enabled state to the deduplication step so the on-screen rendered panels update accordingly; ensure any user-facing copy added here is English."
+          "description": "Replace string arrays with the structured panel array from frontend/src/lib/comicData.ts, update rendering to iterate panels and their parts, and keep story vs credits sections driven by the panel kind/type. Ensure TypeScript types align with the new model."
+        },
+        {
+          "path": "frontend/src/components/ComicPanel.tsx",
+          "operation": "modify",
+          "description": "Update ComicPanel to support rendering a panel container for structured content (children will become composed comic parts rather than a single string). Keep variant-based frame styling compatible with story/credits/highlight usage."
+        },
+        {
+          "path": "frontend/src/components/ComicParts.tsx",
+          "operation": "create",
+          "description": "Add reusable presentational components for distinct comic parts (CaptionBox, SpeechBubble, ThoughtBubble, SfxText, SceneLabel). Compose these inside panels to render different part types. Verify the component's usage instructions before implementing (shadcn-ui composition only; do not edit frontend/src/components/ui sources)."
         }
       ]
     },
     {
-      "id": "REQ-3",
-      "summary": "Apply a consistent comic-inspired visual theme across the app (bold typography, high-contrast palette, panel styling) while avoiding blue/purple as primary colors.",
+      "id": "REQ-5",
+      "summary": "Render panels with true comic styling: framed panels plus visually distinct caption boxes, speech/thought bubbles, SFX typography, and update copy to say “Comic Viewer”.",
       "acceptanceCriteria": [
-        "The app uses a consistent comic-inspired theme (e.g., bold headings, high-contrast palette, panel-like containers) across all screens/components.",
-        "The theme avoids blue/purple as the primary palette unless explicitly requested later."
+        "Each panel visually includes at least two distinct comic elements (e.g., a caption box + a speech bubble, or a speech bubble + SFX) where applicable based on the panel data.",
+        "Panels use the existing comic-inspired palette (Tailwind/theme variables) with deliberate color usage for different part types (e.g., captions vs speech vs SFX) while maintaining readability/contrast in both light and dark mode.",
+        "The app’s top-level labels no longer describe the content as a script-only viewer (e.g., update header/subtitle text that currently says “Script Viewer” to “Comic Viewer” or equivalent).",
+        "All user-facing text remains in English."
       ],
       "file_operations": [
         {
           "path": "frontend/src/index.css",
-          "operation": "create",
-          "description": "Define global theme tokens and base styles to support a comic-inspired look (e.g., warm high-contrast palette, bold headings, thicker borders, panel-like containers) without using blue/purple as primary; keep changes centralized here."
-        },
-        {
-          "path": "frontend/tailwind.config.js",
           "operation": "modify",
-          "description": "Extend Tailwind theme configuration to support the comic-inspired palette/typography tokens used across the UI (keeping blue/purple out of the primary role) and enable consistent panel styling utilities."
+          "description": "Add/adjust global comic-part styles (caption box, speech bubble, thought bubble, SFX typography) using existing theme variables (background/foreground/primary/secondary/accent/muted) with good contrast in light/dark mode. Keep styling consistent with existing .comic-panel framing."
         },
         {
-          "path": "frontend/src/components/ComicPanel.tsx",
-          "operation": "create",
-          "description": "Create a reusable ComicPanel wrapper that applies consistent panel styling (border, background, spacing, typography) and composes existing shadcn-ui primitives as needed (do not edit files under frontend/src/components/ui). Verify the component's usage instructions before implementing."
+          "path": "frontend/src/components/ComicViewer.tsx",
+          "operation": "modify",
+          "description": "Update layout inside each panel to visually compose multiple part types (e.g., caption at top, bubbles within, SFX positioned) based on the structured model, producing a real comic-reading feel rather than a transcript list."
+        },
+        {
+          "path": "frontend/src/components/Header.tsx",
+          "operation": "modify",
+          "description": "Update header subtitle text to remove “Script Viewer” phrasing and use “Comic Viewer” (or equivalent) in English. Ensure no other user-facing copy implies transcript-only viewing."
         },
         {
           "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Use the shared ComicPanel wrapper (and theme classes/tokens) throughout the app UI so panel styling, spacing, and typography remain consistent on all screens/components rendered by the app."
+          "description": "Update the title section copy so it describes a comic viewing experience (not “Original Script Version”), keeping all user-facing text in English and consistent with the Comic Viewer concept."
+        },
+        {
+          "path": "frontend/index.html",
+          "operation": "modify",
+          "description": "Update the document <title> to reflect a comic viewer experience (English), avoiding “prevent repeated dialogue/panels” phrasing that suggests a script-only tool."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Keep repetition-removal compatible with structured panels by deduplicating repeated text lines across panel parts while preserving panel order and toggle behavior.",
+      "acceptanceCriteria": [
+        "When repetition removal is enabled, repeated identical text lines found in panel parts (dialogue/captions/SFX) are removed or suppressed consistently, while the overall panel ordering remains stable.",
+        "When repetition removal is disabled, the comic renders all original panel text content.",
+        "The existing repetition removal toggle continues to work and the UI does not regress (no crashes, no empty render) with the new panel model."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/lib/deduplication.ts",
+          "operation": "modify",
+          "description": "Extend deduplication utilities to support structured panel models by providing a predictable way to suppress repeated identical lines across panel parts (caption/dialogue/sfx/thought) while keeping the first occurrence and preserving panel ordering."
+        },
+        {
+          "path": "frontend/src/components/ComicViewer.tsx",
+          "operation": "modify",
+          "description": "Wire the existing repetitionRemovalEnabled toggle to apply structured-panel deduplication when enabled and render original structured content when disabled. Ensure rendering stays stable (no crashes/empty UI) even when parts are suppressed."
+        },
+        {
+          "path": "frontend/src/components/RepetitionRemovalControl.tsx",
+          "operation": "modify",
+          "description": "Update the helper text (English) to reflect deduplication of panel parts (captions, dialogue, SFX) under the new structured model while keeping the existing toggle behavior unchanged."
         }
       ]
     }

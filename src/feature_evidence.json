@@ -2,49 +2,14 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-add-a-deduplication-step-for-comic-dialogue-panel-text-so-that-repeated-lines-are-removed-from-the-generated-comic-content-before-rendering-exporting",
-      "featureTitle": "Add a deduplication step for comic dialogue/panel text so that repeated lines are removed from the generated comic content before rendering/exporting.",
+      "featureId": "feature-replace-the-current-string-only-story-credits-data-model-with-a-structured-comic-panel-model-that-supports-distinct-comic-parts-e-g-panel-title-scene-label-narration-caption-boxes-speech-bubbles-thought-bubbles-and-sound-effect-text-so-the-ui-can-render-an-actual-comic-instead-of-a-transcript",
+      "featureTitle": "Replace the current string-only story/credits data model with a structured comic panel model that supports distinct comic parts (e.g., panel title/scene label, narration/caption boxes, speech bubbles, thought bubbles, and sound-effect text), so the UI can render an actual comic instead of a transcript.",
       "files": [
-        "frontend/src/App.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-1"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-expose-a-clear-user-facing-indication-that-repetition-removal-is-active-e-g-a-toggle-or-label-and-ensure-all-user-facing-text-is-in-english",
-      "featureTitle": "Expose a clear, user-facing indication that repetition removal is active (e.g., a toggle or label) and ensure all user-facing text is in English.",
-      "files": [
-        "frontend/src/App.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-2"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-apply-a-coherent-comic-inspired-visual-theme-across-the-frontend-colors-typography-spacing-and-panel-styling-and-use-it-consistently-throughout-the-app",
-      "featureTitle": "Apply a coherent, comic-inspired visual theme across the frontend (colors, typography, spacing, and panel styling) and use it consistently throughout the app.",
-      "files": [
-        "frontend/src/App.tsx",
         "frontend/src/components/ComicPanel.tsx",
-        "frontend/src/index.css",
-        "frontend/tailwind.config.js"
+        "frontend/src/components/ComicParts.tsx",
+        "frontend/src/components/ComicViewer.tsx",
+        "frontend/src/lib/comicData.ts",
+        "frontend/src/lib/comicModel.ts"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -54,7 +19,49 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-3"
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-the-comic-reading-experience-to-visually-look-like-a-real-comic-render-panel-frames-with-consistent-comic-styling-and-within-each-panel-render-distinct-comic-parts-with-clear-visual-differentiation-caption-boxes-speech-bubbles-sfx-typography-and-a-coherent-intentional-color-scheme-across-panels",
+      "featureTitle": "Update the comic reading experience to visually look like a real comic: render panel frames with consistent comic styling, and within each panel render distinct comic parts with clear visual differentiation (caption boxes, speech bubbles, SFX typography) and a coherent, intentional color scheme across panels.",
+      "files": [
+        "frontend/index.html",
+        "frontend/src/App.tsx",
+        "frontend/src/components/ComicViewer.tsx",
+        "frontend/src/components/Header.tsx",
+        "frontend/src/index.css"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-ensure-the-existing-repetition-removal-behavior-remains-compatible-with-the-new-structured-panel-model-by-deduplicating-repeated-panel-text-content-in-a-predictable-way-e-g-deduplicate-repeated-dialogue-caption-sfx-lines-across-panels-while-preserving-the-first-occurrence",
+      "featureTitle": "Ensure the existing repetition-removal behavior remains compatible with the new structured panel model by deduplicating repeated panel text content in a predictable way (e.g., deduplicate repeated dialogue/caption/SFX lines across panels while preserving the first occurrence).",
+      "files": [
+        "frontend/src/components/ComicViewer.tsx",
+        "frontend/src/components/RepetitionRemovalControl.tsx",
+        "frontend/src/lib/deduplication.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
       ],
       "confidence": "high"
     }

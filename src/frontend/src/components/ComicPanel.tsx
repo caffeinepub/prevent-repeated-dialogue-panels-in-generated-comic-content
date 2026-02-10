@@ -11,13 +11,14 @@ export function ComicPanel({ children, className, variant = 'default' }: ComicPa
   return (
     <div
       className={cn(
-        'comic-panel rounded-sm p-4 animate-pop-in',
-        variant === 'highlight' && 'bg-accent text-accent-foreground',
-        variant === 'credits' && 'bg-muted text-muted-foreground',
+        'comic-panel rounded-sm p-6 animate-pop-in',
+        'min-h-[120px] flex flex-col gap-3',
+        variant === 'highlight' && 'bg-accent/10',
+        variant === 'credits' && 'bg-muted/50',
         className
       )}
     >
-      <div className="text-base leading-relaxed">{children}</div>
+      {children}
     </div>
   );
 }
