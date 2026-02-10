@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Generate a comic-style PDF using ReportLab (Platypus), with panel-based layout and credits pages.",
+  "architectural_notes": [
+    "Use ReportLab Platypus (SimpleDocTemplate, Paragraph, Table/TableStyle) to build comic-style panel layouts and credits pages."
+  ],
+  "known_issues": [],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-add-a-deduplication-step-for-comic-dialogue-panel-text-so-that-repeated-lines-are-removed-from-the-generated-comic-content-before-rendering-exporting",
+      "title": "Add a deduplication step for comic dialogue/panel text so that repeated lines are removed from the generated comic content before rendering/exporting.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-expose-a-clear-user-facing-indication-that-repetition-removal-is-active-e-g-a-toggle-or-label-and-ensure-all-user-facing-text-is-in-english",
+      "title": "Expose a clear, user-facing indication that repetition removal is active (e.g., a toggle or label) and ensure all user-facing text is in English.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-coherent-comic-inspired-visual-theme-across-the-frontend-colors-typography-spacing-and-panel-styling-and-use-it-consistently-throughout-the-app",
+      "title": "Apply a coherent, comic-inspired visual theme across the frontend (colors, typography, spacing, and panel styling) and use it consistently throughout the app.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Ensure generated comic panels/dialogue do not contain repetition (deduplicate or avoid repeated lines).",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "projectName": "Prevent repeated dialogue/panels in generated comic content",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

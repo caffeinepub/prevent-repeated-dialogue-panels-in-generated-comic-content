@@ -1,0 +1,89 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Deduplicate repeated comic text and apply comic-inspired UI theme",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Deduplicate repeated dialogue/panel lines before rendering/exporting comic content (including credits panels) while preserving order.",
+      "acceptanceCriteria": [
+        "If the same exact line appears multiple times in the input script, only the first occurrence is kept in the final output.",
+        "If the same exact line appears consecutively (back-to-back), the final output contains only one instance.",
+        "Deduplication preserves the original ordering of the remaining lines.",
+        "Deduplication is applied consistently to both the main scene panels and the credits panels (if credits are generated from a list of lines)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/features/comic/deduplication.ts",
+          "operation": "create",
+          "description": "Implement a frontend deduplication utility that applies the exact-line rules (keep first occurrence; preserve order) and can be used for both scene panels and credits lines."
+        },
+        {
+          "path": "frontend/src/features/comic/useDeduplicatedComicText.ts",
+          "operation": "create",
+          "description": "Add a React hook that, when enabled, uses the backend capability available on the actor (deduplicateComicText) to produce deduplicated text lines, falling back to the local utility when the actor is unavailable; expose a single, reusable API for scene and credits text preparation."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Wire the deduplication step into the comic generation/render/export flow by ensuring all text line lists (scene panels and credits panels) pass through the shared deduplication hook/utility before display and any export preparation."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Expose an English user-facing indication (label and optional toggle) that repetition removal is active, and ensure the rendered panels reflect the active setting.",
+      "acceptanceCriteria": [
+        "The UI contains an English label indicating repetition removal (and if configurable, an English toggle).",
+        "When repetition removal is enabled, the rendered list of panels in the UI does not display duplicate lines per the deduplication rules."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/features/comic/RepetitionRemovalControl.tsx",
+          "operation": "create",
+          "description": "Create a small control component with an English label (and toggle) for repetition removal; compose shadcn-ui components (e.g., Switch/Label) to present the control. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/features/comic/comicSettingsContext.tsx",
+          "operation": "create",
+          "description": "Add a lightweight settings context/state container for the repetition removal enabled flag so multiple parts of the UI (preview list, credits preview, export preparation) can read the same setting."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Integrate the repetition removal control into the existing UI and connect its enabled state to the deduplication step so the on-screen rendered panels update accordingly; ensure any user-facing copy added here is English."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Apply a consistent comic-inspired visual theme across the app (bold typography, high-contrast palette, panel styling) while avoiding blue/purple as primary colors.",
+      "acceptanceCriteria": [
+        "The app uses a consistent comic-inspired theme (e.g., bold headings, high-contrast palette, panel-like containers) across all screens/components.",
+        "The theme avoids blue/purple as the primary palette unless explicitly requested later."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Define global theme tokens and base styles to support a comic-inspired look (e.g., warm high-contrast palette, bold headings, thicker borders, panel-like containers) without using blue/purple as primary; keep changes centralized here."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Extend Tailwind theme configuration to support the comic-inspired palette/typography tokens used across the UI (keeping blue/purple out of the primary role) and enable consistent panel styling utilities."
+        },
+        {
+          "path": "frontend/src/components/ComicPanel.tsx",
+          "operation": "create",
+          "description": "Create a reusable ComicPanel wrapper that applies consistent panel styling (border, background, spacing, typography) and composes existing shadcn-ui primitives as needed (do not edit files under frontend/src/components/ui). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Use the shared ComicPanel wrapper (and theme classes/tokens) throughout the app UI so panel styling, spacing, and typography remain consistent on all screens/components rendered by the app."
+        }
+      ]
+    }
+  ]
+}

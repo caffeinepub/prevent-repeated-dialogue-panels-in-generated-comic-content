@@ -1,0 +1,14 @@
+{
+  "frontend/src/index.css": "Global styles with comic-inspired OKLCH color system (warm red/yellow palette), bold typography, and comic panel effects with thick borders and shadow animations.",
+  "frontend/tailwind.config.js": "Tailwind configuration extended with comic-style utilities including custom border widths, comic shadow effects, pop-in animations, and Inter font family.",
+  "frontend/src/hooks/useQueries.ts": "React Query hook for calling the backend deduplicateComicText mutation with proper actor initialization and cache invalidation.",
+  "frontend/src/lib/deduplication.ts": "Frontend utility function that deduplicates text lines by keeping only the first occurrence of each unique line while preserving order.",
+  "frontend/src/contexts/ComicSettingsContext.tsx": "React context provider managing the repetition removal enabled state, accessible throughout the app via useComicSettings hook.",
+  "frontend/src/components/ComicPanel.tsx": "Reusable comic panel wrapper component with comic-style borders, shadows, and hover effects supporting default, highlight, and credits variants.",
+  "frontend/src/components/RepetitionRemovalControl.tsx": "Control component with English label and Switch toggle for enabling/disabling repetition removal, using shadcn/ui components.",
+  "frontend/src/components/Header.tsx": "App header with bold Spider-Verse branding, subtitle, and theme toggle button using comic-style borders.",
+  "frontend/src/components/Footer.tsx": "Footer with copyright, caffeine.ai attribution with UTM tracking, and comic creator credits.",
+  "frontend/src/components/ComicViewer.tsx": "Main comic viewer displaying deduplicated Spider-Verse script panels and credits in a scrollable area with stats badges showing panel count and duplicates removed.",
+  "frontend/src/App.tsx": "Root application component wrapping the app with ThemeProvider and ComicSettingsProvider, rendering header, main comic viewer with controls, and footer.",
+  "frontend/src/lib/utils.ts": "Utility function combining clsx and tailwind-merge for conditional className composition."
+}

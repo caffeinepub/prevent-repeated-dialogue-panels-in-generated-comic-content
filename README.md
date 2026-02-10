@@ -1,2 +1,3 @@
-# prevent-repeated-dialogue-panels-in-generated-comic-content
-Exported from Caffeine project: Prevent repeated dialogue/panels in generated comic content
+## Prevent repeated dialogue/panels in generated comic content
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`

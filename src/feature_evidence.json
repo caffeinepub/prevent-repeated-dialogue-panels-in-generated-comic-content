@@ -1,0 +1,62 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-add-a-deduplication-step-for-comic-dialogue-panel-text-so-that-repeated-lines-are-removed-from-the-generated-comic-content-before-rendering-exporting",
+      "featureTitle": "Add a deduplication step for comic dialogue/panel text so that repeated lines are removed from the generated comic content before rendering/exporting.",
+      "files": [
+        "frontend/src/App.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-expose-a-clear-user-facing-indication-that-repetition-removal-is-active-e-g-a-toggle-or-label-and-ensure-all-user-facing-text-is-in-english",
+      "featureTitle": "Expose a clear, user-facing indication that repetition removal is active (e.g., a toggle or label) and ensure all user-facing text is in English.",
+      "files": [
+        "frontend/src/App.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-a-coherent-comic-inspired-visual-theme-across-the-frontend-colors-typography-spacing-and-panel-styling-and-use-it-consistently-throughout-the-app",
+      "featureTitle": "Apply a coherent, comic-inspired visual theme across the frontend (colors, typography, spacing, and panel styling) and use it consistently throughout the app.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/ComicPanel.tsx",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    }
+  ]
+}
