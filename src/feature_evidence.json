@@ -2,15 +2,9 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-replace-the-current-string-only-story-credits-data-model-with-a-structured-comic-panel-model-that-supports-distinct-comic-parts-e-g-panel-title-scene-label-narration-caption-boxes-speech-bubbles-thought-bubbles-and-sound-effect-text-so-the-ui-can-render-an-actual-comic-instead-of-a-transcript",
-      "featureTitle": "Replace the current string-only story/credits data model with a structured comic panel model that supports distinct comic parts (e.g., panel title/scene label, narration/caption boxes, speech bubbles, thought bubbles, and sound-effect text), so the UI can render an actual comic instead of a transcript.",
-      "files": [
-        "frontend/src/components/ComicPanel.tsx",
-        "frontend/src/components/ComicParts.tsx",
-        "frontend/src/components/ComicViewer.tsx",
-        "frontend/src/lib/comicData.ts",
-        "frontend/src/lib/comicModel.ts"
-      ],
+      "featureId": "feature-update-the-comic-panel-illustration-assets-so-that-miles-morales-is-visually-depicted-as-black-in-any-panel-where-he-is-shown-including-panels-where-he-is-clearly-visible-in-shadow-or-partially-visible",
+      "featureTitle": "Update the comic panel illustration assets so that Miles Morales is visually depicted as Black in any panel where he is shown (including panels where he is clearly visible, in shadow, or partially visible).",
+      "files": [],
       "components": [
         "core-infrastructure@1.0.2",
         "shadcn-ui@1.0.0",
@@ -19,20 +13,14 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-4"
+        "REQ-1"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-update-the-comic-reading-experience-to-visually-look-like-a-real-comic-render-panel-frames-with-consistent-comic-styling-and-within-each-panel-render-distinct-comic-parts-with-clear-visual-differentiation-caption-boxes-speech-bubbles-sfx-typography-and-a-coherent-intentional-color-scheme-across-panels",
-      "featureTitle": "Update the comic reading experience to visually look like a real comic: render panel frames with consistent comic styling, and within each panel render distinct comic parts with clear visual differentiation (caption boxes, speech bubbles, SFX typography) and a coherent, intentional color scheme across panels.",
-      "files": [
-        "frontend/index.html",
-        "frontend/src/App.tsx",
-        "frontend/src/components/ComicViewer.tsx",
-        "frontend/src/components/Header.tsx",
-        "frontend/src/index.css"
-      ],
+      "featureId": "feature-ensure-the-fight-action-scenes-are-represented-with-comic-style-pictures-not-blank-missing-placeholder-visuals-by-updating-the-existing-fight-scene-illustration-assets-to-clearly-read-as-comic-panels-with-dynamic-action-composition",
+      "featureTitle": "Ensure the fight/action scenes are represented with comic-style pictures (not blank/missing/placeholder visuals) by updating the existing fight-scene illustration assets to clearly read as comic panels with dynamic action composition.",
+      "files": [],
       "components": [
         "core-infrastructure@1.0.2",
         "shadcn-ui@1.0.0",
@@ -41,17 +29,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-5"
+        "REQ-2"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-the-existing-repetition-removal-behavior-remains-compatible-with-the-new-structured-panel-model-by-deduplicating-repeated-panel-text-content-in-a-predictable-way-e-g-deduplicate-repeated-dialogue-caption-sfx-lines-across-panels-while-preserving-the-first-occurrence",
-      "featureTitle": "Ensure the existing repetition-removal behavior remains compatible with the new structured panel model by deduplicating repeated panel text content in a predictable way (e.g., deduplicate repeated dialogue/caption/SFX lines across panels while preserving the first occurrence).",
+      "featureId": "feature-revise-illustrationalt-strings-in-frontend-src-lib-comicdata-ts-for-panels-featuring-miles-and-for-the-fight-action-panels-so-the-alt-text-accurately-describes-the-updated-visuals-in-clear-english",
+      "featureTitle": "Revise `illustrationAlt` strings in `frontend/src/lib/comicData.ts` for panels featuring Miles and for the fight/action panels so the alt text accurately describes the updated visuals in clear English.",
       "files": [
-        "frontend/src/components/ComicViewer.tsx",
-        "frontend/src/components/RepetitionRemovalControl.tsx",
-        "frontend/src/lib/deduplication.ts"
+        "frontend/src/lib/comicData.ts"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -61,7 +47,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-6"
+        "REQ-3"
       ],
       "confidence": "high"
     }

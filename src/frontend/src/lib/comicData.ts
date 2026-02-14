@@ -2,12 +2,14 @@ import type { ComicPanel } from './comicModel';
 
 /**
  * Structured comic data for Spider-Man: Into the Spider-Verse.
- * Each panel contains distinct comic parts (captions, dialogue, SFX, etc.).
+ * Each panel contains distinct comic parts (captions, dialogue, SFX, etc.) and optional illustrations.
  */
 
 export const STORY_PANELS: ComicPanel[] = [
   {
     kind: 'story',
+    illustrationSrc: '/assets/generated/spiderverse-panel-01.dim_1024x768.png',
+    illustrationAlt: 'Brooklyn cityscape establishing shot in comic style',
     parts: [
       { type: 'caption', text: 'Brooklyn, New York' },
       { type: 'dialogue', speaker: 'Miles', text: "Alright… let's do this. My name is Miles Morales." }
@@ -15,6 +17,8 @@ export const STORY_PANELS: ComicPanel[] = [
   },
   {
     kind: 'story',
+    illustrationSrc: '/assets/generated/spiderverse-panel-02.dim_1024x768.png',
+    illustrationAlt: 'Miles Morales, a Black teenager, and his father Jefferson in their apartment',
     parts: [
       { type: 'scene', text: 'Miles\' apartment - Morning' },
       { type: 'dialogue', speaker: 'Jefferson', text: "You're going to be late! This school is important!" },
@@ -23,6 +27,8 @@ export const STORY_PANELS: ComicPanel[] = [
   },
   {
     kind: 'story',
+    illustrationSrc: '/assets/generated/spiderverse-panel-03.dim_1024x768.png',
+    illustrationAlt: 'Uncle Aaron\'s cozy apartment with graffiti art',
     parts: [
       { type: 'caption', text: 'Later, at Uncle Aaron\'s place' },
       { type: 'dialogue', speaker: 'Aaron', text: "You don't have to be what everyone expects. Be yourself." }
@@ -30,6 +36,8 @@ export const STORY_PANELS: ComicPanel[] = [
   },
   {
     kind: 'story',
+    illustrationSrc: '/assets/generated/spiderverse-panel-04.dim_1024x768.png',
+    illustrationAlt: 'Dark subway tunnel with glowing radioactive spider',
     parts: [
       { type: 'scene', text: 'Abandoned subway tunnel' },
       { type: 'caption', text: 'A strange spider bites Miles in the darkness.' },
@@ -38,6 +46,8 @@ export const STORY_PANELS: ComicPanel[] = [
   },
   {
     kind: 'story',
+    illustrationSrc: '/assets/generated/spiderverse-panel-05.dim_1024x768.png',
+    illustrationAlt: 'Miles Morales, a Black teenager, stuck to ceiling with dramatic perspective in comic style',
     parts: [
       { type: 'dialogue', speaker: 'Miles', text: 'Why am I stuck to the ceiling?!' },
       { type: 'sfx', text: 'THWIP!' }
@@ -45,6 +55,8 @@ export const STORY_PANELS: ComicPanel[] = [
   },
   {
     kind: 'story',
+    illustrationSrc: '/assets/generated/spiderverse-panel-06.dim_1024x768.png',
+    illustrationAlt: 'Kingpin\'s underground facility with massive collider machine',
     parts: [
       { type: 'scene', text: 'Kingpin\'s underground facility' },
       { type: 'dialogue', speaker: 'Kingpin', text: 'Activate the collider.' },
@@ -53,6 +65,8 @@ export const STORY_PANELS: ComicPanel[] = [
   },
   {
     kind: 'story',
+    illustrationSrc: '/assets/generated/spiderverse-panel-07.dim_1024x768.png',
+    illustrationAlt: 'Dynamic comic-style battle scene with explosive energy blasts, inked outlines, and motion lines',
     parts: [
       { type: 'dialogue', speaker: 'Peter Parker', text: 'That machine will tear reality apart!' },
       { type: 'caption', text: 'Battle erupts. Explosions shake the chamber.' },
@@ -61,6 +75,8 @@ export const STORY_PANELS: ComicPanel[] = [
   },
   {
     kind: 'story',
+    illustrationSrc: '/assets/generated/spiderverse-panel-08.dim_1024x768.png',
+    illustrationAlt: 'Close-up of Peter Parker handing USB drive to Miles',
     parts: [
       { type: 'dialogue', speaker: 'Peter Parker', text: 'Take this device. Finish what I started.' },
       { type: 'caption', text: 'He hands Miles a small USB drive.' }
@@ -68,6 +84,8 @@ export const STORY_PANELS: ComicPanel[] = [
   },
   {
     kind: 'story',
+    illustrationSrc: '/assets/generated/spiderverse-panel-09.dim_1024x768.png',
+    illustrationAlt: 'Heavy impact moment with debris and motion streaks',
     parts: [
       { type: 'caption', text: 'Kingpin strikes. Silence falls.' },
       { type: 'sfx', text: 'CRASH!' }
@@ -75,6 +93,8 @@ export const STORY_PANELS: ComicPanel[] = [
   },
   {
     kind: 'story',
+    illustrationSrc: '/assets/generated/spiderverse-panel-10.dim_1024x768.png',
+    illustrationAlt: 'Miles Morales, a Black teenager, in shadow watching helplessly in comic style',
     parts: [
       { type: 'thought', speaker: 'Miles', text: 'I should\'ve helped him…' },
       { type: 'caption', text: 'Miles watches helplessly from the shadows.' }
@@ -82,6 +102,8 @@ export const STORY_PANELS: ComicPanel[] = [
   },
   {
     kind: 'story',
+    illustrationSrc: '/assets/generated/spiderverse-panel-11.dim_1024x768.png',
+    illustrationAlt: 'Gwen entering Miles\' dorm room',
     parts: [
       { type: 'scene', text: 'Miles\' dorm room' },
       { type: 'dialogue', speaker: 'Gwen', text: "You're not the only one like this." }
@@ -89,6 +111,8 @@ export const STORY_PANELS: ComicPanel[] = [
   },
   {
     kind: 'story',
+    illustrationSrc: '/assets/generated/spiderverse-panel-12.dim_1024x768.png',
+    illustrationAlt: 'Peter B. Parker with burger in casual scene',
     parts: [
       { type: 'dialogue', speaker: 'Peter B. Parker', text: "Kid, being Spider-Man isn't about perfection." },
       { type: 'caption', text: 'Peter B. takes a bite of his burger.' }
@@ -96,6 +120,8 @@ export const STORY_PANELS: ComicPanel[] = [
   },
   {
     kind: 'story',
+    illustrationSrc: '/assets/generated/spiderverse-panel-13.dim_1024x768.png',
+    illustrationAlt: 'Rooftop confrontation with Prowler and wind effects',
     parts: [
       { type: 'scene', text: 'Rooftop confrontation' },
       { type: 'dialogue', speaker: 'Prowler', text: "You don't belong here." },
@@ -104,6 +130,8 @@ export const STORY_PANELS: ComicPanel[] = [
   },
   {
     kind: 'story',
+    illustrationSrc: '/assets/generated/spiderverse-panel-14.dim_1024x768.png',
+    illustrationAlt: 'Emotional reveal as Prowler removes mask, Miles Morales (Black teenager) reacts in shock',
     parts: [
       { type: 'dialogue', speaker: 'Miles', text: 'Uncle…?' },
       { type: 'caption', text: 'The mask comes off. Miles\' world shatters.' }
@@ -111,6 +139,8 @@ export const STORY_PANELS: ComicPanel[] = [
   },
   {
     kind: 'story',
+    illustrationSrc: '/assets/generated/spiderverse-panel-15.dim_1024x768.png',
+    illustrationAlt: 'Dramatic gunshot scene with stylized impact',
     parts: [
       { type: 'dialogue', speaker: 'Aaron', text: "You're going to be better than me." },
       { type: 'caption', text: 'Gunshot echoes.' },
@@ -119,6 +149,8 @@ export const STORY_PANELS: ComicPanel[] = [
   },
   {
     kind: 'story',
+    illustrationSrc: '/assets/generated/spiderverse-panel-16.dim_1024x768.png',
+    illustrationAlt: 'Miles Morales, a Black teenager, standing determined with bold backlighting in comic style',
     parts: [
       { type: 'dialogue', speaker: 'Miles', text: "I won't run anymore." },
       { type: 'caption', text: 'Miles stands tall, determination in his eyes.' }
@@ -126,6 +158,8 @@ export const STORY_PANELS: ComicPanel[] = [
   },
   {
     kind: 'story',
+    illustrationSrc: '/assets/generated/spiderverse-panel-17.dim_1024x768.png',
+    illustrationAlt: 'Miles Morales, a Black teenager in Spider-Man suit, leaping from skyscraper with vertigo perspective',
     parts: [
       { type: 'dialogue', speaker: 'Peter B.', text: 'Then jump.' },
       { type: 'caption', text: 'Miles leaps from the skyscraper. The city rises toward him.' },
@@ -134,6 +168,8 @@ export const STORY_PANELS: ComicPanel[] = [
   },
   {
     kind: 'story',
+    illustrationSrc: '/assets/generated/spiderverse-panel-18.dim_1024x768.png',
+    illustrationAlt: 'Miles Morales, a Black teenager in Spider-Man suit, swinging through neon-lit Brooklyn streets in comic style',
     parts: [
       { type: 'dialogue', speaker: 'Miles', text: "I'm Spider-Man." },
       { type: 'caption', text: 'He swings through the neon-lit streets of Brooklyn.' }
@@ -141,6 +177,8 @@ export const STORY_PANELS: ComicPanel[] = [
   },
   {
     kind: 'story',
+    illustrationSrc: '/assets/generated/spiderverse-panel-19.dim_1024x768.png',
+    illustrationAlt: 'Dynamic comic-style final battle inside collider with portal energy, inked action lines and impact effects',
     parts: [
       { type: 'scene', text: 'Final battle inside the collider' },
       { type: 'dialogue', speaker: 'Kingpin', text: "You're nothing!" },
@@ -149,6 +187,8 @@ export const STORY_PANELS: ComicPanel[] = [
   },
   {
     kind: 'story',
+    illustrationSrc: '/assets/generated/spiderverse-panel-20.dim_1024x768.png',
+    illustrationAlt: 'Comic-style venom blast with jagged lightning energy, bold inked outlines and explosive motion effects',
     parts: [
       { type: 'dialogue', speaker: 'Miles', text: "I'm not supposed to be you." },
       { type: 'caption', text: 'Venom blast shatters the chamber.' },
@@ -157,6 +197,8 @@ export const STORY_PANELS: ComicPanel[] = [
   },
   {
     kind: 'story',
+    illustrationSrc: '/assets/generated/spiderverse-panel-21.dim_1024x768.png',
+    illustrationAlt: 'Gwen smiling before stepping through portal',
     parts: [
       { type: 'dialogue', speaker: 'Gwen', text: "You're amazing." },
       { type: 'caption', text: 'She smiles before stepping through her portal.' }
@@ -164,6 +206,8 @@ export const STORY_PANELS: ComicPanel[] = [
   },
   {
     kind: 'story',
+    illustrationSrc: '/assets/generated/spiderverse-panel-22.dim_1024x768.png',
+    illustrationAlt: 'Multiple portals closing with circular shapes',
     parts: [
       { type: 'dialogue', speaker: 'Peter B.', text: "You've got this from here." },
       { type: 'caption', text: 'Portals close one by one.' },

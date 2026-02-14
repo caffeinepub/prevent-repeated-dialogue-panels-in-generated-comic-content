@@ -1,104 +1,90 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Structured comic panels with true comic-style rendering",
+  "title": "Update Spider-Verse comic panel assets for Miles depiction and fight-scene illustrations",
   "requirements": [
     {
-      "id": "REQ-4",
-      "summary": "Introduce a structured comic panel data model (story + credits) with distinct panel parts so the UI renders a comic instead of string transcripts.",
+      "id": "REQ-1",
+      "summary": "Update existing comic panel illustration assets so Miles Morales is visually depicted as Black in all panels where he appears (including partial/shadow visibility) while preserving filenames and composition.",
       "acceptanceCriteria": [
-        "Story content is represented as an array of panel objects (not only strings) with explicit fields for at least: panel kind/type (story/credits), and at least one of: caption/narration, dialogue (speaker + text), SFX text.",
-        "ComicViewer renders panels from the structured model without TypeScript errors.",
-        "Credits are still shown, but rendered using the same structured model rather than a plain string list."
+        "All relevant story panel images in `frontend/public/assets/generated/` depict Miles Morales as a Black character (e.g., facial features/skin tone/hair), consistent with the Spider-Verse comic style.",
+        "No image filenames referenced by the app change (the app continues to load the same `/assets/generated/spiderverse-panel-*.dim_1024x768.png` paths)."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/lib/comicModel.ts",
-          "operation": "create",
-          "description": "Create TypeScript types for a structured comic model: panels with kind/type (story/credits) and parts (caption/narration, dialogue with speaker+text, thought, SFX). Include helpers for extracting all text lines from panels for later deduplication."
+          "path": "frontend/public/assets/generated/spiderverse-panel-02.dim_1024x768.png",
+          "operation": "modify",
+          "description": "Replace the existing image content so Miles is clearly depicted as Black while preserving the current scene composition and the exact filename/path."
         },
+        {
+          "path": "frontend/public/assets/generated/spiderverse-panel-05.dim_1024x768.png",
+          "operation": "modify",
+          "description": "Replace the existing image content so Miles is clearly depicted as Black (even if partially visible) while preserving the dramatic ceiling-stuck composition and the exact filename/path."
+        },
+        {
+          "path": "frontend/public/assets/generated/spiderverse-panel-10.dim_1024x768.png",
+          "operation": "modify",
+          "description": "Replace the existing image content so Miles is depicted as Black even in shadow/low light while preserving the scene framing and the exact filename/path."
+        },
+        {
+          "path": "frontend/public/assets/generated/spiderverse-panel-14.dim_1024x768.png",
+          "operation": "modify",
+          "description": "Replace the existing image content so Miles is clearly depicted as Black during the reveal scene while preserving composition and the exact filename/path."
+        },
+        {
+          "path": "frontend/public/assets/generated/spiderverse-panel-16.dim_1024x768.png",
+          "operation": "modify",
+          "description": "Replace the existing image content so Miles is clearly depicted as Black in the determined pose panel while preserving backlighting/composition and the exact filename/path."
+        },
+        {
+          "path": "frontend/public/assets/generated/spiderverse-panel-17.dim_1024x768.png",
+          "operation": "modify",
+          "description": "Replace the existing image content so Miles is clearly depicted as Black in the leap panel while preserving vertigo perspective/composition and the exact filename/path."
+        },
+        {
+          "path": "frontend/public/assets/generated/spiderverse-panel-18.dim_1024x768.png",
+          "operation": "modify",
+          "description": "Replace the existing image content so Miles is clearly depicted as Black in the swinging panel while preserving neon/composition and the exact filename/path."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Update existing fight/action illustration assets so action scenes render as dynamic comic-style panels (not blank/placeholder) while keeping viewer layout unchanged.",
+      "acceptanceCriteria": [
+        "Fight/action panels render an illustration (not missing) and the visuals clearly appear as comic art (inked outlines, stylized shading, comic motion/impact language).",
+        "Fight/action panels remain viewable in the Comic Viewer without layout breakage (image fits within the panel frame and scroll area as before)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/spiderverse-panel-07.dim_1024x768.png",
+          "operation": "modify",
+          "description": "Replace the existing fight-scene image content with a clearly comic-style, dynamic action composition (inked outlines, motion/impact cues) while preserving the exact filename/path and dimensions."
+        },
+        {
+          "path": "frontend/public/assets/generated/spiderverse-panel-19.dim_1024x768.png",
+          "operation": "modify",
+          "description": "Replace the existing final battle image content with a clearly comic-style, dynamic action composition while preserving the exact filename/path and ensuring it still fits the existing Comic Viewer layout."
+        },
+        {
+          "path": "frontend/public/assets/generated/spiderverse-panel-20.dim_1024x768.png",
+          "operation": "modify",
+          "description": "Replace the existing venom blast/action moment image content with a clearly comic-style, dynamic action composition while preserving the exact filename/path and dimensions."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Revise `illustrationAlt` strings in `frontend/src/lib/comicData.ts` for the updated Miles panels and fight/action panels to accurately describe the new visuals in English.",
+      "acceptanceCriteria": [
+        "`illustrationAlt` entries for updated panels describe the visible scene accurately and remain in English.",
+        "No TypeScript errors are introduced in `frontend/src/lib/comicData.ts`."
+      ],
+      "file_operations": [
         {
           "path": "frontend/src/lib/comicData.ts",
-          "operation": "create",
-          "description": "Create structured seed data for the comic as an array of panel objects (story and credits) using the new model (not plain strings). Ensure each panel includes explicit parts (e.g., caption + dialogue, or dialogue + SFX) where applicable."
-        },
-        {
-          "path": "frontend/src/components/ComicViewer.tsx",
           "operation": "modify",
-          "description": "Replace string arrays with the structured panel array from frontend/src/lib/comicData.ts, update rendering to iterate panels and their parts, and keep story vs credits sections driven by the panel kind/type. Ensure TypeScript types align with the new model."
-        },
-        {
-          "path": "frontend/src/components/ComicPanel.tsx",
-          "operation": "modify",
-          "description": "Update ComicPanel to support rendering a panel container for structured content (children will become composed comic parts rather than a single string). Keep variant-based frame styling compatible with story/credits/highlight usage."
-        },
-        {
-          "path": "frontend/src/components/ComicParts.tsx",
-          "operation": "create",
-          "description": "Add reusable presentational components for distinct comic parts (CaptionBox, SpeechBubble, ThoughtBubble, SfxText, SceneLabel). Compose these inside panels to render different part types. Verify the component's usage instructions before implementing (shadcn-ui composition only; do not edit frontend/src/components/ui sources)."
-        }
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "summary": "Render panels with true comic styling: framed panels plus visually distinct caption boxes, speech/thought bubbles, SFX typography, and update copy to say “Comic Viewer”.",
-      "acceptanceCriteria": [
-        "Each panel visually includes at least two distinct comic elements (e.g., a caption box + a speech bubble, or a speech bubble + SFX) where applicable based on the panel data.",
-        "Panels use the existing comic-inspired palette (Tailwind/theme variables) with deliberate color usage for different part types (e.g., captions vs speech vs SFX) while maintaining readability/contrast in both light and dark mode.",
-        "The app’s top-level labels no longer describe the content as a script-only viewer (e.g., update header/subtitle text that currently says “Script Viewer” to “Comic Viewer” or equivalent).",
-        "All user-facing text remains in English."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "Add/adjust global comic-part styles (caption box, speech bubble, thought bubble, SFX typography) using existing theme variables (background/foreground/primary/secondary/accent/muted) with good contrast in light/dark mode. Keep styling consistent with existing .comic-panel framing."
-        },
-        {
-          "path": "frontend/src/components/ComicViewer.tsx",
-          "operation": "modify",
-          "description": "Update layout inside each panel to visually compose multiple part types (e.g., caption at top, bubbles within, SFX positioned) based on the structured model, producing a real comic-reading feel rather than a transcript list."
-        },
-        {
-          "path": "frontend/src/components/Header.tsx",
-          "operation": "modify",
-          "description": "Update header subtitle text to remove “Script Viewer” phrasing and use “Comic Viewer” (or equivalent) in English. Ensure no other user-facing copy implies transcript-only viewing."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Update the title section copy so it describes a comic viewing experience (not “Original Script Version”), keeping all user-facing text in English and consistent with the Comic Viewer concept."
-        },
-        {
-          "path": "frontend/index.html",
-          "operation": "modify",
-          "description": "Update the document <title> to reflect a comic viewer experience (English), avoiding “prevent repeated dialogue/panels” phrasing that suggests a script-only tool."
-        }
-      ]
-    },
-    {
-      "id": "REQ-6",
-      "summary": "Keep repetition-removal compatible with structured panels by deduplicating repeated text lines across panel parts while preserving panel order and toggle behavior.",
-      "acceptanceCriteria": [
-        "When repetition removal is enabled, repeated identical text lines found in panel parts (dialogue/captions/SFX) are removed or suppressed consistently, while the overall panel ordering remains stable.",
-        "When repetition removal is disabled, the comic renders all original panel text content.",
-        "The existing repetition removal toggle continues to work and the UI does not regress (no crashes, no empty render) with the new panel model."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/lib/deduplication.ts",
-          "operation": "modify",
-          "description": "Extend deduplication utilities to support structured panel models by providing a predictable way to suppress repeated identical lines across panel parts (caption/dialogue/sfx/thought) while keeping the first occurrence and preserving panel ordering."
-        },
-        {
-          "path": "frontend/src/components/ComicViewer.tsx",
-          "operation": "modify",
-          "description": "Wire the existing repetitionRemovalEnabled toggle to apply structured-panel deduplication when enabled and render original structured content when disabled. Ensure rendering stays stable (no crashes/empty UI) even when parts are suppressed."
-        },
-        {
-          "path": "frontend/src/components/RepetitionRemovalControl.tsx",
-          "operation": "modify",
-          "description": "Update the helper text (English) to reflect deduplication of panel parts (captions, dialogue, SFX) under the new structured model while keeping the existing toggle behavior unchanged."
+          "description": "Update `illustrationAlt` for panels referencing spiderverse-panel-02, -05, -07, -10, -14, -16, -17, -18, -19, and -20 so the text explicitly matches the updated visuals (including Miles depicted as Black and the fight/action scenes reading as comic panels), keeping strings clear, accurate, and English-only."
         }
       ]
     }

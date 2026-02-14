@@ -4,59 +4,59 @@
 
 @layer base {
     :root {
-        --radius: 0.25rem;
-        /* Comic-inspired warm palette with high contrast */
-        --background: 0.98 0 0;
-        --foreground: 0.15 0 0;
-        --card: 1 0 0;
-        --card-foreground: 0.15 0 0;
-        --popover: 1 0 0;
-        --popover-foreground: 0.15 0 0;
-        /* Bold red primary (comic book red) */
-        --primary: 0.55 0.24 25;
-        --primary-foreground: 1 0 0;
-        /* Warm yellow accent */
-        --secondary: 0.85 0.15 85;
-        --secondary-foreground: 0.15 0 0;
-        --muted: 0.94 0 0;
-        --muted-foreground: 0.45 0 0;
-        --accent: 0.85 0.15 85;
-        --accent-foreground: 0.15 0 0;
-        --destructive: 0.55 0.24 25;
-        --destructive-foreground: 1 0 0;
-        --border: 0.15 0 0;
-        --input: 0.88 0 0;
-        --ring: 0.55 0.24 25;
-        --chart-1: 0.55 0.24 25;
-        --chart-2: 0.85 0.15 85;
-        --chart-3: 0.45 0.18 145;
+        --radius: 0rem;
+        /* Classic comic book palette - aged paper with bold ink */
+        --background: 0.96 0.02 60; /* Warm off-white paper */
+        --foreground: 0.10 0 0; /* Deep black ink */
+        --card: 0.98 0.01 60; /* Slightly lighter paper for cards */
+        --card-foreground: 0.10 0 0;
+        --popover: 0.98 0.01 60;
+        --popover-foreground: 0.10 0 0;
+        /* Bold comic red (Spider-Man red) */
+        --primary: 0.50 0.26 25;
+        --primary-foreground: 0.98 0 0;
+        /* Classic comic yellow (caption boxes) */
+        --secondary: 0.88 0.18 85;
+        --secondary-foreground: 0.10 0 0;
+        --muted: 0.90 0.02 60;
+        --muted-foreground: 0.40 0 0;
+        --accent: 0.88 0.18 85;
+        --accent-foreground: 0.10 0 0;
+        --destructive: 0.50 0.26 25;
+        --destructive-foreground: 0.98 0 0;
+        --border: 0.10 0 0; /* Pure black ink borders */
+        --input: 0.92 0.02 60;
+        --ring: 0.50 0.26 25;
+        --chart-1: 0.50 0.26 25;
+        --chart-2: 0.88 0.18 85;
+        --chart-3: 0.45 0.20 220;
         --chart-4: 0.65 0.20 35;
         --chart-5: 0.75 0.12 65;
     }
 
     .dark {
-        --background: 0.12 0 0;
-        --foreground: 0.98 0 0;
-        --card: 0.18 0 0;
-        --card-foreground: 0.98 0 0;
-        --popover: 0.15 0 0;
-        --popover-foreground: 0.98 0 0;
-        --primary: 0.65 0.22 25;
-        --primary-foreground: 0.98 0 0;
-        --secondary: 0.75 0.14 85;
-        --secondary-foreground: 0.12 0 0;
-        --muted: 0.25 0 0;
-        --muted-foreground: 0.65 0 0;
-        --accent: 0.75 0.14 85;
-        --accent-foreground: 0.98 0 0;
-        --destructive: 0.60 0.22 25;
-        --destructive-foreground: 0.98 0 0;
-        --border: 0.98 0 0 / 20%;
-        --input: 0.98 0 0 / 15%;
-        --ring: 0.65 0.22 25;
-        --chart-1: 0.65 0.22 25;
-        --chart-2: 0.75 0.14 85;
-        --chart-3: 0.55 0.16 145;
+        --background: 0.15 0.02 240; /* Dark blue-gray ink */
+        --foreground: 0.96 0.01 60; /* Aged paper white */
+        --card: 0.20 0.02 240;
+        --card-foreground: 0.96 0.01 60;
+        --popover: 0.18 0.02 240;
+        --popover-foreground: 0.96 0.01 60;
+        --primary: 0.60 0.24 25;
+        --primary-foreground: 0.96 0 0;
+        --secondary: 0.80 0.16 85;
+        --secondary-foreground: 0.15 0 0;
+        --muted: 0.28 0.02 240;
+        --muted-foreground: 0.65 0.02 60;
+        --accent: 0.80 0.16 85;
+        --accent-foreground: 0.15 0 0;
+        --destructive: 0.55 0.24 25;
+        --destructive-foreground: 0.96 0 0;
+        --border: 0.96 0.01 60 / 85%;
+        --input: 0.96 0.01 60 / 12%;
+        --ring: 0.60 0.24 25;
+        --chart-1: 0.60 0.24 25;
+        --chart-2: 0.80 0.16 85;
+        --chart-3: 0.55 0.18 220;
         --chart-4: 0.70 0.18 35;
         --chart-5: 0.80 0.10 65;
     }
@@ -67,76 +67,203 @@
     
     body {
         @apply bg-background text-foreground;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        font-family: 'Bangers', 'Impact', 'Arial Black', -apple-system, BlinkMacSystemFont, sans-serif;
+        /* Layered comic print textures */
+        background-image: 
+            url('/assets/generated/ink-overlay.dim_2048x2048.png'),
+            url('/assets/generated/halftone-texture.dim_1024x1024.png'),
+            url('/assets/generated/paper-grain-texture.dim_1024x1024.png');
+        background-blend-mode: multiply, overlay, normal;
+        background-size: 512px 512px, 256px 256px, 512px 512px;
+        background-position: 0 0, 0 0, 0 0;
+        background-attachment: fixed;
     }
 
-    /* Comic-style headings */
+    .dark body {
+        background-blend-mode: screen, soft-light, normal;
+    }
+
+    /* Comic masthead typography */
     h1, h2, h3, h4, h5, h6 {
+        font-family: 'Bangers', 'Impact', 'Arial Black', sans-serif;
         font-weight: 900;
-        letter-spacing: -0.02em;
-        line-height: 1.1;
+        letter-spacing: 0.02em;
+        line-height: 0.95;
+        text-transform: uppercase;
     }
 
     h1 {
-        font-size: 2.5rem;
-        text-transform: uppercase;
+        font-size: 3rem;
+        text-shadow: 
+            3px 3px 0 oklch(var(--background)),
+            -2px -2px 0 oklch(var(--border));
     }
 
     h2 {
         font-size: 2rem;
+        text-shadow: 2px 2px 0 oklch(var(--background));
     }
 
-    /* Comic panel effect */
+    /* Body text - readable but comic-like */
+    p, div, span {
+        font-family: 'Arial', 'Helvetica', sans-serif;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+    }
+
+    /* Comic panel with heavy ink borders */
     .comic-panel {
-        border: 3px solid oklch(var(--border));
+        border: 4px solid oklch(var(--border));
         background: oklch(var(--card));
-        box-shadow: 4px 4px 0 oklch(var(--border));
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 
+            6px 6px 0 oklch(var(--border)),
+            inset 0 0 0 1px oklch(var(--border) / 10%);
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+        position: relative;
     }
 
     .comic-panel:hover {
         transform: translate(-2px, -2px);
-        box-shadow: 6px 6px 0 oklch(var(--border));
+        box-shadow: 
+            8px 8px 0 oklch(var(--border)),
+            inset 0 0 0 1px oklch(var(--border) / 10%);
     }
 
-    /* Comic part styles */
+    /* Comic page container */
+    .comic-page {
+        background: oklch(var(--card));
+        border: 6px solid oklch(var(--border));
+        box-shadow: 
+            0 8px 24px oklch(var(--border) / 30%),
+            inset 0 0 60px oklch(var(--muted) / 40%);
+        position: relative;
+    }
+
+    /* Panel gutters */
+    .comic-gutter {
+        gap: 1.25rem;
+    }
+
+    /* Comic illustration styling */
+    .comic-illustration {
+        display: block;
+        border: 3px solid oklch(var(--border));
+        box-shadow: 
+            4px 4px 0 oklch(var(--border)),
+            inset 0 0 0 2px oklch(var(--background));
+        object-fit: cover;
+        max-height: 400px;
+        image-rendering: crisp-edges;
+        image-rendering: -webkit-optimize-contrast;
+    }
+
+    /* Caption box - classic yellow narration box */
     .caption-box {
         font-style: italic;
-        line-height: 1.4;
+        line-height: 1.3;
+        font-weight: 600;
+        background: oklch(var(--secondary));
+        color: oklch(var(--secondary-foreground));
+        border: 3px solid oklch(var(--border));
+        box-shadow: 2px 2px 0 oklch(var(--border));
+        position: relative;
     }
 
+    /* Speech bubble with tail */
     .speech-bubble {
         position: relative;
-        line-height: 1.5;
+        line-height: 1.4;
+        background: oklch(var(--background));
+        border: 3px solid oklch(var(--border));
+        box-shadow: 3px 3px 0 oklch(var(--border));
     }
 
+    .speech-bubble::before {
+        content: '';
+        position: absolute;
+        bottom: -12px;
+        left: 20%;
+        width: 0;
+        height: 0;
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-top: 12px solid oklch(var(--border));
+    }
+
+    .speech-bubble::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: calc(20% + 2px);
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 10px solid oklch(var(--background));
+    }
+
+    /* Thought bubble - cloud-like with scalloped edge effect */
     .thought-bubble {
         position: relative;
-        line-height: 1.5;
+        line-height: 1.4;
+        background: oklch(var(--background));
+        border: 3px dashed oklch(var(--border));
     }
 
+    /* SFX text - explosive comic impact */
     .sfx-text {
         text-shadow: 
-            2px 2px 0 oklch(var(--background)),
-            -1px -1px 0 oklch(var(--background)),
-            1px -1px 0 oklch(var(--background)),
-            -1px 1px 0 oklch(var(--background)),
-            1px 1px 0 oklch(var(--background));
-        animation: sfx-pulse 0.5s ease-in-out;
+            3px 3px 0 oklch(var(--background)),
+            -2px -2px 0 oklch(var(--background)),
+            2px -2px 0 oklch(var(--background)),
+            -2px 2px 0 oklch(var(--background)),
+            4px 4px 0 oklch(var(--border));
+        -webkit-text-stroke: 2px oklch(var(--border));
+        paint-order: stroke fill;
     }
 
-    @keyframes sfx-pulse {
-        0%, 100% { transform: scale(1) rotate(-3deg); }
-        50% { transform: scale(1.05) rotate(-3deg); }
-    }
-
+    /* Scene label - location/time stamp */
     .scene-label {
-        display: inline-block;
+        font-style: italic;
+        font-weight: 700;
+        text-transform: uppercase;
         letter-spacing: 0.05em;
+        border-left: 4px solid oklch(var(--primary));
+        background: oklch(var(--muted));
     }
 
-    /* Bold text emphasis */
-    strong, b {
-        font-weight: 900;
+    /* Transcript scrollbar styling */
+    .transcript-content::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .transcript-content::-webkit-scrollbar-track {
+        background: oklch(var(--muted));
+        border: 2px solid oklch(var(--border));
+    }
+
+    .transcript-content::-webkit-scrollbar-thumb {
+        background: oklch(var(--primary));
+        border: 2px solid oklch(var(--border));
+    }
+
+    .transcript-content::-webkit-scrollbar-thumb:hover {
+        background: oklch(var(--primary) / 80%);
+    }
+
+    /* Animation for panel pop-in */
+    @keyframes pop-in {
+        0% {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .animate-pop-in {
+        animation: pop-in 0.3s ease-out;
     }
 }

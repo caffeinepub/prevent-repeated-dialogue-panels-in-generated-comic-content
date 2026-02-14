@@ -6,12 +6,12 @@ export function RepetitionRemovalControl() {
   const { repetitionRemovalEnabled, setRepetitionRemovalEnabled } = useComicSettings();
 
   return (
-    <div className="flex items-center justify-between gap-4 p-4 comic-panel rounded-sm bg-card">
-      <div className="flex flex-col gap-1">
-        <Label htmlFor="repetition-removal" className="text-base font-bold">
+    <div className="flex items-center justify-between gap-4 p-5 comic-panel rounded-none bg-card">
+      <div className="flex flex-col gap-1.5">
+        <Label htmlFor="repetition-removal" className="text-base font-black uppercase tracking-wide">
           Remove Repeated Lines
         </Label>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm font-semibold text-muted-foreground">
           Automatically deduplicate identical captions, dialogue, and SFX across panels
         </p>
       </div>

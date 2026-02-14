@@ -15,14 +15,14 @@ function renderPanelPart(part: PanelPart, index: number) {
     case 'dialogue':
       return (
         <SpeechBubble key={index}>
-          <span className="text-primary font-black uppercase text-xs">{part.speaker}:</span>{' '}
+          <span className="text-primary font-black uppercase text-xs tracking-wide">{part.speaker}:</span>{' '}
           {part.text}
         </SpeechBubble>
       );
     case 'thought':
       return (
         <ThoughtBubble key={index}>
-          <span className="text-secondary font-bold text-xs">{part.speaker}:</span>{' '}
+          <span className="text-foreground font-bold text-xs tracking-wide">{part.speaker}:</span>{' '}
           {part.text}
         </ThoughtBubble>
       );
@@ -53,44 +53,57 @@ export function ComicViewer() {
     <div className="space-y-6">
       {/* Stats */}
       <div className="flex flex-wrap gap-3">
-        <Badge variant="outline" className="text-sm border-3 px-4 py-2">
-          <strong className="mr-2">Total Panels:</strong> {storyPanels.length}
+        <Badge variant="outline" className="text-sm font-bold border-3 px-4 py-2 shadow-[2px_2px_0_oklch(var(--border))]">
+          <strong className="mr-2 uppercase tracking-wide">Panels:</strong> {storyPanels.length}
         </Badge>
         {repetitionRemovalEnabled && removedCount > 0 && (
-          <Badge variant="default" className="text-sm border-3 px-4 py-2">
-            <strong className="mr-2">Duplicates Removed:</strong> {removedCount}
+          <Badge variant="default" className="text-sm font-bold border-3 px-4 py-2 shadow-[2px_2px_0_oklch(var(--border))]">
+            <strong className="mr-2 uppercase tracking-wide">Removed:</strong> {removedCount}
           </Badge>
         )}
       </div>
 
-      {/* Comic Panels */}
-      <ScrollArea className="h-[600px] rounded-sm border-3 border-border p-4">
-        <div className="space-y-4">
-          <h2 className="text-xl font-black uppercase mb-4">Story Panels</h2>
-          {storyPanels.map((panel, index) => (
-            <ComicPanel
-              key={`story-${index}`}
-              variant={panel.parts.some(p => p.type === 'sfx') ? 'highlight' : 'default'}
-            >
-              {panel.parts.map((part, partIndex) => renderPanelPart(part, partIndex))}
-            </ComicPanel>
-          ))}
+      {/* Comic Page Container */}
+      <div className="comic-page rounded-none p-6 md:p-8">
+        <ScrollArea className="h-[700px] pr-4">
+          <div className="comic-gutter flex flex-col">
+            <h2 className="font-heading text-2xl md:text-3xl uppercase mb-6 text-foreground tracking-tight">
+              Story Panels
+            </h2>
+            {storyPanels.map((panel, index) => (
+              <ComicPanel
+                key={`story-${index}`}
+                variant={panel.parts.some(p => p.type === 'sfx') ? 'highlight' : 'default'}
+              >
+                {panel.illustrationSrc && (
+                  <img
+                    src={panel.illustrationSrc}
+                    alt={panel.illustrationAlt || 'Comic panel illustration'}
+                    className="comic-illustration w-full h-auto mb-4"
+                  />
+                )}
+                {panel.parts.map((part, partIndex) => renderPanelPart(part, partIndex))}
+              </ComicPanel>
+            ))}
 
-          {/* Credits Section */}
-          {creditPanels.length > 0 && (
-            <div className="pt-8 mt-8 border-t-3 border-border">
-              <h2 className="text-xl font-black uppercase mb-4">Credits</h2>
-              <div className="space-y-4">
-                {creditPanels.map((panel, index) => (
-                  <ComicPanel key={`credit-${index}`} variant="credits">
-                    {panel.parts.map((part, partIndex) => renderPanelPart(part, partIndex))}
-                  </ComicPanel>
-                ))}
+            {/* Credits Section */}
+            {creditPanels.length > 0 && (
+              <div className="pt-8 mt-8 border-t-4 border-border">
+                <h2 className="font-heading text-2xl md:text-3xl uppercase mb-6 text-foreground tracking-tight">
+                  Credits
+                </h2>
+                <div className="comic-gutter flex flex-col">
+                  {creditPanels.map((panel, index) => (
+                    <ComicPanel key={`credit-${index}`} variant="credits">
+                      {panel.parts.map((part, partIndex) => renderPanelPart(part, partIndex))}
+                    </ComicPanel>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
-        </div>
-      </ScrollArea>
+            )}
+          </div>
+        </ScrollArea>
+      </div>
     </div>
   );
 }

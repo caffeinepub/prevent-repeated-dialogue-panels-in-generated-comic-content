@@ -7,14 +7,13 @@ interface ComicPartProps {
 }
 
 /**
- * Caption box - narrative text at top/bottom of panels
+ * Caption box - classic yellow narration box with heavy borders
  */
 export function CaptionBox({ children, className }: ComicPartProps) {
   return (
     <div
       className={cn(
-        'caption-box rounded-sm px-3 py-2 text-sm italic',
-        'bg-muted/80 text-muted-foreground border-2 border-border',
+        'caption-box rounded-none px-4 py-2.5 text-sm',
         className
       )}
     >
@@ -24,51 +23,47 @@ export function CaptionBox({ children, className }: ComicPartProps) {
 }
 
 /**
- * Speech bubble - character dialogue
+ * Speech bubble - character dialogue with tail
  */
 export function SpeechBubble({ children, className }: ComicPartProps) {
   return (
     <div
       className={cn(
-        'speech-bubble rounded-lg px-4 py-3 relative',
-        'bg-background border-3 border-foreground',
-        'shadow-[2px_2px_0_oklch(var(--foreground))]',
+        'speech-bubble rounded-2xl px-5 py-3.5 mb-3',
         className
       )}
     >
-      <div className="font-semibold text-base leading-relaxed">{children}</div>
+      <div className="font-semibold text-base leading-snug">{children}</div>
     </div>
   );
 }
 
 /**
- * Thought bubble - character internal thoughts
+ * Thought bubble - character internal thoughts with dashed border
  */
 export function ThoughtBubble({ children, className }: ComicPartProps) {
   return (
     <div
       className={cn(
-        'thought-bubble rounded-full px-4 py-3 relative',
-        'bg-secondary/20 border-2 border-dashed border-secondary',
+        'thought-bubble rounded-3xl px-5 py-3.5',
         className
       )}
     >
-      <div className="font-medium text-sm italic leading-relaxed">{children}</div>
+      <div className="font-medium text-sm italic leading-snug">{children}</div>
     </div>
   );
 }
 
 /**
- * SFX text - sound effects with bold comic styling
+ * SFX text - explosive comic sound effects
  */
 export function SfxText({ children, className }: ComicPartProps) {
   return (
     <div
       className={cn(
-        'sfx-text text-center py-2',
-        'font-black text-2xl uppercase tracking-wider',
-        'text-primary drop-shadow-[2px_2px_0_oklch(var(--primary-foreground))]',
-        'transform -rotate-3',
+        'sfx-text text-center py-3',
+        'font-heading text-3xl md:text-4xl uppercase tracking-widest',
+        'text-primary transform -rotate-2',
         className
       )}
     >
@@ -78,15 +73,14 @@ export function SfxText({ children, className }: ComicPartProps) {
 }
 
 /**
- * Scene label - location/time indicators
+ * Scene label - location/time stamp
  */
 export function SceneLabel({ children, className }: ComicPartProps) {
   return (
     <div
       className={cn(
-        'scene-label px-3 py-1 inline-block rounded-sm',
-        'bg-accent text-accent-foreground border-2 border-accent-foreground',
-        'text-xs font-bold uppercase tracking-wide',
+        'scene-label px-4 py-1.5 inline-block rounded-none',
+        'text-xs uppercase tracking-widest',
         className
       )}
     >

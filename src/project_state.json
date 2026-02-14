@@ -1,59 +1,33 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 5,
-  "summary": "Generate a full comic-style PDF using ReportLab (Platypus), with true panel-based comic layout (not just dialogue), a consistent color scheme/theme, and credits/authoring details.",
-  "architectural_notes": [
-    "Use ReportLab Platypus (SimpleDocTemplate, Paragraph, Table/TableStyle) to build comic-style panel layouts and credits pages.",
-    "Extend ReportLab Platypus layout to support colored comic panel styling (background fills, borders, theme palette) so the PDF reads as a real comic rather than a dialogue transcript."
-  ],
+  "projectStateVersion": 3,
+  "summary": "Project involves comic-style visuals/scenes, with a character named Miles and a fight scene requiring comic-style images.",
+  "architectural_notes": [],
   "known_issues": [],
   "isFixRequest": false,
+  "imageRequirements": "## Edit Images\n- Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-02.dim_1024x768.png > spiderverse-panel-02.dim_1024x768.png)\n- Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-05.dim_1024x768.png > spiderverse-panel-05.dim_1024x768.png)\n- Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-10.dim_1024x768.png > spiderverse-panel-10.dim_1024x768.png)\n- Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-14.dim_1024x768.png > spiderverse-panel-14.dim_1024x768.png)\n- Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-16.dim_1024x768.png > spiderverse-panel-16.dim_1024x768.png)\n- Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-17.dim_1024x768.png > spiderverse-panel-17.dim_1024x768.png)\n- Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-18.dim_1024x768.png > spiderverse-panel-18.dim_1024x768.png)\n- Ensure the fight/action scene reads clearly as comic art with dynamic action (spiderverse-panel-07.dim_1024x768.png > spiderverse-panel-07.dim_1024x768.png)\n- Ensure the final battle scene reads clearly as comic art with dynamic action (spiderverse-panel-19.dim_1024x768.png > spiderverse-panel-19.dim_1024x768.png)\n- Ensure the venom blast/action moment reads clearly as comic art with dynamic action (spiderverse-panel-20.dim_1024x768.png > spiderverse-panel-20.dim_1024x768.png)",
   "existing_features": [
     {
-      "id": "feature-add-a-deduplication-step-for-comic-dialogue-panel-text-so-that-repeated-lines-are-removed-from-the-generated-comic-content-before-rendering-exporting",
-      "title": "Add a deduplication step for comic dialogue/panel text so that repeated lines are removed from the generated comic content before rendering/exporting.",
+      "id": "feature-update-the-comic-panel-illustration-assets-so-that-miles-morales-is-visually-depicted-as-black-in-any-panel-where-he-is-shown-including-panels-where-he-is-clearly-visible-in-shadow-or-partially-visible",
+      "title": "Update the comic panel illustration assets so that Miles Morales is visually depicted as Black in any panel where he is shown (including panels where he is clearly visible, in shadow, or partially visible).",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-expose-a-clear-user-facing-indication-that-repetition-removal-is-active-e-g-a-toggle-or-label-and-ensure-all-user-facing-text-is-in-english",
-      "title": "Expose a clear, user-facing indication that repetition removal is active (e.g., a toggle or label) and ensure all user-facing text is in English.",
+      "id": "feature-ensure-the-fight-action-scenes-are-represented-with-comic-style-pictures-not-blank-missing-placeholder-visuals-by-updating-the-existing-fight-scene-illustration-assets-to-clearly-read-as-comic-panels-with-dynamic-action-composition",
+      "title": "Ensure the fight/action scenes are represented with comic-style pictures (not blank/missing/placeholder visuals) by updating the existing fight-scene illustration assets to clearly read as comic panels with dynamic action composition.",
       "reqIds": [
         "REQ-2"
       ],
       "version": 1
     },
     {
-      "id": "feature-apply-a-coherent-comic-inspired-visual-theme-across-the-frontend-colors-typography-spacing-and-panel-styling-and-use-it-consistently-throughout-the-app",
-      "title": "Apply a coherent, comic-inspired visual theme across the frontend (colors, typography, spacing, and panel styling) and use it consistently throughout the app.",
+      "id": "feature-revise-illustrationalt-strings-in-frontend-src-lib-comicdata-ts-for-panels-featuring-miles-and-for-the-fight-action-panels-so-the-alt-text-accurately-describes-the-updated-visuals-in-clear-english",
+      "title": "Revise `illustrationAlt` strings in `frontend/src/lib/comicData.ts` for panels featuring Miles and for the fight/action panels so the alt text accurately describes the updated visuals in clear English.",
       "reqIds": [
         "REQ-3"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-replace-the-current-string-only-story-credits-data-model-with-a-structured-comic-panel-model-that-supports-distinct-comic-parts-e-g-panel-title-scene-label-narration-caption-boxes-speech-bubbles-thought-bubbles-and-sound-effect-text-so-the-ui-can-render-an-actual-comic-instead-of-a-transcript",
-      "title": "Replace the current string-only story/credits data model with a structured comic panel model that supports distinct comic parts (e.g., panel title/scene label, narration/caption boxes, speech bubbles, thought bubbles, and sound-effect text), so the UI can render an actual comic instead of a transcript.",
-      "reqIds": [
-        "REQ-4"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-update-the-comic-reading-experience-to-visually-look-like-a-real-comic-render-panel-frames-with-consistent-comic-styling-and-within-each-panel-render-distinct-comic-parts-with-clear-visual-differentiation-caption-boxes-speech-bubbles-sfx-typography-and-a-coherent-intentional-color-scheme-across-panels",
-      "title": "Update the comic reading experience to visually look like a real comic: render panel frames with consistent comic styling, and within each panel render distinct comic parts with clear visual differentiation (caption boxes, speech bubbles, SFX typography) and a coherent, intentional color scheme across panels.",
-      "reqIds": [
-        "REQ-5"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-ensure-the-existing-repetition-removal-behavior-remains-compatible-with-the-new-structured-panel-model-by-deduplicating-repeated-panel-text-content-in-a-predictable-way-e-g-deduplicate-repeated-dialogue-caption-sfx-lines-across-panels-while-preserving-the-first-occurrence",
-      "title": "Ensure the existing repetition-removal behavior remains compatible with the new structured panel model by deduplicating repeated panel text content in a predictable way (e.g., deduplicate repeated dialogue/caption/SFX lines across panels while preserving the first occurrence).",
-      "reqIds": [
-        "REQ-6"
       ],
       "version": 1
     }
@@ -61,30 +35,18 @@
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Ensure generated comic panels/dialogue do not contain repetition (deduplicate or avoid repeated lines).",
+      "summary": "Depict Miles as Black in character visuals",
       "reqIds": [],
       "status": "pending"
     },
     {
       "id": "AR-2",
-      "summary": "Render an actual comic in the PDF with proper comic panels/parts and a coherent color scheme (not just pure dialogue/transcript).",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-3",
-      "summary": "Ensure the generated PDF remains screen-reader friendly / accessible for audio reading.",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-4",
-      "summary": "Include author credit/name in the PDF (Andy Romero Escobar J.).",
+      "summary": "Render the fight scene using comic-style pictures/imagery",
       "reqIds": [],
       "status": "pending"
     }
   ],
-  "projectName": "Prevent repeated dialogue/panels in generated comic content",
+  "projectName": "Update Miles depiction and ensure fight scenes use comic-style illustrations",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

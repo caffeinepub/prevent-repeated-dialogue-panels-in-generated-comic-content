@@ -1,13 +1,11 @@
 # Specification
 
 ## Summary
-**Goal:** Render a true comic-reading experience by moving from string-only script content to a structured panel model and updating the UI to display distinct comic parts with consistent comic styling and color.
+**Goal:** Update existing comic panel assets so Miles Morales is clearly depicted as Black wherever shown, and ensure fight/action scenes render as dynamic comic-style illustrations; update corresponding alt text.
 
 **Planned changes:**
-- Replace the current story/credits string data with a structured array of comic panel objects (including panel type/kind and explicit fields for caption/narration, dialogue (speaker + text), and/or SFX).
-- Update ComicViewer to render framed comic panels and distinct comic elements (caption boxes, speech bubbles, thought bubbles where present, SFX text) using a coherent, deliberate color scheme that remains readable in light and dark mode.
-- Render credits using the same structured panel model rather than a plain string list.
-- Keep the existing repetition-removal toggle working by deduplicating repeated text lines within panel parts (caption/dialogue/SFX) while preserving panel order.
-- Update top-level UI labels so the experience is described as a comic viewer rather than a script/transcript viewer, keeping all user-facing text in English.
+- Edit existing `/assets/generated/spiderverse-panel-*.dim_1024x768.png` images to depict Miles Morales as Black in every panel where he appears (including partial/shadowed visibility), while keeping compositions and filenames unchanged.
+- Edit existing fight/action panel images so they clearly read as comic-style action scenes (no blank/placeholder visuals) and continue to fit the Comic Viewer layout.
+- Revise `illustrationAlt` strings in `frontend/src/lib/comicData.ts` for the updated Miles panels and fight/action panels to accurately describe the updated visuals in clear English.
 
-**User-visible outcome:** Users see an in-app comic viewer that displays actual comic-style panels with clearly differentiated parts (captions, bubbles, SFX) and consistent color styling; credits still appear; and the repetition-removal toggle continues to work without breaking rendering.
+**User-visible outcome:** The comic viewer shows updated panels where Miles is correctly depicted as Black and action scenes display proper comic-style fight illustrations, with accurate English alt text for those panels.

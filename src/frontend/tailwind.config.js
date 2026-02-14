@@ -16,8 +16,9 @@ export default {
         },
         extend: {
             fontFamily: {
-                sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
-                display: ['Inter', 'sans-serif']
+                sans: ['Arial', 'Helvetica', 'sans-serif'],
+                display: ['Bangers', 'Impact', 'Arial Black', 'sans-serif'],
+                heading: ['Bangers', 'Impact', 'Arial Black', 'sans-serif']
             },
             colors: {
                 border: 'oklch(var(--border))',
@@ -78,12 +79,16 @@ export default {
             },
             borderWidth: {
                 3: '3px',
-                5: '5px'
+                4: '4px',
+                5: '5px',
+                6: '6px'
             },
             boxShadow: {
                 xs: '0 1px 2px 0 rgba(0,0,0,0.05)',
-                comic: '4px 4px 0 oklch(var(--border))',
-                'comic-lg': '6px 6px 0 oklch(var(--border))'
+                comic: '6px 6px 0 oklch(var(--border))',
+                'comic-lg': '8px 8px 0 oklch(var(--border))',
+                'comic-inset': 'inset 0 0 0 1px oklch(var(--border) / 10%)',
+                'comic-page': '0 8px 24px oklch(var(--border) / 30%), inset 0 0 60px oklch(var(--muted) / 40%)'
             },
             keyframes: {
                 'accordion-down': {
@@ -95,14 +100,14 @@ export default {
                     to: { height: '0' }
                 },
                 'pop-in': {
-                    '0%': { transform: 'scale(0.95)', opacity: '0' },
+                    '0%': { transform: 'scale(0.96)', opacity: '0' },
                     '100%': { transform: 'scale(1)', opacity: '1' }
                 }
             },
             animation: {
                 'accordion-down': 'accordion-down 0.2s ease-out',
                 'accordion-up': 'accordion-up 0.2s ease-out',
-                'pop-in': 'pop-in 0.2s ease-out'
+                'pop-in': 'pop-in 0.25s ease-out'
             }
         }
     },

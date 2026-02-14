@@ -1,7 +1,7 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-10T22:38:42.757Z",
+  "generatedAt": "2026-02-14T19:36:44.432Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
@@ -11,77 +11,66 @@
     "implemented": 3,
     "items": [
       {
-        "id": "REQ-4",
-        "summary": "Replace the current string-only story/credits data model with a structured comic panel model that supports distinct comic parts (e.g., panel title/scene label, narration/caption boxes, speech bubbles, thought bubbles, and sound-effect text), so the UI can render an actual comic instead of a transcript.",
+        "id": "REQ-1",
+        "summary": "Update the comic panel illustration assets so that Miles Morales is visually depicted as Black in any panel where he is shown (including panels where he is clearly visible, in shadow, or partially visible).",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/lib/comicModel.ts",
-          "frontend/src/lib/comicData.ts",
-          "frontend/src/components/ComicViewer.tsx",
-          "frontend/src/components/ComicPanel.tsx",
-          "frontend/src/components/ComicParts.tsx"
+          "frontend/public/assets/generated/spiderverse-panel-02.dim_1024x768.png",
+          "frontend/public/assets/generated/spiderverse-panel-05.dim_1024x768.png",
+          "frontend/public/assets/generated/spiderverse-panel-10.dim_1024x768.png",
+          "frontend/public/assets/generated/spiderverse-panel-14.dim_1024x768.png",
+          "frontend/public/assets/generated/spiderverse-panel-16.dim_1024x768.png",
+          "frontend/public/assets/generated/spiderverse-panel-17.dim_1024x768.png",
+          "frontend/public/assets/generated/spiderverse-panel-18.dim_1024x768.png"
         ],
         "matchedFiles": [
-          "frontend/src/lib/comicModel.ts",
-          "frontend/src/lib/comicData.ts",
-          "frontend/src/components/ComicViewer.tsx",
-          "frontend/src/components/ComicPanel.tsx",
-          "frontend/src/components/ComicParts.tsx"
+          "frontend/public/assets/generated/spiderverse-panel-02.dim_1024x768.png",
+          "frontend/public/assets/generated/spiderverse-panel-14.dim_1024x768.png",
+          "frontend/public/assets/generated/spiderverse-panel-16.dim_1024x768.png",
+          "frontend/public/assets/generated/spiderverse-panel-17.dim_1024x768.png",
+          "frontend/public/assets/generated/spiderverse-panel-18.dim_1024x768.png"
         ]
       },
       {
-        "id": "REQ-5",
-        "summary": "Update the comic reading experience to visually look like a real comic: render panel frames with consistent comic styling, and within each panel render distinct comic parts with clear visual differentiation (caption boxes, speech bubbles, SFX typography) and a coherent, intentional color scheme across panels.",
+        "id": "REQ-2",
+        "summary": "Ensure the fight/action scenes are represented with comic-style pictures (not blank/missing/placeholder visuals) by updating the existing fight-scene illustration assets to clearly read as comic panels with dynamic action composition.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/index.css",
-          "frontend/src/components/ComicViewer.tsx",
-          "frontend/src/components/Header.tsx",
-          "frontend/src/App.tsx",
-          "frontend/index.html"
+          "frontend/public/assets/generated/spiderverse-panel-07.dim_1024x768.png",
+          "frontend/public/assets/generated/spiderverse-panel-19.dim_1024x768.png",
+          "frontend/public/assets/generated/spiderverse-panel-20.dim_1024x768.png"
         ],
         "matchedFiles": [
-          "frontend/src/index.css",
-          "frontend/src/components/ComicViewer.tsx",
-          "frontend/src/components/Header.tsx",
-          "frontend/src/App.tsx",
-          "frontend/index.html"
+          "frontend/public/assets/generated/spiderverse-panel-07.dim_1024x768.png",
+          "frontend/public/assets/generated/spiderverse-panel-19.dim_1024x768.png"
         ]
       },
       {
-        "id": "REQ-6",
-        "summary": "Ensure the existing repetition-removal behavior remains compatible with the new structured panel model by deduplicating repeated panel text content in a predictable way (e.g., deduplicate repeated dialogue/caption/SFX lines across panels while preserving the first occurrence).",
+        "id": "REQ-3",
+        "summary": "Revise `illustrationAlt` strings in `frontend/src/lib/comicData.ts` for panels featuring Miles and for the fight/action panels so the alt text accurately describes the updated visuals in clear English.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/lib/deduplication.ts",
-          "frontend/src/components/ComicViewer.tsx",
-          "frontend/src/components/RepetitionRemovalControl.tsx"
+          "frontend/src/lib/comicData.ts"
         ],
         "matchedFiles": [
-          "frontend/src/lib/deduplication.ts",
-          "frontend/src/components/ComicViewer.tsx",
-          "frontend/src/components/RepetitionRemovalControl.tsx"
+          "frontend/src/lib/comicData.ts"
         ]
       }
     ]
   },
   "changedFiles": [
     "build-request.json",
-    "build-template/README.md",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/index.html",
-    "frontend/src/App.tsx",
-    "frontend/src/components/ComicPanel.tsx",
-    "frontend/src/components/ComicParts.tsx",
-    "frontend/src/components/ComicViewer.tsx",
-    "frontend/src/components/Header.tsx",
-    "frontend/src/components/RepetitionRemovalControl.tsx",
-    "frontend/src/index.css",
+    "frontend/public/assets/generated/spiderverse-panel-02.dim_1024x768.png",
+    "frontend/public/assets/generated/spiderverse-panel-07.dim_1024x768.png",
+    "frontend/public/assets/generated/spiderverse-panel-14.dim_1024x768.png",
+    "frontend/public/assets/generated/spiderverse-panel-16.dim_1024x768.png",
+    "frontend/public/assets/generated/spiderverse-panel-17.dim_1024x768.png",
+    "frontend/public/assets/generated/spiderverse-panel-18.dim_1024x768.png",
+    "frontend/public/assets/generated/spiderverse-panel-19.dim_1024x768.png",
     "frontend/src/lib/comicData.ts",
-    "frontend/src/lib/comicModel.ts",
-    "frontend/src/lib/deduplication.ts",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

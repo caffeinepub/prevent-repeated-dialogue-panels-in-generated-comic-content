@@ -1,76 +1,91 @@
 {
   "kind": "build_request",
-  "title": "Render a true colored comic with panel parts (not just dialogue text)",
+  "title": "Update Miles depiction and ensure fight scenes use comic-style illustrations",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-4",
-      "text": "Replace the current string-only story/credits data model with a structured comic panel model that supports distinct comic parts (e.g., panel title/scene label, narration/caption boxes, speech bubbles, thought bubbles, and sound-effect text), so the UI can render an actual comic instead of a transcript.",
+      "id": "REQ-1",
+      "text": "Update the comic panel illustration assets so that Miles Morales is visually depicted as Black in any panel where he is shown (including panels where he is clearly visible, in shadow, or partially visible).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-5"
+          "msg-user-1"
         ],
         "quotes": [
-          "It is the actual comic with colors and the comic panels not just pure dialoug it has to have correct comic parts and color scheme's"
+          "miles is black"
         ]
       },
       "acceptanceCriteria": [
-        "Story content is represented as an array of panel objects (not only strings) with explicit fields for at least: panel kind/type (story/credits), and at least one of: caption/narration, dialogue (speaker + text), SFX text.",
-        "ComicViewer renders panels from the structured model without TypeScript errors.",
-        "Credits are still shown, but rendered using the same structured model rather than a plain string list."
+        "All relevant story panel images in `frontend/public/assets/generated/` depict Miles Morales as a Black character (e.g., facial features/skin tone/hair), consistent with the Spider-Verse comic style.",
+        "No image filenames referenced by the app change (the app continues to load the same `/assets/generated/spiderverse-panel-*.dim_1024x768.png` paths)."
       ]
     },
     {
-      "id": "REQ-5",
-      "text": "Update the comic reading experience to visually look like a real comic: render panel frames with consistent comic styling, and within each panel render distinct comic parts with clear visual differentiation (caption boxes, speech bubbles, SFX typography) and a coherent, intentional color scheme across panels.",
+      "id": "REQ-2",
+      "text": "Ensure the fight/action scenes are represented with comic-style pictures (not blank/missing/placeholder visuals) by updating the existing fight-scene illustration assets to clearly read as comic panels with dynamic action composition.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-5"
+          "msg-user-1"
         ],
         "quotes": [
-          "It is the actual comic with colors and the comic panels not just pure dialoug it has to have correct comic parts and color scheme's"
+          "the fight scene also needs to be with comic pictures]"
         ]
       },
       "acceptanceCriteria": [
-        "Each panel visually includes at least two distinct comic elements (e.g., a caption box + a speech bubble, or a speech bubble + SFX) where applicable based on the panel data.",
-        "Panels use the existing comic-inspired palette (Tailwind/theme variables) with deliberate color usage for different part types (e.g., captions vs speech vs SFX) while maintaining readability/contrast in both light and dark mode.",
-        "The app’s top-level labels no longer describe the content as a script-only viewer (e.g., update header/subtitle text that currently says “Script Viewer” to “Comic Viewer” or equivalent).",
-        "All user-facing text remains in English."
+        "Fight/action panels render an illustration (not missing) and the visuals clearly appear as comic art (inked outlines, stylized shading, comic motion/impact language).",
+        "Fight/action panels remain viewable in the Comic Viewer without layout breakage (image fits within the panel frame and scroll area as before)."
       ]
     },
     {
-      "id": "REQ-6",
-      "text": "Ensure the existing repetition-removal behavior remains compatible with the new structured panel model by deduplicating repeated panel text content in a predictable way (e.g., deduplicate repeated dialogue/caption/SFX lines across panels while preserving the first occurrence).",
+      "id": "REQ-3",
+      "text": "Revise `illustrationAlt` strings in `frontend/src/lib/comicData.ts` for panels featuring Miles and for the fight/action panels so the alt text accurately describes the updated visuals in clear English.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-5"
+          "msg-user-1"
         ],
         "quotes": [
-          "not just pure dialoug"
+          "miles is black and the fight scene also needs to be with comic pictures]"
         ]
       },
       "acceptanceCriteria": [
-        "When repetition removal is enabled, repeated identical text lines found in panel parts (dialogue/captions/SFX) are removed or suppressed consistently, while the overall panel ordering remains stable.",
-        "When repetition removal is disabled, the comic renders all original panel text content.",
-        "The existing repetition removal toggle continues to work and the UI does not regress (no crashes, no empty render) with the new panel model."
+        "`illustrationAlt` entries for updated panels describe the visible scene accurately and remain in English.",
+        "No TypeScript errors are introduced in `frontend/src/lib/comicData.ts`."
       ]
     }
   ],
   "constraints": [
-    "Do not edit files under frontend/src/components/ui (read-only UI component sources must be composed, not edited).",
-    "Do not edit frontend/src/hooks/useInternetIdentity.ts or frontend/src/hooks/useActor.ts or frontend/src/main.tsx (immutable paths).",
-    "Keep all user-facing text in English."
+    "Do not modify files under `frontend/src/components/ui` or any other paths listed as immutable in system context.",
+    "Do not change the illustration filenames referenced by `frontend/src/lib/comicData.ts`; update the underlying assets instead."
   ],
   "nonGoals": [
-    "Generating or integrating AI-produced comic artwork/images.",
-    "Adding PDF generation/export or ReportLab-based rendering in this change (focus on the in-app comic rendering).",
-    "Adding new authentication methods beyond Internet Identity."
+    "Adding new story panels or changing the story text/dialogue.",
+    "Implementing new backend functionality (no backend changes required for this request)."
   ],
   "imageRequirements": {
     "required": [],
-    "edits": []
+    "edits": [
+      "Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-02.dim_1024x768.png > spiderverse-panel-02.dim_1024x768.png)",
+      "Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-05.dim_1024x768.png > spiderverse-panel-05.dim_1024x768.png)",
+      "Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-10.dim_1024x768.png > spiderverse-panel-10.dim_1024x768.png)",
+      "Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-14.dim_1024x768.png > spiderverse-panel-14.dim_1024x768.png)",
+      "Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-16.dim_1024x768.png > spiderverse-panel-16.dim_1024x768.png)",
+      "Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-17.dim_1024x768.png > spiderverse-panel-17.dim_1024x768.png)",
+      "Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-18.dim_1024x768.png > spiderverse-panel-18.dim_1024x768.png)",
+      "Ensure the fight/action scene reads clearly as comic art with dynamic action (spiderverse-panel-07.dim_1024x768.png > spiderverse-panel-07.dim_1024x768.png)",
+      "Ensure the final battle scene reads clearly as comic art with dynamic action (spiderverse-panel-19.dim_1024x768.png > spiderverse-panel-19.dim_1024x768.png)",
+      "Ensure the venom blast/action moment reads clearly as comic art with dynamic action (spiderverse-panel-20.dim_1024x768.png > spiderverse-panel-20.dim_1024x768.png)"
+    ]
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
   }
 }

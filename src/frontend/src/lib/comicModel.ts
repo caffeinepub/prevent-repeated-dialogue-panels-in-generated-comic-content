@@ -36,6 +36,8 @@ export type PanelPart = CaptionPart | DialoguePart | ThoughtPart | SfxPart | Sce
 export interface ComicPanel {
   kind: PanelKind;
   parts: PanelPart[];
+  illustrationSrc?: string;
+  illustrationAlt?: string;
 }
 
 /**
