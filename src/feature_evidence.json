@@ -2,9 +2,12 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-update-the-comic-panel-illustration-assets-so-that-miles-morales-is-visually-depicted-as-black-in-any-panel-where-he-is-shown-including-panels-where-he-is-clearly-visible-in-shadow-or-partially-visible",
-      "featureTitle": "Update the comic panel illustration assets so that Miles Morales is visually depicted as Black in any panel where he is shown (including panels where he is clearly visible, in shadow, or partially visible).",
-      "files": [],
+      "featureId": "feature-update-narration-script-generation-to-avoid-explicit-speaker-labels-e-g-avoid-phrases-like-miles-says-jefferson-says-miles-thinks-while-still-narrating-dialogue-and-thoughts-in-a-natural-way",
+      "featureTitle": "Update narration script generation to avoid explicit speaker labels (e.g., avoid phrases like \"Miles says:\" / \"Jefferson says:\" / \"Miles thinks:\") while still narrating dialogue and thoughts in a natural way.",
+      "files": [
+        "frontend/src/components/StoryNarrationControl.tsx",
+        "frontend/src/lib/narration.ts"
+      ],
       "components": [
         "core-infrastructure@1.0.2",
         "shadcn-ui@1.0.0",
@@ -18,9 +21,14 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-the-fight-action-scenes-are-represented-with-comic-style-pictures-not-blank-missing-placeholder-visuals-by-updating-the-existing-fight-scene-illustration-assets-to-clearly-read-as-comic-panels-with-dynamic-action-composition",
-      "featureTitle": "Ensure the fight/action scenes are represented with comic-style pictures (not blank/missing/placeholder visuals) by updating the existing fight-scene illustration assets to clearly read as comic panels with dynamic action composition.",
-      "files": [],
+      "featureId": "feature-add-a-narration-voice-style-configuration-that-lets-the-user-choose-different-text-to-speech-voices-and-basic-voice-parameters-like-rate-and-pitch-if-supported-for-key-speakers-at-minimum-miles-jefferson-and-a-default-for-all-other-characters-and-apply-those-selections-during-playback",
+      "featureTitle": "Add a narration “Voice Style” configuration that lets the user choose different text-to-speech voices (and basic voice parameters like rate and pitch if supported) for key speakers (at minimum: Miles, Jefferson, and a default for all other characters), and apply those selections during playback.",
+      "files": [
+        "frontend/src/components/StoryNarrationControl.tsx",
+        "frontend/src/hooks/useSpeechSynthesisVoices.ts",
+        "frontend/src/hooks/useStoryNarration.ts",
+        "frontend/src/lib/narration.ts"
+      ],
       "components": [
         "core-infrastructure@1.0.2",
         "shadcn-ui@1.0.0",
@@ -34,8 +42,8 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-revise-illustrationalt-strings-in-frontend-src-lib-comicdata-ts-for-panels-featuring-miles-and-for-the-fight-action-panels-so-the-alt-text-accurately-describes-the-updated-visuals-in-clear-english",
-      "featureTitle": "Revise `illustrationAlt` strings in `frontend/src/lib/comicData.ts` for panels featuring Miles and for the fight/action panels so the alt text accurately describes the updated visuals in clear English.",
+      "featureId": "feature-update-story-panel-metadata-so-miles-is-visually-described-as-black-with-curly-hair-in-relevant-illustration-alt-text-at-least-the-opening-miles-panel",
+      "featureTitle": "Update story panel metadata so Miles is visually described as Black with curly hair in relevant illustration alt text (at least the opening Miles panel).",
       "files": [
         "frontend/src/lib/comicData.ts"
       ],

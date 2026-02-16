@@ -1,7 +1,7 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-14T19:36:44.432Z",
+  "generatedAt": "2026-02-15T01:13:14.788Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
@@ -12,42 +12,37 @@
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Update the comic panel illustration assets so that Miles Morales is visually depicted as Black in any panel where he is shown (including panels where he is clearly visible, in shadow, or partially visible).",
+        "summary": "Update narration script generation to avoid explicit speaker labels (e.g., avoid phrases like \"Miles says:\" / \"Jefferson says:\" / \"Miles thinks:\") while still narrating dialogue and thoughts in a natural way.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/public/assets/generated/spiderverse-panel-02.dim_1024x768.png",
-          "frontend/public/assets/generated/spiderverse-panel-05.dim_1024x768.png",
-          "frontend/public/assets/generated/spiderverse-panel-10.dim_1024x768.png",
-          "frontend/public/assets/generated/spiderverse-panel-14.dim_1024x768.png",
-          "frontend/public/assets/generated/spiderverse-panel-16.dim_1024x768.png",
-          "frontend/public/assets/generated/spiderverse-panel-17.dim_1024x768.png",
-          "frontend/public/assets/generated/spiderverse-panel-18.dim_1024x768.png"
+          "frontend/src/lib/narration.ts",
+          "frontend/src/components/StoryNarrationControl.tsx"
         ],
         "matchedFiles": [
-          "frontend/public/assets/generated/spiderverse-panel-02.dim_1024x768.png",
-          "frontend/public/assets/generated/spiderverse-panel-14.dim_1024x768.png",
-          "frontend/public/assets/generated/spiderverse-panel-16.dim_1024x768.png",
-          "frontend/public/assets/generated/spiderverse-panel-17.dim_1024x768.png",
-          "frontend/public/assets/generated/spiderverse-panel-18.dim_1024x768.png"
+          "frontend/src/lib/narration.ts",
+          "frontend/src/components/StoryNarrationControl.tsx"
         ]
       },
       {
         "id": "REQ-2",
-        "summary": "Ensure the fight/action scenes are represented with comic-style pictures (not blank/missing/placeholder visuals) by updating the existing fight-scene illustration assets to clearly read as comic panels with dynamic action composition.",
+        "summary": "Add a narration “Voice Style” configuration that lets the user choose different text-to-speech voices (and basic voice parameters like rate and pitch if supported) for key speakers (at minimum: Miles, Jefferson, and a default for all other characters), and apply those selections during playback.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/public/assets/generated/spiderverse-panel-07.dim_1024x768.png",
-          "frontend/public/assets/generated/spiderverse-panel-19.dim_1024x768.png",
-          "frontend/public/assets/generated/spiderverse-panel-20.dim_1024x768.png"
+          "frontend/src/hooks/useSpeechSynthesisVoices.ts",
+          "frontend/src/hooks/useStoryNarration.ts",
+          "frontend/src/components/StoryNarrationControl.tsx",
+          "frontend/src/lib/narration.ts"
         ],
         "matchedFiles": [
-          "frontend/public/assets/generated/spiderverse-panel-07.dim_1024x768.png",
-          "frontend/public/assets/generated/spiderverse-panel-19.dim_1024x768.png"
+          "frontend/src/hooks/useSpeechSynthesisVoices.ts",
+          "frontend/src/hooks/useStoryNarration.ts",
+          "frontend/src/components/StoryNarrationControl.tsx",
+          "frontend/src/lib/narration.ts"
         ]
       },
       {
         "id": "REQ-3",
-        "summary": "Revise `illustrationAlt` strings in `frontend/src/lib/comicData.ts` for panels featuring Miles and for the fight/action panels so the alt text accurately describes the updated visuals in clear English.",
+        "summary": "Update story panel metadata so Miles is visually described as Black with curly hair in relevant illustration alt text (at least the opening Miles panel).",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/lib/comicData.ts"
@@ -63,14 +58,11 @@
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/public/assets/generated/spiderverse-panel-02.dim_1024x768.png",
-    "frontend/public/assets/generated/spiderverse-panel-07.dim_1024x768.png",
-    "frontend/public/assets/generated/spiderverse-panel-14.dim_1024x768.png",
-    "frontend/public/assets/generated/spiderverse-panel-16.dim_1024x768.png",
-    "frontend/public/assets/generated/spiderverse-panel-17.dim_1024x768.png",
-    "frontend/public/assets/generated/spiderverse-panel-18.dim_1024x768.png",
-    "frontend/public/assets/generated/spiderverse-panel-19.dim_1024x768.png",
+    "frontend/src/components/StoryNarrationControl.tsx",
+    "frontend/src/hooks/useSpeechSynthesisVoices.ts",
+    "frontend/src/hooks/useStoryNarration.ts",
     "frontend/src/lib/comicData.ts",
+    "frontend/src/lib/narration.ts",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

@@ -24,6 +24,7 @@ export function CaptionBox({ children, className }: ComicPartProps) {
 
 /**
  * Speech bubble - character dialogue with tail
+ * Enhanced with overlay support for in-panel rendering
  */
 export function SpeechBubble({ children, className }: ComicPartProps) {
   return (
@@ -40,6 +41,7 @@ export function SpeechBubble({ children, className }: ComicPartProps) {
 
 /**
  * Thought bubble - character internal thoughts with dashed border
+ * Enhanced with overlay support for in-panel rendering
  */
 export function ThoughtBubble({ children, className }: ComicPartProps) {
   return (

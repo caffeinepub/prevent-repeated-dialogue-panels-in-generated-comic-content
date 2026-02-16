@@ -1,31 +1,30 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "Project involves comic-style visuals/scenes, with a character named Miles and a fight scene requiring comic-style images.",
+  "summary": "App includes narrated reading/voice playback; user requests character-specific voices and narration/content adjustments for a Miles-centered story scene.",
   "architectural_notes": [],
   "known_issues": [],
   "isFixRequest": false,
-  "imageRequirements": "## Edit Images\n- Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-02.dim_1024x768.png > spiderverse-panel-02.dim_1024x768.png)\n- Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-05.dim_1024x768.png > spiderverse-panel-05.dim_1024x768.png)\n- Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-10.dim_1024x768.png > spiderverse-panel-10.dim_1024x768.png)\n- Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-14.dim_1024x768.png > spiderverse-panel-14.dim_1024x768.png)\n- Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-16.dim_1024x768.png > spiderverse-panel-16.dim_1024x768.png)\n- Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-17.dim_1024x768.png > spiderverse-panel-17.dim_1024x768.png)\n- Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-18.dim_1024x768.png > spiderverse-panel-18.dim_1024x768.png)\n- Ensure the fight/action scene reads clearly as comic art with dynamic action (spiderverse-panel-07.dim_1024x768.png > spiderverse-panel-07.dim_1024x768.png)\n- Ensure the final battle scene reads clearly as comic art with dynamic action (spiderverse-panel-19.dim_1024x768.png > spiderverse-panel-19.dim_1024x768.png)\n- Ensure the venom blast/action moment reads clearly as comic art with dynamic action (spiderverse-panel-20.dim_1024x768.png > spiderverse-panel-20.dim_1024x768.png)",
   "existing_features": [
     {
-      "id": "feature-update-the-comic-panel-illustration-assets-so-that-miles-morales-is-visually-depicted-as-black-in-any-panel-where-he-is-shown-including-panels-where-he-is-clearly-visible-in-shadow-or-partially-visible",
-      "title": "Update the comic panel illustration assets so that Miles Morales is visually depicted as Black in any panel where he is shown (including panels where he is clearly visible, in shadow, or partially visible).",
+      "id": "feature-update-narration-script-generation-to-avoid-explicit-speaker-labels-e-g-avoid-phrases-like-miles-says-jefferson-says-miles-thinks-while-still-narrating-dialogue-and-thoughts-in-a-natural-way",
+      "title": "Update narration script generation to avoid explicit speaker labels (e.g., avoid phrases like \"Miles says:\" / \"Jefferson says:\" / \"Miles thinks:\") while still narrating dialogue and thoughts in a natural way.",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-ensure-the-fight-action-scenes-are-represented-with-comic-style-pictures-not-blank-missing-placeholder-visuals-by-updating-the-existing-fight-scene-illustration-assets-to-clearly-read-as-comic-panels-with-dynamic-action-composition",
-      "title": "Ensure the fight/action scenes are represented with comic-style pictures (not blank/missing/placeholder visuals) by updating the existing fight-scene illustration assets to clearly read as comic panels with dynamic action composition.",
+      "id": "feature-add-a-narration-voice-style-configuration-that-lets-the-user-choose-different-text-to-speech-voices-and-basic-voice-parameters-like-rate-and-pitch-if-supported-for-key-speakers-at-minimum-miles-jefferson-and-a-default-for-all-other-characters-and-apply-those-selections-during-playback",
+      "title": "Add a narration “Voice Style” configuration that lets the user choose different text-to-speech voices (and basic voice parameters like rate and pitch if supported) for key speakers (at minimum: Miles, Jefferson, and a default for all other characters), and apply those selections during playback.",
       "reqIds": [
         "REQ-2"
       ],
       "version": 1
     },
     {
-      "id": "feature-revise-illustrationalt-strings-in-frontend-src-lib-comicdata-ts-for-panels-featuring-miles-and-for-the-fight-action-panels-so-the-alt-text-accurately-describes-the-updated-visuals-in-clear-english",
-      "title": "Revise `illustrationAlt` strings in `frontend/src/lib/comicData.ts` for panels featuring Miles and for the fight/action panels so the alt text accurately describes the updated visuals in clear English.",
+      "id": "feature-update-story-panel-metadata-so-miles-is-visually-described-as-black-with-curly-hair-in-relevant-illustration-alt-text-at-least-the-opening-miles-panel",
+      "title": "Update story panel metadata so Miles is visually described as Black with curly hair in relevant illustration alt text (at least the opening Miles panel).",
       "reqIds": [
         "REQ-3"
       ],
@@ -35,18 +34,30 @@
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Depict Miles as Black in character visuals",
+      "summary": "Add voice style options for character-specific narration (e.g., Miles, his dad, other characters)",
       "reqIds": [],
       "status": "pending"
     },
     {
       "id": "AR-2",
-      "summary": "Render the fight scene using comic-style pictures/imagery",
+      "summary": "Adjust narration to avoid explicit speaker labels like 'so-and-so says'",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Update story content/scene details: spider is small and camouflaged",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Update story content/character description: Miles is Black with curly hair; include line 'why am I stuck to the ceiling'",
       "reqIds": [],
       "status": "pending"
     }
   ],
-  "projectName": "Update Miles depiction and ensure fight scenes use comic-style illustrations",
+  "projectName": "Improve story narration: remove speaker labels, add per-character voice settings, and update Miles visual description",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

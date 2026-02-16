@@ -1,82 +1,77 @@
 {
   "kind": "build_request",
-  "title": "Update Miles depiction and ensure fight scenes use comic-style illustrations",
+  "title": "Improve story narration: remove speaker labels, add per-character voice settings, and update Miles visual description",
   "priority": "normal",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Update the comic panel illustration assets so that Miles Morales is visually depicted as Black in any panel where he is shown (including panels where he is clearly visible, in shadow, or partially visible).",
+      "text": "Update narration script generation to avoid explicit speaker labels (e.g., avoid phrases like \"Miles says:\" / \"Jefferson says:\" / \"Miles thinks:\") while still narrating dialogue and thoughts in a natural way.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-1"
+          "msg-1"
         ],
         "quotes": [
-          "miles is black"
+          "maybe don't say so and so says"
         ]
       },
       "acceptanceCriteria": [
-        "All relevant story panel images in `frontend/public/assets/generated/` depict Miles Morales as a Black character (e.g., facial features/skin tone/hair), consistent with the Spider-Verse comic style.",
-        "No image filenames referenced by the app change (the app continues to load the same `/assets/generated/spiderverse-panel-*.dim_1024x768.png` paths)."
+        "When narrating any panel part of type \"dialogue\", the spoken line does not contain the substring \" says:\" and does not prepend the speaker name by default.",
+        "When narrating any panel part of type \"thought\", the spoken line does not contain the substring \" thinks:\" and does not prepend the speaker name by default.",
+        "Captions, scene text, and SFX continue to be narrated in a reasonable, understandable way (no runtime errors; narration still produces a non-empty script for the existing story)."
       ]
     },
     {
       "id": "REQ-2",
-      "text": "Ensure the fight/action scenes are represented with comic-style pictures (not blank/missing/placeholder visuals) by updating the existing fight-scene illustration assets to clearly read as comic panels with dynamic action composition.",
+      "text": "Add a narration “Voice Style” configuration that lets the user choose different text-to-speech voices (and basic voice parameters like rate and pitch if supported) for key speakers (at minimum: Miles, Jefferson, and a default for all other characters), and apply those selections during playback.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-1"
+          "msg-1"
         ],
         "quotes": [
-          "the fight scene also needs to be with comic pictures]"
+          "it has to sound like miles and his did and the other characters"
         ]
       },
       "acceptanceCriteria": [
-        "Fight/action panels render an illustration (not missing) and the visuals clearly appear as comic art (inked outlines, stylized shading, comic motion/impact language).",
-        "Fight/action panels remain viewable in the Comic Viewer without layout breakage (image fits within the panel frame and scroll area as before)."
+        "The UI includes a section in the Story Narration area for selecting a voice for Miles, a voice for Jefferson, and a default voice for all other speakers.",
+        "If the browser provides multiple speechSynthesis voices, the dropdowns list them and selecting a voice changes the actual SpeechSynthesisUtterance.voice used during narration.",
+        "If the browser provides no selectable voices (or voices are not yet loaded), the UI shows a clear English message and narration still works with the browser default voice.",
+        "Changing voice settings does not require page reload and takes effect for the next started narration session.",
+        "The implementation does not claim to perfectly imitate copyrighted character voices; it only uses available system/browser TTS voices."
       ]
     },
     {
       "id": "REQ-3",
-      "text": "Revise `illustrationAlt` strings in `frontend/src/lib/comicData.ts` for panels featuring Miles and for the fight/action panels so the alt text accurately describes the updated visuals in clear English.",
+      "text": "Update story panel metadata so Miles is visually described as Black with curly hair in relevant illustration alt text (at least the opening Miles panel).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-1"
+          "msg-1"
         ],
         "quotes": [
-          "miles is black and the fight scene also needs to be with comic pictures]"
+          "miles has curly hair and is black"
         ]
       },
       "acceptanceCriteria": [
-        "`illustrationAlt` entries for updated panels describe the visible scene accurately and remain in English.",
-        "No TypeScript errors are introduced in `frontend/src/lib/comicData.ts`."
+        "In the first story panel illustrationAlt (spiderverse-panel-01...), the description explicitly mentions Miles is Black and has curly hair.",
+        "No story dialogue content is removed; the line \"Why am I stuck to the ceiling?!\" remains present in the data and continues to be narrated."
       ]
     }
   ],
   "constraints": [
-    "Do not modify files under `frontend/src/components/ui` or any other paths listed as immutable in system context.",
-    "Do not change the illustration filenames referenced by `frontend/src/lib/comicData.ts`; update the underlying assets instead."
+    "Do not edit files under frontend/src/components/ui (read-only).",
+    "Do not modify frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, or frontend/src/main.tsx (immutable paths).",
+    "Backend remains a single Motoko actor; do not introduce additional backend services."
   ],
   "nonGoals": [
-    "Adding new story panels or changing the story text/dialogue.",
-    "Implementing new backend functionality (no backend changes required for this request)."
+    "Do not implement third-party or AI voice cloning/impersonation.",
+    "Do not add external TTS providers or APIs.",
+    "Do not change the overall story structure beyond the requested Miles visual description and narration formatting/voice controls."
   ],
   "imageRequirements": {
     "required": [],
-    "edits": [
-      "Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-02.dim_1024x768.png > spiderverse-panel-02.dim_1024x768.png)",
-      "Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-05.dim_1024x768.png > spiderverse-panel-05.dim_1024x768.png)",
-      "Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-10.dim_1024x768.png > spiderverse-panel-10.dim_1024x768.png)",
-      "Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-14.dim_1024x768.png > spiderverse-panel-14.dim_1024x768.png)",
-      "Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-16.dim_1024x768.png > spiderverse-panel-16.dim_1024x768.png)",
-      "Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-17.dim_1024x768.png > spiderverse-panel-17.dim_1024x768.png)",
-      "Update Miles to be depicted as Black while preserving the existing scene composition and comic style (spiderverse-panel-18.dim_1024x768.png > spiderverse-panel-18.dim_1024x768.png)",
-      "Ensure the fight/action scene reads clearly as comic art with dynamic action (spiderverse-panel-07.dim_1024x768.png > spiderverse-panel-07.dim_1024x768.png)",
-      "Ensure the final battle scene reads clearly as comic art with dynamic action (spiderverse-panel-19.dim_1024x768.png > spiderverse-panel-19.dim_1024x768.png)",
-      "Ensure the venom blast/action moment reads clearly as comic art with dynamic action (spiderverse-panel-20.dim_1024x768.png > spiderverse-panel-20.dim_1024x768.png)"
-    ]
+    "edits": []
   },
   "userProfileUpdate": {
     "goalsToAdd": [],

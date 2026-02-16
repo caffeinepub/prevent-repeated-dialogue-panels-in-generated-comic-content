@@ -1,55 +1,18 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-14T19:36:44.430Z",
-  "summary": "The diff updates `illustrationAlt` text in `frontend/src/lib/comicData.ts` (at least for panels 02, 05, 07, and starts 10), but provides no evidence that the actual illustration image assets under `frontend/public/assets/generated/` were updated. Additional changes include modifications to `frontend-file-summaries.txt` and `project_state.json`, which were not requested by the BuildRequest.",
-  "missing_requirements": [
-    {
-      "id": "REQ-1",
-      "requirement": "Update the comic panel illustration assets so that Miles Morales is visually depicted as Black in any panel where he is shown (including panels where he is clearly visible, in shadow, or partially visible).",
-      "reason": "No image/asset files under `frontend/public/assets/generated/` are shown as modified in the diff summary; only code/metadata files were modified.",
-      "evidence": [
-        "File diff summary shows Modified: 3 (frontend/src/lib/comicData.ts, frontend-file-summaries.txt, project_state.json) and no asset/image paths"
-      ]
-    },
-    {
-      "id": "REQ-2",
-      "requirement": "Ensure the fight/action scenes are represented with comic-style pictures (not blank/missing/placeholder visuals) by updating the existing fight-scene illustration assets to clearly read as comic panels with dynamic action composition.",
-      "reason": "There is no evidence of updated fight-scene illustration image assets (e.g., panel-07, panel-19, panel-20) in `frontend/public/assets/generated/`; only alt text updates are visible.",
-      "evidence": [
-        "File diff summary shows no modified files in frontend/public/assets/generated/",
-        "frontend/src/lib/comicData.ts (truncated) shows alt text change for panel 07 but no asset changes"
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "requirement": "Revise `illustrationAlt` strings in `frontend/src/lib/comicData.ts` for panels featuring Miles and for the fight/action panels so the alt text accurately describes the updated visuals in clear English.",
-      "reason": "The diff is truncated and only shows updated alt text for some relevant panels (02, 05, 07, and the start of 10). It does not provide evidence that all specified Miles panels (10, 14, 16, 17, 18) and fight/action panels (07, 19, 20) have had their `illustrationAlt` revised.",
-      "evidence": [
-        "frontend/src/lib/comicData.ts (truncated): shows updated illustrationAlt for panels 02, 05, 07 and begins panel 10 before truncation"
-      ]
-    }
-  ],
-  "hallucinated_features": [
-    {
-      "description": "Project tracking/state updates recorded as new_feature_requests (AR-1..AR-5) and status metadata changes.",
-      "reason": "The BuildRequest asks for asset updates and alt text updates; it does not request updating internal `project_state.json`.",
-      "evidence": [
-        "project_state.json"
-      ]
-    },
-    {
-      "description": "Updated/maintained a large prose summary of many frontend files and features (comic UI styling, hooks, speech recognition, deduplication, etc.).",
-      "reason": "The BuildRequest does not ask for documentation/summary-file updates; this appears unrelated to the requested asset/alt-text changes.",
-      "evidence": [
-        "frontend-file-summaries.txt"
-      ]
-    }
-  ],
-  "confidence": 0.74,
+  "generatedAt": "2026-02-15T01:13:14.785Z",
+  "summary": "All three requested changes appear implemented: narration script generation no longer prepends speaker labels while retaining speaker metadata for voice selection; a new Voice Style UI and voice-loading hook were added and the selected voices are applied to SpeechSynthesisUtterance during playback with a fallback message when voices aren’t available; and Miles’ illustration alt text (including the first panel) now explicitly describes him as Black with curly hair while preserving the “Why am I stuck to the ceiling?!” line.",
+  "missing_requirements": [],
+  "hallucinated_features": [],
+  "confidence": 0.83,
   "changed_files": [
     "frontend-file-summaries.txt",
+    "frontend/src/components/StoryNarrationControl.tsx",
+    "frontend/src/hooks/useSpeechSynthesisVoices.ts",
+    "frontend/src/hooks/useStoryNarration.ts",
     "frontend/src/lib/comicData.ts",
+    "frontend/src/lib/narration.ts",
     "project_state.json"
   ]
 }

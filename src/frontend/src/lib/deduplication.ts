@@ -1,12 +1,17 @@
 import type { ComicPanel, PanelPart } from './comicModel';
 
 /**
- * Deduplicates an array of text lines, keeping only the first occurrence of each unique line.
- * Preserves the original order of the remaining lines.
+ * Extended deduplication utilities supporting both simple text lines
+ * and structured panel parts, with functions to suppress repeated content
+ * while preserving panel order and counting total lines.
+ */
+
+/**
+ * Deduplicate an array of text lines, keeping only the first occurrence of each.
  */
 export function deduplicateTextLines(lines: string[]): string[] {
   const seen = new Set<string>();
-  return lines.filter((line) => {
+  return lines.filter(line => {
     if (seen.has(line)) {
       return false;
     }
@@ -16,44 +21,46 @@ export function deduplicateTextLines(lines: string[]): string[] {
 }
 
 /**
- * Deduplicates panel parts by removing repeated identical text lines.
- * Returns panels with suppressed duplicate parts while preserving panel order.
+ * Convert a panel part to a unique string key for deduplication.
+ */
+function panelPartToKey(part: PanelPart): string {
+  switch (part.type) {
+    case 'caption':
+    case 'sfx':
+    case 'scene':
+      return `${part.type}:${part.text}`;
+    case 'dialogue':
+    case 'thought':
+      return `${part.type}:${part.speaker}:${part.text}`;
+  }
+}
+
+/**
+ * Deduplicate panel parts across all panels, removing repeated identical lines
+ * while preserving panel structure and order.
  */
 export function deduplicatePanelParts(panels: ComicPanel[]): ComicPanel[] {
-  const seenLines = new Set<string>();
+  const seen = new Set<string>();
   
   return panels.map(panel => {
-    const filteredParts = panel.parts.filter(part => {
-      // Generate a unique key for this part's text content
-      let textKey: string;
-      switch (part.type) {
-        case 'caption':
-        case 'sfx':
-        case 'scene':
-          textKey = part.text;
-          break;
-        case 'dialogue':
-        case 'thought':
-          textKey = `${part.speaker}: ${part.text}`;
-          break;
+    const deduplicatedParts = panel.parts.filter(part => {
+      const key = panelPartToKey(part);
+      if (seen.has(key)) {
+        return false;
       }
-      
-      if (seenLines.has(textKey)) {
-        return false; // Suppress duplicate
-      }
-      seenLines.add(textKey);
-      return true; // Keep first occurrence
+      seen.add(key);
+      return true;
     });
     
     return {
       ...panel,
-      parts: filteredParts
+      parts: deduplicatedParts
     };
-  }).filter(panel => panel.parts.length > 0); // Remove panels with no parts left
+  }).filter(panel => panel.parts.length > 0 || panel.illustrationSrc);
 }
 
 /**
- * Count total text lines across all panel parts.
+ * Count the total number of text lines across all panels.
  */
 export function countPanelTextLines(panels: ComicPanel[]): number {
   return panels.reduce((count, panel) => count + panel.parts.length, 0);

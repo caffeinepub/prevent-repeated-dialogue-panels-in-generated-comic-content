@@ -8,28 +8,30 @@ import { Badge } from '@/components/ui/badge';
 import { STORY_PANELS, CREDITS_PANELS } from '@/lib/comicData';
 import type { PanelPart } from '@/lib/comicModel';
 
-function renderPanelPart(part: PanelPart, index: number) {
+function renderPanelPart(part: PanelPart, index: number, isOverlay: boolean = false) {
+  const overlayClasses = isOverlay ? 'comic-bubble-overlay' : '';
+  
   switch (part.type) {
     case 'caption':
-      return <CaptionBox key={index}>{part.text}</CaptionBox>;
+      return <CaptionBox key={index} className={overlayClasses}>{part.text}</CaptionBox>;
     case 'dialogue':
       return (
-        <SpeechBubble key={index}>
+        <SpeechBubble key={index} className={overlayClasses}>
           <span className="text-primary font-black uppercase text-xs tracking-wide">{part.speaker}:</span>{' '}
           {part.text}
         </SpeechBubble>
       );
     case 'thought':
       return (
-        <ThoughtBubble key={index}>
+        <ThoughtBubble key={index} className={overlayClasses}>
           <span className="text-foreground font-bold text-xs tracking-wide">{part.speaker}:</span>{' '}
           {part.text}
         </ThoughtBubble>
       );
     case 'sfx':
-      return <SfxText key={index}>{part.text}</SfxText>;
+      return <SfxText key={index} className={overlayClasses}>{part.text}</SfxText>;
     case 'scene':
-      return <SceneLabel key={index}>{part.text}</SceneLabel>;
+      return <SceneLabel key={index} className={overlayClasses}>{part.text}</SceneLabel>;
   }
 }
 
@@ -70,21 +72,42 @@ export function ComicViewer() {
             <h2 className="font-heading text-2xl md:text-3xl uppercase mb-6 text-foreground tracking-tight">
               Story Panels
             </h2>
-            {storyPanels.map((panel, index) => (
-              <ComicPanel
-                key={`story-${index}`}
-                variant={panel.parts.some(p => p.type === 'sfx') ? 'highlight' : 'default'}
-              >
-                {panel.illustrationSrc && (
-                  <img
-                    src={panel.illustrationSrc}
-                    alt={panel.illustrationAlt || 'Comic panel illustration'}
-                    className="comic-illustration w-full h-auto mb-4"
-                  />
-                )}
-                {panel.parts.map((part, partIndex) => renderPanelPart(part, partIndex))}
-              </ComicPanel>
-            ))}
+            {storyPanels.map((panel, index) => {
+              // Separate dialogue/thought bubbles from other parts for overlay rendering
+              const bubbleParts = panel.parts.filter(p => p.type === 'dialogue' || p.type === 'thought');
+              const otherParts = panel.parts.filter(p => p.type !== 'dialogue' && p.type !== 'thought');
+              
+              return (
+                <ComicPanel
+                  key={`story-${index}`}
+                  variant={panel.parts.some(p => p.type === 'sfx') ? 'highlight' : 'default'}
+                >
+                  {panel.illustrationSrc ? (
+                    // Panel with illustration: overlay bubbles on top of image
+                    <div className="relative mb-4">
+                      <img
+                        src={panel.illustrationSrc}
+                        alt={panel.illustrationAlt || 'Comic panel illustration'}
+                        className="comic-illustration w-full h-auto"
+                      />
+                      {/* Overlay bubbles on illustration */}
+                      {bubbleParts.length > 0 && (
+                        <div className="absolute inset-0 flex flex-col justify-start items-start p-4 gap-2 pointer-events-none">
+                          {bubbleParts.map((part, partIndex) => renderPanelPart(part, partIndex, true))}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    // Panel without illustration: render bubbles inline
+                    <>
+                      {bubbleParts.map((part, partIndex) => renderPanelPart(part, partIndex, false))}
+                    </>
+                  )}
+                  {/* Render other parts (captions, SFX, scene labels) below */}
+                  {otherParts.map((part, partIndex) => renderPanelPart(part, partIndex, false))}
+                </ComicPanel>
+              );
+            })}
 
             {/* Credits Section */}
             {creditPanels.length > 0 && (
@@ -95,7 +118,7 @@ export function ComicViewer() {
                 <div className="comic-gutter flex flex-col">
                   {creditPanels.map((panel, index) => (
                     <ComicPanel key={`credit-${index}`} variant="credits">
-                      {panel.parts.map((part, partIndex) => renderPanelPart(part, partIndex))}
+                      {panel.parts.map((part, partIndex) => renderPanelPart(part, partIndex, false))}
                     </ComicPanel>
                   ))}
                 </div>
