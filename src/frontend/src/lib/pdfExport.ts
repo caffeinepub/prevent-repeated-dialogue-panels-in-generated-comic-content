@@ -1,16 +1,16 @@
-import type { ComicPanel } from './comicModel';
+import type { ComicPanel, Chapter } from './comicModel';
 import { deduplicatePanelParts } from './deduplication';
-
-/**
- * Client-side comic export utility that generates a downloadable HTML document
- * styled as a printable PDF with all story panels followed by credits, applying deduplication.
- */
+import { getPanelTimestamp } from './timeline';
+import { t } from './i18n';
 
 export async function exportComicToPDF(
   storyPanels: ComicPanel[],
-  creditsPanels: ComicPanel[]
+  creditsPanels: ComicPanel[],
+  language: string,
+  authorName: string,
+  timelineMode: boolean,
+  chapters?: Chapter[]
 ): Promise<void> {
-  // Always apply deduplication for export (consistent behavior)
   const allPanels = [...storyPanels, ...creditsPanels];
   const deduplicatedPanels = deduplicatePanelParts(allPanels);
   
@@ -18,10 +18,15 @@ export async function exportComicToPDF(
   const deduplicatedStory = deduplicatedPanels.slice(0, storyCount);
   const deduplicatedCredits = deduplicatedPanels.slice(storyCount);
 
-  // Create HTML document for printing/saving
-  const htmlContent = await generatePrintableHTML(deduplicatedStory, deduplicatedCredits);
+  const htmlContent = await generatePrintableHTML(
+    deduplicatedStory,
+    deduplicatedCredits,
+    language,
+    authorName,
+    timelineMode,
+    chapters
+  );
   
-  // Create a new window with the content
   const printWindow = window.open('', '_blank');
   if (!printWindow) {
     throw new Error('Failed to open print window. Please allow popups for this site.');
@@ -30,27 +35,39 @@ export async function exportComicToPDF(
   printWindow.document.write(htmlContent);
   printWindow.document.close();
   
-  // Wait for images to load
   await new Promise(resolve => {
     printWindow.addEventListener('load', resolve);
-    setTimeout(resolve, 1000); // Fallback timeout
+    setTimeout(resolve, 1000);
   });
   
-  // Trigger print dialog (user can save as PDF)
   printWindow.print();
 }
 
 async function generatePrintableHTML(
   storyPanels: ComicPanel[],
-  creditsPanels: ComicPanel[]
+  creditsPanels: ComicPanel[],
+  language: string,
+  authorName: string,
+  timelineMode: boolean,
+  chapters?: Chapter[]
 ): Promise<string> {
+  const title = t('pdf.title', language);
+  const subtitle = t('pdf.subtitle', language);
+  const authorLabel = t('pdf.author', language);
+  const generatedText = t('pdf.generated', language);
+  const storyLabel = t('pdf.story', language);
+  const creditsLabel = t('pdf.credits', language);
+  const panelLabel = t('pdf.panel', language);
+  const chapterLabel = t('pdf.chapter', language);
+  const authorNotProvided = t('author.notProvided', language);
+
   return `
 <!DOCTYPE html>
-<html lang="en">
+<html lang="${language}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Spider-Man: Into the Spider-Verse - Comic</title>
+  <title>${escapeHtml(title)}</title>
   <style>
     @page {
       size: letter;
@@ -92,6 +109,12 @@ async function generatePrintableHTML(
       margin-bottom: 10px;
     }
     
+    .title-page .author {
+      font-size: 18px;
+      margin-top: 30px;
+      font-style: italic;
+    }
+    
     .section-title {
       font-size: 32px;
       font-weight: bold;
@@ -99,6 +122,15 @@ async function generatePrintableHTML(
       text-transform: uppercase;
       border-bottom: 4px solid #000;
       padding-bottom: 10px;
+    }
+    
+    .chapter-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 30px 0 15px;
+      text-transform: uppercase;
+      border-bottom: 3px solid #000;
+      padding-bottom: 8px;
     }
     
     .panel {
@@ -114,6 +146,16 @@ async function generatePrintableHTML(
       font-weight: bold;
       margin-bottom: 10px;
       text-transform: uppercase;
+    }
+    
+    .timestamp {
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #666;
+      background: #f0f0f0;
+      padding: 4px 8px;
+      display: inline-block;
     }
     
     .panel img {
@@ -216,20 +258,21 @@ async function generatePrintableHTML(
 </head>
 <body>
   <div class="title-page">
-    <h1>SPIDER-MAN:<br>INTO THE SPIDER-VERSE</h1>
-    <p>A Comic Adaptation</p>
-    <p style="font-size: 14px; margin-top: 40px;">Generated from Spider-Verse Comic Viewer</p>
+    <h1>${escapeHtml(title)}</h1>
+    <p>${escapeHtml(subtitle)}</p>
+    ${authorName ? `<p class="author">${escapeHtml(authorLabel)}: ${escapeHtml(authorName)}</p>` : `<p class="author">${escapeHtml(authorNotProvided)}</p>`}
+    <p style="font-size: 14px; margin-top: 40px;">${escapeHtml(generatedText)}</p>
   </div>
   
   <div class="story-section">
-    <h2 class="section-title">Story</h2>
-    ${storyPanels.map((panel, index) => renderPanelHTML(panel, index + 1)).join('\n')}
+    <h2 class="section-title">${escapeHtml(storyLabel)}</h2>
+    ${chapters ? renderChaptersHTML(chapters, storyPanels, timelineMode, chapterLabel, panelLabel) : storyPanels.map((panel, index) => renderPanelHTML(panel, index + 1, timelineMode, panelLabel)).join('\n')}
   </div>
   
   ${creditsPanels.length > 0 ? `
   <div class="credits">
-    <h2 class="section-title">Credits</h2>
-    ${creditsPanels.map(panel => renderPanelHTML(panel, null)).join('\n')}
+    <h2 class="section-title">${escapeHtml(creditsLabel)}</h2>
+    ${creditsPanels.map(panel => renderPanelHTML(panel, null, false, panelLabel)).join('\n')}
   </div>
   ` : ''}
 </body>
@@ -237,11 +280,34 @@ async function generatePrintableHTML(
   `;
 }
 
-function renderPanelHTML(panel: ComicPanel, panelNumber: number | null): string {
+function renderChaptersHTML(chapters: Chapter[], allPanels: ComicPanel[], timelineMode: boolean, chapterLabel: string, panelLabel: string): string {
+  let html = '';
+  let panelIndex = 0;
+
+  for (let chIdx = 0; chIdx < chapters.length; chIdx++) {
+    const chapter = chapters[chIdx];
+    html += `<h3 class="chapter-title">${escapeHtml(chapterLabel)} ${chIdx + 1}: ${escapeHtml(chapter.title)}</h3>`;
+    
+    for (let i = 0; i < chapter.panels.length && panelIndex < allPanels.length; i++, panelIndex++) {
+      html += renderPanelHTML(allPanels[panelIndex], panelIndex + 1, timelineMode, panelLabel);
+    }
+  }
+
+  return html;
+}
+
+function renderPanelHTML(panel: ComicPanel, panelNumber: number | null, timelineMode: boolean, panelLabel: string): string {
   let html = '<div class="panel">';
   
   if (panelNumber !== null) {
-    html += `<div class="panel-number">Panel ${panelNumber}</div>`;
+    html += `<div class="panel-number">${escapeHtml(panelLabel)} ${panelNumber}</div>`;
+  }
+  
+  if (timelineMode) {
+    const timestamp = getPanelTimestamp(panel);
+    if (timestamp) {
+      html += `<div class="timestamp">⏱ ${escapeHtml(timestamp)}</div>`;
+    }
   }
   
   if (panel.illustrationSrc) {

@@ -1,77 +1,80 @@
 {
   "kind": "build_request",
-  "title": "Improve story narration: remove speaker labels, add per-character voice settings, and update Miles visual description",
-  "priority": "normal",
+  "title": "Fix Radix Select crash and preserve comic + Aaron appearance",
+  "projectName": "Spider-Verse Comic Viewer",
+  "priority": "high",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Update narration script generation to avoid explicit speaker labels (e.g., avoid phrases like \"Miles says:\" / \"Jefferson says:\" / \"Miles thinks:\") while still narrating dialogue and thoughts in a natural way.",
+      "text": "Eliminate the runtime crash caused by any Radix/Shadcn `<SelectItem />` using an empty-string `value` by auditing all Select components and replacing `value=\"\"` with a non-empty sentinel value, while preserving the user-visible meaning of “Default/None” selections.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "maybe don't say so and so says"
+          "IT CRASHED, A <Select.Item /> must have a value prop that is not an empty string.",
+          "Fix the app and then make sure that the problems are gone"
         ]
       },
       "acceptanceCriteria": [
-        "When narrating any panel part of type \"dialogue\", the spoken line does not contain the substring \" says:\" and does not prepend the speaker name by default.",
-        "When narrating any panel part of type \"thought\", the spoken line does not contain the substring \" thinks:\" and does not prepend the speaker name by default.",
-        "Captions, scene text, and SFX continue to be narrated in a reasonable, understandable way (no runtime errors; narration still produces a non-empty script for the existing story)."
+        "App no longer crashes on load with the Radix error: \"A <Select.Item /> must have a value prop that is not an empty string\".",
+        "In `frontend/src/components/StoryNarrationControl.tsx`, the three voice dropdowns no longer render any `<SelectItem value=\"\">…</SelectItem>` option.",
+        "Choosing the UI option that represents the default voice still results in using the default voice behavior (i.e., the app does not force a specific selected voice)."
       ]
     },
     {
       "id": "REQ-2",
-      "text": "Add a narration “Voice Style” configuration that lets the user choose different text-to-speech voices (and basic voice parameters like rate and pitch if supported) for key speakers (at minimum: Miles, Jefferson, and a default for all other characters), and apply those selections during playback.",
+      "text": "Ensure the existing comic content remains present and functional after applying the crash fix, including comic panel rendering and the characters gallery.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "it has to sound like miles and his did and the other characters"
+          "make sure that the problems are gone but the comic is still there"
         ]
       },
       "acceptanceCriteria": [
-        "The UI includes a section in the Story Narration area for selecting a voice for Miles, a voice for Jefferson, and a default voice for all other speakers.",
-        "If the browser provides multiple speechSynthesis voices, the dropdowns list them and selecting a voice changes the actual SpeechSynthesisUtterance.voice used during narration.",
-        "If the browser provides no selectable voices (or voices are not yet loaded), the UI shows a clear English message and narration still works with the browser default voice.",
-        "Changing voice settings does not require page reload and takes effect for the next started narration session.",
-        "The implementation does not claim to perfectly imitate copyrighted character voices; it only uses available system/browser TTS voices."
+        "The `ComicViewer` still renders comic panels (not a blank/black screen) and remains usable after the Select crash fix.",
+        "The `CharactersGallery` still renders all existing characters, including Aaron, after the Select crash fix.",
+        "No changes remove or significantly alter the existing chapter/panel data in `frontend/src/lib/comicData.ts` beyond what is required for stability fixes."
       ]
     },
     {
       "id": "REQ-3",
-      "text": "Update story panel metadata so Miles is visually described as Black with curly hair in relevant illustration alt text (at least the opening Miles panel).",
-      "target": "frontend",
+      "text": "Update the character Aaron (user spelled “Arron”) to appear as a Black character with a bit of hair by updating the Aaron character artwork asset and keeping the gallery wired to the updated asset.",
+      "target": "both",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "miles has curly hair and is black"
+          "Arron has a bit hair and is black"
         ]
       },
       "acceptanceCriteria": [
-        "In the first story panel illustrationAlt (spiderverse-panel-01...), the description explicitly mentions Miles is Black and has curly hair.",
-        "No story dialogue content is removed; the line \"Why am I stuck to the ceiling?!\" remains present in the data and continues to be narrated."
+        "The Characters Gallery displays Aaron with dark skin and short/visible hair in the character tile artwork.",
+        "Aaron’s character entry in `frontend/src/lib/characters.ts` references the updated artwork filename (or the original filename if overwritten) and remains correctly displayed.",
+        "All user-facing text remains in English for this change (e.g., alt text updates remain English)."
       ]
     }
   ],
   "constraints": [
-    "Do not edit files under frontend/src/components/ui (read-only).",
-    "Do not modify frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, or frontend/src/main.tsx (immutable paths).",
-    "Backend remains a single Motoko actor; do not introduce additional backend services."
+    "Do not edit files under `frontend/src/components/ui` (compose them only).",
+    "Do not modify `frontend/src/hooks/useInternetIdentity.ts`, `frontend/src/hooks/useInternetIdentity.tsx`, `frontend/src/hooks/useActor.ts`, or `frontend/src/main.tsx` (immutable paths).",
+    "Respect the single-actor backend architecture; only add a migration if persistent state schema changes (not expected for this fix)."
   ],
   "nonGoals": [
-    "Do not implement third-party or AI voice cloning/impersonation.",
-    "Do not add external TTS providers or APIs.",
-    "Do not change the overall story structure beyond the requested Miles visual description and narration formatting/voice controls."
+    "Adding new authentication providers beyond Internet Identity.",
+    "Adding new comic chapters, new story content, or changing the story order beyond what is necessary to keep existing content rendering.",
+    "Introducing external databases or non-supported backend technologies."
   ],
   "imageRequirements": {
     "required": [],
-    "edits": []
+    "edits": [
+      "Adjust Aaron character portrait to depict dark skin and short/visible hair in bold comic/halftone style (character-aaron.dim_768x768.png > character-aaron-v2.dim_768x768.png)"
+    ]
   },
   "userProfileUpdate": {
     "goalsToAdd": [],

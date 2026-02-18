@@ -1,7 +1,10 @@
-import { Copy, Trash2 } from 'lucide-react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Copy, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { useI18n } from '@/hooks/useI18n';
 
 interface TranscriptPanelProps {
   transcript: string;
@@ -10,84 +13,71 @@ interface TranscriptPanelProps {
 }
 
 export function TranscriptPanel({ transcript, interimTranscript, onClear }: TranscriptPanelProps) {
-  const fullText = transcript + interimTranscript;
-  const wordCount = fullText.trim().split(/\s+/).filter(Boolean).length;
+  const { t } = useI18n();
+  const [isCopying, setIsCopying] = useState(false);
+
+  const wordCount = transcript.split(/\s+/).filter(word => word.length > 0).length;
 
   const handleCopy = async () => {
-    if (!transcript) {
-      toast.error('No transcript to copy');
-      return;
-    }
-
+    setIsCopying(true);
     try {
       await navigator.clipboard.writeText(transcript);
-      toast.success('Transcript copied to clipboard!');
-    } catch (err) {
-      console.error('Failed to copy transcript:', err);
-      toast.error('Failed to copy transcript');
+      toast.success(t('transcript.copied'));
+    } catch (error) {
+      console.error('Failed to copy:', error);
+      toast.error(t('transcript.copyError'));
+    } finally {
+      setIsCopying(false);
     }
   };
-
-  const handleClear = () => {
-    if (transcript) {
-      onClear();
-      toast.success('Transcript cleared');
-    }
-  };
-
-  if (!fullText) {
-    return null;
-  }
 
   return (
-    <div className="comic-panel rounded-none bg-card p-6 space-y-4">
-      <div className="flex items-center justify-between gap-4">
+    <div className="comic-panel p-6 space-y-4">
+      <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <h3 className="text-lg font-black uppercase tracking-wide">
-            Your Story Transcript
+          <h3 className="font-heading text-xl uppercase tracking-tight text-foreground">
+            {t('transcript.title')}
           </h3>
-          <Badge variant="secondary" className="rounded-none font-black uppercase text-xs">
-            {wordCount} {wordCount === 1 ? 'word' : 'words'}
+          <Badge variant="outline" className="text-xs font-bold border-2 px-3 py-1">
+            {wordCount} {t('transcript.words')}
           </Badge>
         </div>
         <div className="flex gap-2">
           <Button
             onClick={handleCopy}
+            disabled={!transcript || isCopying}
             variant="outline"
             size="sm"
-            className="rounded-none font-black uppercase"
-            disabled={!transcript}
+            className="font-bold uppercase text-xs border-3"
           >
-            <Copy className="mr-2 h-4 w-4" />
-            Copy
+            <Copy className="w-4 h-4 mr-1" />
+            {t('transcript.copy')}
           </Button>
           <Button
-            onClick={handleClear}
+            onClick={onClear}
+            disabled={!transcript && !interimTranscript}
             variant="destructive"
             size="sm"
-            className="rounded-none font-black uppercase"
-            disabled={!transcript}
+            className="font-bold uppercase text-xs border-3"
           >
-            <Trash2 className="mr-2 h-4 w-4" />
-            Clear
+            <Trash2 className="w-4 h-4 mr-1" />
+            {t('transcript.clear')}
           </Button>
         </div>
       </div>
 
-      <div className="transcript-content max-h-64 overflow-y-auto p-4 bg-background border-4 border-border">
-        <p className="text-base leading-relaxed whitespace-pre-wrap break-words">
-          {transcript}
-          {interimTranscript && (
-            <span className="text-muted-foreground italic">
-              {interimTranscript}
-            </span>
+      <ScrollArea className="h-[200px] w-full border-4 border-border rounded-none p-4 bg-background transcript-scroll">
+        <div className="space-y-2">
+          {transcript && (
+            <p className="text-sm leading-relaxed font-medium">{transcript}</p>
           )}
-        </p>
-      </div>
-
-      <p className="text-xs font-semibold text-muted-foreground italic">
-        Tip: Your transcript updates in real-time as you speak. Use "Copy" to save it elsewhere.
-      </p>
+          {interimTranscript && (
+            <p className="text-sm leading-relaxed text-muted-foreground italic">
+              {interimTranscript}
+            </p>
+          )}
+        </div>
+      </ScrollArea>
     </div>
   );
 }

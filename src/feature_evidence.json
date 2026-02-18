@@ -2,11 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-update-narration-script-generation-to-avoid-explicit-speaker-labels-e-g-avoid-phrases-like-miles-says-jefferson-says-miles-thinks-while-still-narrating-dialogue-and-thoughts-in-a-natural-way",
-      "featureTitle": "Update narration script generation to avoid explicit speaker labels (e.g., avoid phrases like \"Miles says:\" / \"Jefferson says:\" / \"Miles thinks:\") while still narrating dialogue and thoughts in a natural way.",
+      "featureId": "feature-eliminate-the-runtime-crash-caused-by-any-radix-shadcn-selectitem-using-an-empty-string-value-by-auditing-all-select-components-and-replacing-value-with-a-non-empty-sentinel-value-while-preserving-the-user-visible-meaning-of-default-none-selections",
+      "featureTitle": "Eliminate the runtime crash caused by any Radix/Shadcn `<SelectItem />` using an empty-string `value` by auditing all Select components and replacing `value=\"\"` with a non-empty sentinel value, while preserving the user-visible meaning of “Default/None” selections.",
       "files": [
-        "frontend/src/components/StoryNarrationControl.tsx",
-        "frontend/src/lib/narration.ts"
+        "frontend/src/components/StoryNarrationControl.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -21,13 +20,10 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-add-a-narration-voice-style-configuration-that-lets-the-user-choose-different-text-to-speech-voices-and-basic-voice-parameters-like-rate-and-pitch-if-supported-for-key-speakers-at-minimum-miles-jefferson-and-a-default-for-all-other-characters-and-apply-those-selections-during-playback",
-      "featureTitle": "Add a narration “Voice Style” configuration that lets the user choose different text-to-speech voices (and basic voice parameters like rate and pitch if supported) for key speakers (at minimum: Miles, Jefferson, and a default for all other characters), and apply those selections during playback.",
+      "featureId": "feature-ensure-the-existing-comic-content-remains-present-and-functional-after-applying-the-crash-fix-including-comic-panel-rendering-and-the-characters-gallery",
+      "featureTitle": "Ensure the existing comic content remains present and functional after applying the crash fix, including comic panel rendering and the characters gallery.",
       "files": [
-        "frontend/src/components/StoryNarrationControl.tsx",
-        "frontend/src/hooks/useSpeechSynthesisVoices.ts",
-        "frontend/src/hooks/useStoryNarration.ts",
-        "frontend/src/lib/narration.ts"
+        "frontend/src/components/CharactersGallery.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -42,10 +38,10 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-update-story-panel-metadata-so-miles-is-visually-described-as-black-with-curly-hair-in-relevant-illustration-alt-text-at-least-the-opening-miles-panel",
-      "featureTitle": "Update story panel metadata so Miles is visually described as Black with curly hair in relevant illustration alt text (at least the opening Miles panel).",
+      "featureId": "feature-update-the-character-aaron-user-spelled-arron-to-appear-as-a-black-character-with-a-bit-of-hair-by-updating-the-aaron-character-artwork-asset-and-keeping-the-gallery-wired-to-the-updated-asset",
+      "featureTitle": "Update the character Aaron (user spelled “Arron”) to appear as a Black character with a bit of hair by updating the Aaron character artwork asset and keeping the gallery wired to the updated asset.",
       "files": [
-        "frontend/src/lib/comicData.ts"
+        "frontend/src/lib/characters.ts"
       ],
       "components": [
         "core-infrastructure@1.0.2",

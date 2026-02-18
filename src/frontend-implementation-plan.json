@@ -1,74 +1,63 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Story narration improvements: remove speaker labels, add voice styles, and update Miles alt text",
+  "title": "Fix Select crash and update Aaron artwork without breaking comic viewer",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Remove explicit speaker-label prefixes from generated narration while keeping dialogue/thought/caption/SFX/scene narration coherent.",
+      "summary": "Remove all empty-string SelectItem values by introducing a non-empty sentinel while preserving the “Default” voice behavior in narration controls.",
       "acceptanceCriteria": [
-        "When narrating any panel part of type \"dialogue\", the spoken line does not contain the substring \" says:\" and does not prepend the speaker name by default.",
-        "When narrating any panel part of type \"thought\", the spoken line does not contain the substring \" thinks:\" and does not prepend the speaker name by default.",
-        "Captions, scene text, and SFX continue to be narrated in a reasonable, understandable way (no runtime errors; narration still produces a non-empty script for the existing story)."
+        "App no longer crashes on load with the Radix error: \"A <Select.Item /> must have a value prop that is not an empty string\".",
+        "In `frontend/src/components/StoryNarrationControl.tsx`, the three voice dropdowns no longer render any `<SelectItem value=\"\">…</SelectItem>` option.",
+        "Choosing the UI option that represents the default voice still results in using the default voice behavior (i.e., the app does not force a specific selected voice)."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/lib/narration.ts",
-          "operation": "modify",
-          "description": "Update narration script derivation so dialogue/thought lines are speakable without speaker-label prefixes (remove patterns like \"<speaker> says:\" and \"<speaker> thinks:\") while keeping captions/scene/SFX speakable; adjust the script item shape if needed to carry speaker metadata separately for later voice selection."
-        },
-        {
           "path": "frontend/src/components/StoryNarrationControl.tsx",
           "operation": "modify",
-          "description": "Wire updated deriveNarrationScript output into narration playback so the spoken text for dialogue/thought is natural and does not prepend speaker names by default; ensure no runtime errors and script remains non-empty for existing STORY_PANELS. Verify the component's usage instructions before implementing."
+          "description": "Replace the three empty-string SelectItem values with a non-empty sentinel value and map sentinel selection back to the empty internal state so “Default” continues to mean “no explicit voice selected”. Use the shadcn-ui Select component as currently composed (do not edit files under frontend/src/components/ui). Verify the component's usage instructions before implementing."
         }
       ]
     },
     {
       "id": "REQ-2",
-      "summary": "Add per-character voice selection (Miles, Jefferson, and default) plus basic rate/pitch controls (if supported) and apply them to Web Speech narration without reload.",
+      "summary": "Add guardrails to ensure comic panels and the characters gallery still render after the Select crash fix, without altering existing story data.",
       "acceptanceCriteria": [
-        "The UI includes a section in the Story Narration area for selecting a voice for Miles, a voice for Jefferson, and a default voice for all other speakers.",
-        "If the browser provides multiple speechSynthesis voices, the dropdowns list them and selecting a voice changes the actual SpeechSynthesisUtterance.voice used during narration.",
-        "If the browser provides no selectable voices (or voices are not yet loaded), the UI shows a clear English message and narration still works with the browser default voice.",
-        "Changing voice settings does not require page reload and takes effect for the next started narration session.",
-        "The implementation does not claim to perfectly imitate copyrighted character voices; it only uses available system/browser TTS voices."
+        "The `ComicViewer` still renders comic panels (not a blank/black screen) and remains usable after the Select crash fix.",
+        "The `CharactersGallery` still renders all existing characters, including Aaron, after the Select crash fix.",
+        "No changes remove or significantly alter the existing chapter/panel data in `frontend/src/lib/comicData.ts` beyond what is required for stability fixes."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/hooks/useSpeechSynthesisVoices.ts",
-          "operation": "create",
-          "description": "Create a React hook that loads and tracks available browser SpeechSynthesis voices (including handling delayed loading via the voiceschanged event) and exposes a stable list + a \"voices ready\" signal for the UI to render dropdown options or a clear fallback message."
+          "path": "frontend/src/components/ComicViewer.tsx",
+          "operation": "modify",
+          "description": "Add a safe empty-state rendering path (e.g., a visible alert/message) when there are zero panels to display so the viewer never appears as a blank/black screen due to unexpected upstream state; keep existing panel/chapter data usage intact."
         },
         {
-          "path": "frontend/src/hooks/useStoryNarration.ts",
+          "path": "frontend/src/components/CharactersGallery.tsx",
           "operation": "modify",
-          "description": "Extend narration playback to accept voice-style configuration (per-speaker voice selection plus optional rate/pitch) and apply it when constructing each SpeechSynthesisUtterance (set utterance.voice when available, and set utterance.rate/utterance.pitch within safe ranges); ensure changes take effect on the next start without reload."
-        },
-        {
-          "path": "frontend/src/components/StoryNarrationControl.tsx",
-          "operation": "modify",
-          "description": "Add a \"Voice Style\" section inside the existing Story Narration panel: dropdowns for Miles/Jefferson/Default voices (using the new useSpeechSynthesisVoices hook) and optional rate/pitch controls; show a clear English message when voices are unavailable/not yet loaded while keeping narration functional with default voice. Use existing shadcn-ui components already in the file (e.g., Button/Alert/Badge) for consistent styling where applicable; Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/lib/narration.ts",
-          "operation": "modify",
-          "description": "Ensure deriveNarrationScript provides enough metadata (e.g., speaker identity when present) so the narration hook can pick Miles/Jefferson/default voice mappings while still keeping the generated spoken line free of speaker-label prefixes."
+          "description": "Add a small non-destructive render guard (e.g., ensure the gallery renders even if a character is missing an asset/alt text) to prevent regressions while keeping existing character list behavior unchanged."
         }
       ]
     },
     {
       "id": "REQ-3",
-      "summary": "Update Miles visual description in story panel alt text (opening panel) to explicitly mention he is Black with curly hair while keeping dialogue intact.",
+      "summary": "Update Aaron’s portrait asset to depict dark skin and short/visible hair and keep the gallery wired to the updated image.",
       "acceptanceCriteria": [
-        "In the first story panel illustrationAlt (spiderverse-panel-01...), the description explicitly mentions Miles is Black and has curly hair.",
-        "No story dialogue content is removed; the line \"Why am I stuck to the ceiling?!\" remains present in the data and continues to be narrated."
+        "The Characters Gallery displays Aaron with dark skin and short/visible hair in the character tile artwork.",
+        "Aaron’s character entry in `frontend/src/lib/characters.ts` references the updated artwork filename (or the original filename if overwritten) and remains correctly displayed.",
+        "All user-facing text remains in English for this change (e.g., alt text updates remain English)."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/lib/comicData.ts",
+          "path": "frontend/public/assets/generated/character-aaron-v2.dim_768x768.png",
+          "operation": "create",
+          "description": "Add the updated Aaron character portrait asset (dark skin + short/visible hair in bold comic/halftone style) as a static frontend asset at this exact path."
+        },
+        {
+          "path": "frontend/src/lib/characters.ts",
           "operation": "modify",
-          "description": "Update the first story panel (spiderverse-panel-01.dim_1024x768.png) illustrationAlt text to explicitly describe Miles as Black with curly hair; do not remove or alter story dialogue content (ensure the existing \"Why am I stuck to the ceiling?!\" line remains unchanged elsewhere in the data)."
+          "description": "Update Aaron’s `artworkSrc` to reference `/assets/generated/character-aaron-v2.dim_768x768.png` and ensure Aaron’s `artworkAlt` remains English while reflecting the updated appearance."
         }
       ]
     }

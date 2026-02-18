@@ -215,4 +215,13 @@
   .transcript-content::-webkit-scrollbar-thumb {
     @apply bg-border border-2 border-background;
   }
+
+  /* Error boundary styling */
+  .error-boundary-container {
+    @apply min-h-screen flex items-center justify-center bg-background p-4;
+  }
+
+  .error-boundary-content {
+    @apply comic-page max-w-2xl w-full p-8 space-y-6;
+  }
 }
