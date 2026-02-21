@@ -1,89 +1,41 @@
 {
   "kind": "build_request",
-  "title": "Fix Radix Select crash and preserve comic + Aaron appearance",
+  "title": "Restore missing comic panels",
   "projectName": "Spider-Verse Comic Viewer",
   "priority": "high",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Eliminate the runtime crash caused by any Radix/Shadcn `<SelectItem />` using an empty-string `value` by auditing all Select components and replacing `value=\"\"` with a non-empty sentinel value, while preserving the user-visible meaning of “Default/None” selections.",
+      "text": "Restore all comic panels that were removed in the previous version. Re-add the complete panel data to frontend/src/lib/comicData.ts to ensure all story scenes are displayed in the ComicViewer component.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-latest"
         ],
         "quotes": [
-          "IT CRASHED, A <Select.Item /> must have a value prop that is not an empty string.",
-          "Fix the app and then make sure that the problems are gone"
+          "ADD BACK THE MISSING PANELS BACK JUST RE-ADD IT"
         ]
       },
       "acceptanceCriteria": [
-        "App no longer crashes on load with the Radix error: \"A <Select.Item /> must have a value prop that is not an empty string\".",
-        "In `frontend/src/components/StoryNarrationControl.tsx`, the three voice dropdowns no longer render any `<SelectItem value=\"\">…</SelectItem>` option.",
-        "Choosing the UI option that represents the default voice still results in using the default voice behavior (i.e., the app does not force a specific selected voice)."
-      ]
-    },
-    {
-      "id": "REQ-2",
-      "text": "Ensure the existing comic content remains present and functional after applying the crash fix, including comic panel rendering and the characters gallery.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "make sure that the problems are gone but the comic is still there"
-        ]
-      },
-      "acceptanceCriteria": [
-        "The `ComicViewer` still renders comic panels (not a blank/black screen) and remains usable after the Select crash fix.",
-        "The `CharactersGallery` still renders all existing characters, including Aaron, after the Select crash fix.",
-        "No changes remove or significantly alter the existing chapter/panel data in `frontend/src/lib/comicData.ts` beyond what is required for stability fixes."
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "text": "Update the character Aaron (user spelled “Arron”) to appear as a Black character with a bit of hair by updating the Aaron character artwork asset and keeping the gallery wired to the updated asset.",
-      "target": "both",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "Arron has a bit hair and is black"
-        ]
-      },
-      "acceptanceCriteria": [
-        "The Characters Gallery displays Aaron with dark skin and short/visible hair in the character tile artwork.",
-        "Aaron’s character entry in `frontend/src/lib/characters.ts` references the updated artwork filename (or the original filename if overwritten) and remains correctly displayed.",
-        "All user-facing text remains in English for this change (e.g., alt text updates remain English)."
+        "All previously existing comic panels are restored to comicData.ts",
+        "No scenes are missing when the comic is rendered in the ComicViewer",
+        "Panel sequence and chapter structure remain intact",
+        "All panel illustrations and text content are complete"
       ]
     }
   ],
   "constraints": [
-    "Do not edit files under `frontend/src/components/ui` (compose them only).",
-    "Do not modify `frontend/src/hooks/useInternetIdentity.ts`, `frontend/src/hooks/useInternetIdentity.tsx`, `frontend/src/hooks/useActor.ts`, or `frontend/src/main.tsx` (immutable paths).",
-    "Respect the single-actor backend architecture; only add a migration if persistent state schema changes (not expected for this fix)."
+    "Do not modify the existing ComicViewer component logic or rendering behavior",
+    "Preserve the current chapter structure and organization",
+    "Maintain compatibility with existing localization, deduplication, and narration features"
   ],
   "nonGoals": [
-    "Adding new authentication providers beyond Internet Identity.",
-    "Adding new comic chapters, new story content, or changing the story order beyond what is necessary to keep existing content rendering.",
-    "Introducing external databases or non-supported backend technologies."
+    "Adding new comic panels that did not exist previously",
+    "Modifying the styling or layout of existing panels",
+    "Changing the timeline or narration features"
   ],
   "imageRequirements": {
     "required": [],
-    "edits": [
-      "Adjust Aaron character portrait to depict dark skin and short/visible hair in bold comic/halftone style (character-aaron.dim_768x768.png > character-aaron-v2.dim_768x768.png)"
-    ]
-  },
-  "userProfileUpdate": {
-    "goalsToAdd": [],
-    "goalsToRemove": [],
-    "preferencesToAdd": [],
-    "preferencesToRemove": [],
-    "miscToAdd": [],
-    "miscToRemove": [],
-    "fieldsToSet": {},
-    "fieldsToDelete": []
+    "edits": []
   }
 }

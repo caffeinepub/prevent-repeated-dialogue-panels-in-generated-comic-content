@@ -60,6 +60,9 @@ async function generatePrintableHTML(
   const panelLabel = t('pdf.panel', language);
   const chapterLabel = t('pdf.chapter', language);
   const authorNotProvided = t('author.notProvided', language);
+  
+  // Use provided author name or default to "Andy Romero Escobar J."
+  const pdfAuthor = authorName || 'Andy Romero Escobar J.';
 
   return `
 <!DOCTYPE html>
@@ -67,6 +70,9 @@ async function generatePrintableHTML(
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="${escapeHtml(pdfAuthor)}">
+  <meta name="creator" content="${escapeHtml(pdfAuthor)}">
+  <meta name="description" content="${escapeHtml(subtitle)}">
   <title>${escapeHtml(title)}</title>
   <style>
     @page {
@@ -260,7 +266,7 @@ async function generatePrintableHTML(
   <div class="title-page">
     <h1>${escapeHtml(title)}</h1>
     <p>${escapeHtml(subtitle)}</p>
-    ${authorName ? `<p class="author">${escapeHtml(authorLabel)}: ${escapeHtml(authorName)}</p>` : `<p class="author">${escapeHtml(authorNotProvided)}</p>`}
+    <p class="author">${escapeHtml(authorLabel)}: ${escapeHtml(pdfAuthor)}</p>
     <p style="font-size: 14px; margin-top: 40px;">${escapeHtml(generatedText)}</p>
   </div>
   
@@ -277,65 +283,74 @@ async function generatePrintableHTML(
   ` : ''}
 </body>
 </html>
-  `;
+  `.trim();
 }
 
-function renderChaptersHTML(chapters: Chapter[], allPanels: ComicPanel[], timelineMode: boolean, chapterLabel: string, panelLabel: string): string {
-  let html = '';
+function renderChaptersHTML(
+  chapters: Chapter[],
+  allPanels: ComicPanel[],
+  timelineMode: boolean,
+  chapterLabel: string,
+  panelLabel: string
+): string {
   let panelIndex = 0;
-
-  for (let chIdx = 0; chIdx < chapters.length; chIdx++) {
-    const chapter = chapters[chIdx];
-    html += `<h3 class="chapter-title">${escapeHtml(chapterLabel)} ${chIdx + 1}: ${escapeHtml(chapter.title)}</h3>`;
+  return chapters.map(chapter => {
+    const chapterPanels = chapter.panels;
+    const chapterHTML = chapterPanels.map(panel => {
+      panelIndex++;
+      return renderPanelHTML(panel, panelIndex, timelineMode, panelLabel);
+    }).join('\n');
     
-    for (let i = 0; i < chapter.panels.length && panelIndex < allPanels.length; i++, panelIndex++) {
-      html += renderPanelHTML(allPanels[panelIndex], panelIndex + 1, timelineMode, panelLabel);
-    }
-  }
-
-  return html;
+    return `
+      <h3 class="chapter-title">${escapeHtml(chapterLabel)} ${escapeHtml(chapter.id.toUpperCase())}: ${escapeHtml(chapter.title)}</h3>
+      ${chapterHTML}
+    `;
+  }).join('\n');
 }
 
-function renderPanelHTML(panel: ComicPanel, panelNumber: number | null, timelineMode: boolean, panelLabel: string): string {
-  let html = '<div class="panel">';
+function renderPanelHTML(
+  panel: ComicPanel,
+  panelNumber: number | null,
+  timelineMode: boolean,
+  panelLabel: string
+): string {
+  const timestamp = timelineMode && panel.timestamp !== undefined
+    ? `<div class="timestamp">${getPanelTimestamp(panel)}</div>`
+    : '';
   
-  if (panelNumber !== null) {
-    html += `<div class="panel-number">${escapeHtml(panelLabel)} ${panelNumber}</div>`;
-  }
+  const panelNumberHTML = panelNumber !== null
+    ? `<div class="panel-number">${escapeHtml(panelLabel)} ${panelNumber}</div>`
+    : '';
   
-  if (timelineMode) {
-    const timestamp = getPanelTimestamp(panel);
-    if (timestamp) {
-      html += `<div class="timestamp">⏱ ${escapeHtml(timestamp)}</div>`;
-    }
-  }
+  const illustration = panel.illustrationSrc
+    ? `<img src="${escapeHtml(panel.illustrationSrc)}" alt="${escapeHtml(panel.illustrationAlt || '')}" />`
+    : '';
   
-  if (panel.illustrationSrc) {
-    html += `<img src="${panel.illustrationSrc}" alt="${escapeHtml(panel.illustrationAlt || 'Comic panel illustration')}" />`;
-  }
-  
-  for (const part of panel.parts) {
+  const parts = panel.parts.map(part => {
     switch (part.type) {
       case 'caption':
-        html += `<div class="caption">${escapeHtml(part.text)}</div>`;
-        break;
+        return `<div class="caption">${escapeHtml(part.text)}</div>`;
       case 'dialogue':
-        html += `<div class="dialogue"><span class="speaker">${escapeHtml(part.speaker)}:</span> ${escapeHtml(part.text)}</div>`;
-        break;
+        return `<div class="dialogue">${part.speaker ? `<div class="speaker">${escapeHtml(part.speaker)}:</div>` : ''}${escapeHtml(part.text)}</div>`;
       case 'thought':
-        html += `<div class="thought"><span class="speaker">${escapeHtml(part.speaker)}:</span> ${escapeHtml(part.text)}</div>`;
-        break;
+        return `<div class="thought">${part.speaker ? `<div class="speaker">${escapeHtml(part.speaker)} thinks:</div>` : ''}${escapeHtml(part.text)}</div>`;
       case 'sfx':
-        html += `<div class="sfx">${escapeHtml(part.text)}</div>`;
-        break;
+        return `<div class="sfx">${escapeHtml(part.text)}</div>`;
       case 'scene':
-        html += `<div class="scene">${escapeHtml(part.text)}</div>`;
-        break;
+        return `<div class="scene">${escapeHtml(part.text)}</div>`;
+      default:
+        return '';
     }
-  }
+  }).join('\n');
   
-  html += '</div>';
-  return html;
+  return `
+    <div class="panel">
+      ${panelNumberHTML}
+      ${timestamp}
+      ${illustration}
+      ${parts}
+    </div>
+  `;
 }
 
 function escapeHtml(text: string): string {

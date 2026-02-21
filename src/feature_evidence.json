@@ -2,10 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-eliminate-the-runtime-crash-caused-by-any-radix-shadcn-selectitem-using-an-empty-string-value-by-auditing-all-select-components-and-replacing-value-with-a-non-empty-sentinel-value-while-preserving-the-user-visible-meaning-of-default-none-selections",
-      "featureTitle": "Eliminate the runtime crash caused by any Radix/Shadcn `<SelectItem />` using an empty-string `value` by auditing all Select components and replacing `value=\"\"` with a non-empty sentinel value, while preserving the user-visible meaning of “Default/None” selections.",
+      "featureId": "feature-restore-all-comic-panels-that-were-removed-in-the-previous-version-re-add-the-complete-panel-data-to-frontend-src-lib-comicdata-ts-to-ensure-all-story-scenes-are-displayed-in-the-comicviewer-component",
+      "featureTitle": "Restore all comic panels that were removed in the previous version. Re-add the complete panel data to frontend/src/lib/comicData.ts to ensure all story scenes are displayed in the ComicViewer component.",
       "files": [
-        "frontend/src/components/StoryNarrationControl.tsx"
+        "frontend/src/lib/comicData.ts"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -16,42 +16,6 @@
       ],
       "testIds": [
         "REQ-1"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-ensure-the-existing-comic-content-remains-present-and-functional-after-applying-the-crash-fix-including-comic-panel-rendering-and-the-characters-gallery",
-      "featureTitle": "Ensure the existing comic content remains present and functional after applying the crash fix, including comic panel rendering and the characters gallery.",
-      "files": [
-        "frontend/src/components/CharactersGallery.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-2"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-update-the-character-aaron-user-spelled-arron-to-appear-as-a-black-character-with-a-bit-of-hair-by-updating-the-aaron-character-artwork-asset-and-keeping-the-gallery-wired-to-the-updated-asset",
-      "featureTitle": "Update the character Aaron (user spelled “Arron”) to appear as a Black character with a bit of hair by updating the Aaron character artwork asset and keeping the gallery wired to the updated asset.",
-      "files": [
-        "frontend/src/lib/characters.ts"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-3"
       ],
       "confidence": "high"
     }

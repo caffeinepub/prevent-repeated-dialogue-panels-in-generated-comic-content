@@ -1,37 +1,18 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "Stabilize the app by fixing the Radix Select crash while preserving the existing comic content and ensuring the character Arron appears as intended (Black with a bit of hair).",
-  "architectural_notes": [
-    "Radix UI Select: <Select.Item /> value prop must be a non-empty string; use a sentinel like \"none\" instead of \"\" for placeholder/clearable behavior."
-  ],
+  "summary": "New project",
+  "architectural_notes": [],
   "known_issues": [
-    "App can crash on load if any Radix <Select.Item /> has value=\"\" (empty string)."
+    "Missing comic panels in current version"
   ],
   "isFixRequest": true,
-  "imageRequirements": "## Edit Images\n- Adjust Aaron character portrait to depict dark skin and short/visible hair in bold comic/halftone style (character-aaron.dim_768x768.png > character-aaron-v2.dim_768x768.png)",
   "existing_features": [
     {
-      "id": "feature-eliminate-the-runtime-crash-caused-by-any-radix-shadcn-selectitem-using-an-empty-string-value-by-auditing-all-select-components-and-replacing-value-with-a-non-empty-sentinel-value-while-preserving-the-user-visible-meaning-of-default-none-selections",
-      "title": "Eliminate the runtime crash caused by any Radix/Shadcn `<SelectItem />` using an empty-string `value` by auditing all Select components and replacing `value=\"\"` with a non-empty sentinel value, while preserving the user-visible meaning of “Default/None” selections.",
+      "id": "feature-restore-all-comic-panels-that-were-removed-in-the-previous-version-re-add-the-complete-panel-data-to-frontend-src-lib-comicdata-ts-to-ensure-all-story-scenes-are-displayed-in-the-comicviewer-component",
+      "title": "Restore all comic panels that were removed in the previous version. Re-add the complete panel data to frontend/src/lib/comicData.ts to ensure all story scenes are displayed in the ComicViewer component.",
       "reqIds": [
         "REQ-1"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-ensure-the-existing-comic-content-remains-present-and-functional-after-applying-the-crash-fix-including-comic-panel-rendering-and-the-characters-gallery",
-      "title": "Ensure the existing comic content remains present and functional after applying the crash fix, including comic panel rendering and the characters gallery.",
-      "reqIds": [
-        "REQ-2"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-update-the-character-aaron-user-spelled-arron-to-appear-as-a-black-character-with-a-bit-of-hair-by-updating-the-aaron-character-artwork-asset-and-keeping-the-gallery-wired-to-the-updated-asset",
-      "title": "Update the character Aaron (user spelled “Arron”) to appear as a Black character with a bit of hair by updating the Aaron character artwork asset and keeping the gallery wired to the updated asset.",
-      "reqIds": [
-        "REQ-3"
       ],
       "version": 1
     }
@@ -39,19 +20,7 @@
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Fix crash caused by Radix <Select.Item /> using an empty string value prop",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-2",
-      "summary": "Ensure existing comic remains present/unchanged after applying crash fixes",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-3",
-      "summary": "Ensure character 'Arron' appearance: Black with a bit of hair",
+      "summary": "Re-add missing comic panels",
       "reqIds": [],
       "status": "pending"
     }
