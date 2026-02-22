@@ -1,41 +1,66 @@
 {
   "kind": "build_request",
-  "title": "Restore missing comic panels",
+  "title": "Restore missing Spider-Verse comic panel images",
   "projectName": "Spider-Verse Comic Viewer",
   "priority": "high",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Restore all comic panels that were removed in the previous version. Re-add the complete panel data to frontend/src/lib/comicData.ts to ensure all story scenes are displayed in the ComicViewer component.",
+      "text": "Render the 13 regenerated Spider-Verse comic panel images (spiderverse-panel-07 through spiderverse-panel-19, excluding panel 20) as static assets in frontend/public/assets/generated",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-latest"
         ],
         "quotes": [
-          "ADD BACK THE MISSING PANELS BACK JUST RE-ADD IT"
+          "spiderverse-panel-08.dim_1024x768.png",
+          "spiderverse-panel-09.dim_1024x768.png",
+          "spiderverse-panel-10.dim_1024x768.png",
+          "spiderverse-panel-11.dim_1024x768.png",
+          "spiderverse-panel-12.dim_1024x768.png",
+          "spiderverse-panel-13.dim_1024x768.png",
+          "spiderverse-panel-14.dim_1024x768.png",
+          "spiderverse-panel-15.dim_1024x768.png",
+          "spiderverse-panel-16.dim_1024x768.png",
+          "spiderverse-panel-07.dim_1024x768.png",
+          "spiderverse-panel-18.dim_1024x768.png",
+          "spiderverse-panel-19.dim_1024x768.png",
+          "spiderverse-panel-17.dim_1024x768.png"
         ]
       },
       "acceptanceCriteria": [
-        "All previously existing comic panels are restored to comicData.ts",
-        "No scenes are missing when the comic is rendered in the ComicViewer",
-        "Panel sequence and chapter structure remain intact",
-        "All panel illustrations and text content are complete"
+        "All 13 panel images are available in frontend/public/assets/generated",
+        "Images are referenced correctly in the comic data structure",
+        "Comic viewer displays all panels without missing image warnings for these specific panels"
       ]
     }
   ],
   "constraints": [
-    "Do not modify the existing ComicViewer component logic or rendering behavior",
-    "Preserve the current chapter structure and organization",
-    "Maintain compatibility with existing localization, deduplication, and narration features"
+    "Do not modify the backend schema or main.mo",
+    "Do not edit immutable frontend paths: useInternetIdentity.ts, useInternetIdentity.tsx, useActor.ts, main.tsx, or components/ui"
   ],
   "nonGoals": [
-    "Adding new comic panels that did not exist previously",
-    "Modifying the styling or layout of existing panels",
-    "Changing the timeline or narration features"
+    "Creating new comic panels beyond the 13 specified",
+    "Modifying the comic data structure or narrative content",
+    "Changing the PDF export functionality",
+    "Altering the narration or speech recognition features"
   ],
   "imageRequirements": {
-    "required": [],
+    "required": [
+      "Spider-Verse comic panel 7 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-07.dim_1024x768.png)",
+      "Spider-Verse comic panel 8 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-08.dim_1024x768.png)",
+      "Spider-Verse comic panel 9 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-09.dim_1024x768.png)",
+      "Spider-Verse comic panel 10 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-10.dim_1024x768.png)",
+      "Spider-Verse comic panel 11 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-11.dim_1024x768.png)",
+      "Spider-Verse comic panel 12 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-12.dim_1024x768.png)",
+      "Spider-Verse comic panel 13 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-13.dim_1024x768.png)",
+      "Spider-Verse comic panel 14 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-14.dim_1024x768.png)",
+      "Spider-Verse comic panel 15 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-15.dim_1024x768.png)",
+      "Spider-Verse comic panel 16 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-16.dim_1024x768.png)",
+      "Spider-Verse comic panel 17 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-17.dim_1024x768.png)",
+      "Spider-Verse comic panel 18 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-18.dim_1024x768.png)",
+      "Spider-Verse comic panel 19 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-19.dim_1024x768.png)"
+    ],
     "edits": []
   }
 }

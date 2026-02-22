@@ -1,22 +1,21 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Restore missing comic panels",
+  "title": "Restore missing Spider-Verse comic panel images",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Restore all comic panels that were removed in the previous version by re-adding complete panel data to comicData.ts",
+      "summary": "Wire the 13 regenerated Spider-Verse comic panel images into the comic data structure so they render correctly in the viewer",
       "acceptanceCriteria": [
-        "All previously existing comic panels are restored to comicData.ts",
-        "No scenes are missing when the comic is rendered in the ComicViewer",
-        "Panel sequence and chapter structure remain intact",
-        "All panel illustrations and text content are complete"
+        "All 13 panel images are available in frontend/public/assets/generated",
+        "Images are referenced correctly in the comic data structure",
+        "Comic viewer displays all panels without missing image warnings for these specific panels"
       ],
       "file_operations": [
         {
           "path": "frontend/src/lib/comicData.ts",
           "operation": "modify",
-          "description": "Restore all missing comic panels to the COMIC_DATA structure. Review the current panel count and chapter organization, then add back any panels that were removed in previous versions. Ensure all story scenes are complete with their illustration references, captions, dialogue, thoughts, and sound effects. Preserve the existing chapter structure and maintain compatibility with the localization system, deduplication features, and narration functionality. Verify that panel IDs follow the existing sequence and that all illustration filenames reference valid assets."
+          "description": "Update the comic data structure to reference the regenerated panel images. Locate panels 7-19 (excluding panel 20) in the data structure and ensure their illustration fields point to the correct workspace paths: frontend/public/assets/generated/spiderverse-panel-07.dim_1024x768.png through frontend/public/assets/generated/spiderverse-panel-19.dim_1024x768.png. Verify that these exact filenames match the generated assets and that no references to panel 20 are included in this change."
         }
       ]
     }

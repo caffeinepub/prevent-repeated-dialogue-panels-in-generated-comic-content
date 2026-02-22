@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-restore-all-comic-panels-that-were-removed-in-the-previous-version-re-add-the-complete-panel-data-to-frontend-src-lib-comicdata-ts-to-ensure-all-story-scenes-are-displayed-in-the-comicviewer-component",
-      "featureTitle": "Restore all comic panels that were removed in the previous version. Re-add the complete panel data to frontend/src/lib/comicData.ts to ensure all story scenes are displayed in the ComicViewer component.",
+      "featureId": "feature-render-the-13-regenerated-spider-verse-comic-panel-images-spiderverse-panel-07-through-spiderverse-panel-19-excluding-panel-20-as-static-assets-in-frontend-public-assets-generated",
+      "featureTitle": "Render the 13 regenerated Spider-Verse comic panel images (spiderverse-panel-07 through spiderverse-panel-19, excluding panel 20) as static assets in frontend/public/assets/generated",
       "files": [
         "frontend/src/lib/comicData.ts"
       ],

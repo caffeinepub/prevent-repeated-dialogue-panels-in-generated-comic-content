@@ -1,7 +1,7 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-21T01:21:26.975Z",
+  "generatedAt": "2026-02-22T21:50:57.302Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
@@ -12,7 +12,7 @@
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Restore all comic panels that were removed in the previous version. Re-add the complete panel data to frontend/src/lib/comicData.ts to ensure all story scenes are displayed in the ComicViewer component.",
+        "summary": "Render the 13 regenerated Spider-Verse comic panel images (spiderverse-panel-07 through spiderverse-panel-19, excluding panel 20) as static assets in frontend/public/assets/generated",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/lib/comicData.ts"
@@ -28,6 +28,7 @@
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
+    "frontend/public/assets/generated/spiderverse-panel-07.dim_1024x768.png",
     "frontend/src/lib/comicData.ts",
     "project_state.json",
     "scratch/component-selection.json",
