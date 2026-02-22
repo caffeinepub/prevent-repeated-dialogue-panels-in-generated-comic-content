@@ -1,65 +1,93 @@
 {
   "kind": "build_request",
-  "title": "Restore missing Spider-Verse comic panel images",
-  "projectName": "Spider-Verse Comic Viewer",
+  "title": "Restore all 18 missing comic panels and ensure complete story display",
   "priority": "high",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Render the 13 regenerated Spider-Verse comic panel images (spiderverse-panel-07 through spiderverse-panel-19, excluding panel 20) as static assets in frontend/public/assets/generated",
+      "text": "Add the 18 missing comic panel images to the frontend assets so all panels from the complete story are rendered without gaps",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-latest"
+          "msg-4"
         ],
         "quotes": [
-          "spiderverse-panel-08.dim_1024x768.png",
-          "spiderverse-panel-09.dim_1024x768.png",
-          "spiderverse-panel-10.dim_1024x768.png",
-          "spiderverse-panel-11.dim_1024x768.png",
-          "spiderverse-panel-12.dim_1024x768.png",
-          "spiderverse-panel-13.dim_1024x768.png",
-          "spiderverse-panel-14.dim_1024x768.png",
-          "spiderverse-panel-15.dim_1024x768.png",
-          "spiderverse-panel-16.dim_1024x768.png",
-          "spiderverse-panel-07.dim_1024x768.png",
-          "spiderverse-panel-18.dim_1024x768.png",
-          "spiderverse-panel-19.dim_1024x768.png",
-          "spiderverse-panel-17.dim_1024x768.png"
+          "Re add the missing 18 Panels"
         ]
       },
       "acceptanceCriteria": [
-        "All 13 panel images are available in frontend/public/assets/generated",
-        "Images are referenced correctly in the comic data structure",
-        "Comic viewer displays all panels without missing image warnings for these specific panels"
+        "All 18 previously missing panel images are present in frontend/public/assets/generated",
+        "Panel numbering is complete with no gaps in the sequence",
+        "All panels load successfully in the ComicViewer component"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Verify that all chapters from comicData.ts are rendered in the ComicViewer without any chapters being skipped or filtered out",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "no chapter is removed from this because The full story is here"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Every chapter defined in comicData.ts appears in the rendered output",
+        "Chapter filtering or exclusion logic (if any exists) is removed",
+        "The complete narrative sequence is preserved from start to finish"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Ensure the progressive rendering system in useProgressivePanels displays all panels from the complete story without truncation",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "all of the panels are shown and MAKE SURE OF THAT"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The load-more functionality reveals all remaining panels",
+        "No artificial caps prevent displaying the complete panel count",
+        "Users can view the entire story from beginning to end"
       ]
     }
   ],
   "constraints": [
-    "Do not modify the backend schema or main.mo",
-    "Do not edit immutable frontend paths: useInternetIdentity.ts, useInternetIdentity.tsx, useActor.ts, main.tsx, or components/ui"
+    "Must preserve existing comic data structure in comicData.ts",
+    "Must maintain the chapter organization without removing any chapters",
+    "Must not alter the progressive rendering performance optimization pattern"
   ],
   "nonGoals": [
-    "Creating new comic panels beyond the 13 specified",
-    "Modifying the comic data structure or narrative content",
-    "Changing the PDF export functionality",
+    "Changing the visual style or layout of existing panels",
+    "Modifying the translation or localization system",
     "Altering the narration or speech recognition features"
   ],
   "imageRequirements": {
     "required": [
-      "Spider-Verse comic panel 7 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-07.dim_1024x768.png)",
-      "Spider-Verse comic panel 8 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-08.dim_1024x768.png)",
-      "Spider-Verse comic panel 9 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-09.dim_1024x768.png)",
-      "Spider-Verse comic panel 10 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-10.dim_1024x768.png)",
-      "Spider-Verse comic panel 11 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-11.dim_1024x768.png)",
-      "Spider-Verse comic panel 12 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-12.dim_1024x768.png)",
-      "Spider-Verse comic panel 13 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-13.dim_1024x768.png)",
-      "Spider-Verse comic panel 14 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-14.dim_1024x768.png)",
-      "Spider-Verse comic panel 15 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-15.dim_1024x768.png)",
-      "Spider-Verse comic panel 16 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-16.dim_1024x768.png)",
-      "Spider-Verse comic panel 17 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-17.dim_1024x768.png)",
-      "Spider-Verse comic panel 18 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-18.dim_1024x768.png)",
-      "Spider-Verse comic panel 19 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-19.dim_1024x768.png)"
+      "Spider-Man comic panel with halftone dots and bold inking, dynamic action scene (panel-1.dim_800x600.png)",
+      "Spider-Man comic panel with halftone dots and bold inking, character moment (panel-2.dim_800x600.png)",
+      "Spider-Man comic panel with halftone dots and bold inking, story progression (panel-3.dim_800x600.png)",
+      "Spider-Man comic panel with halftone dots and bold inking, dramatic scene (panel-4.dim_800x600.png)",
+      "Spider-Man comic panel with halftone dots and bold inking, narrative beat (panel-5.dim_800x600.png)",
+      "Spider-Man comic panel with halftone dots and bold inking, action sequence (panel-6.dim_800x600.png)",
+      "Spider-Man comic panel with halftone dots and bold inking, emotional moment (panel-20.dim_800x600.png)",
+      "Spider-Man comic panel with halftone dots and bold inking, story development (panel-21.dim_800x600.png)",
+      "Spider-Man comic panel with halftone dots and bold inking, scene transition (panel-22.dim_800x600.png)",
+      "Spider-Man comic panel with halftone dots and bold inking, character interaction (panel-23.dim_800x600.png)",
+      "Spider-Man comic panel with halftone dots and bold inking, plot advancement (panel-24.dim_800x600.png)",
+      "Spider-Man comic panel with halftone dots and bold inking, climactic moment (panel-25.dim_800x600.png)",
+      "Spider-Man comic panel with halftone dots and bold inking, resolution scene (panel-26.dim_800x600.png)",
+      "Spider-Man comic panel with halftone dots and bold inking, final sequence (panel-27.dim_800x600.png)",
+      "Spider-Man comic panel with halftone dots and bold inking, concluding beat (panel-28.dim_800x600.png)",
+      "Spider-Man comic panel with halftone dots and bold inking, story closure (panel-29.dim_800x600.png)",
+      "Spider-Man comic panel with halftone dots and bold inking, ending moment (panel-30.dim_800x600.png)",
+      "Spider-Man comic panel with halftone dots and bold inking, final panel (panel-31.dim_800x600.png)"
     ],
     "edits": []
   }

@@ -1,23 +1,57 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "New project",
-  "architectural_notes": [],
-  "known_issues": [],
-  "isFixRequest": false,
-  "imageRequirements": "## Required Images\n- Spider-Verse comic panel 7 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-07.dim_1024x768.png)\n- Spider-Verse comic panel 8 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-08.dim_1024x768.png)\n- Spider-Verse comic panel 9 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-09.dim_1024x768.png)\n- Spider-Verse comic panel 10 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-10.dim_1024x768.png)\n- Spider-Verse comic panel 11 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-11.dim_1024x768.png)\n- Spider-Verse comic panel 12 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-12.dim_1024x768.png)\n- Spider-Verse comic panel 13 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-13.dim_1024x768.png)\n- Spider-Verse comic panel 14 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-14.dim_1024x768.png)\n- Spider-Verse comic panel 15 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-15.dim_1024x768.png)\n- Spider-Verse comic panel 16 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-16.dim_1024x768.png)\n- Spider-Verse comic panel 17 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-17.dim_1024x768.png)\n- Spider-Verse comic panel 18 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-18.dim_1024x768.png)\n- Spider-Verse comic panel 19 with cinematic action scene, halftone dots, bold inking, dynamic composition (spiderverse-panel-19.dim_1024x768.png)",
-  "existing_features": [
+  "summary": "Comic book project with full story requiring all 18 panels displayed without any chapters removed",
+  "architectural_notes": [
+    "Comic book layout must include all 18 panels",
+    "Full story preservation is critical - no chapter removal allowed"
+  ],
+  "known_issues": [
+    "18 panels are currently missing from the display"
+  ],
+  "isFixRequest": true,
+  "imageRequirements": "## Required Images\n- Spider-Man comic panel with halftone dots and bold inking, dynamic action scene (panel-1.dim_800x600.png)\n- Spider-Man comic panel with halftone dots and bold inking, character moment (panel-2.dim_800x600.png)\n- Spider-Man comic panel with halftone dots and bold inking, story progression (panel-3.dim_800x600.png)\n- Spider-Man comic panel with halftone dots and bold inking, dramatic scene (panel-4.dim_800x600.png)\n- Spider-Man comic panel with halftone dots and bold inking, narrative beat (panel-5.dim_800x600.png)\n- Spider-Man comic panel with halftone dots and bold inking, action sequence (panel-6.dim_800x600.png)\n- Spider-Man comic panel with halftone dots and bold inking, emotional moment (panel-20.dim_800x600.png)\n- Spider-Man comic panel with halftone dots and bold inking, story development (panel-21.dim_800x600.png)\n- Spider-Man comic panel with halftone dots and bold inking, scene transition (panel-22.dim_800x600.png)\n- Spider-Man comic panel with halftone dots and bold inking, character interaction (panel-23.dim_800x600.png)\n- Spider-Man comic panel with halftone dots and bold inking, plot advancement (panel-24.dim_800x600.png)\n- Spider-Man comic panel with halftone dots and bold inking, climactic moment (panel-25.dim_800x600.png)\n- Spider-Man comic panel with halftone dots and bold inking, resolution scene (panel-26.dim_800x600.png)\n- Spider-Man comic panel with halftone dots and bold inking, final sequence (panel-27.dim_800x600.png)\n- Spider-Man comic panel with halftone dots and bold inking, concluding beat (panel-28.dim_800x600.png)\n- Spider-Man comic panel with halftone dots and bold inking, story closure (panel-29.dim_800x600.png)\n- Spider-Man comic panel with halftone dots and bold inking, ending moment (panel-30.dim_800x600.png)\n- Spider-Man comic panel with halftone dots and bold inking, final panel (panel-31.dim_800x600.png)",
+  "existing_features": [],
+  "new_feature_requests": [
     {
-      "id": "feature-render-the-13-regenerated-spider-verse-comic-panel-images-spiderverse-panel-07-through-spiderverse-panel-19-excluding-panel-20-as-static-assets-in-frontend-public-assets-generated",
-      "title": "Render the 13 regenerated Spider-Verse comic panel images (spiderverse-panel-07 through spiderverse-panel-19, excluding panel 20) as static assets in frontend/public/assets/generated",
+      "id": "AR-1",
+      "summary": "Re-add missing 18 panels to display full story",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Ensure no chapters are removed from the comic",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Add the 18 missing comic panel images to the frontend assets so all panels from the complete story are rendered without gaps",
       "reqIds": [
         "REQ-1"
       ],
-      "version": 1
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Verify that all chapters from comicData.ts are rendered in the ComicViewer without any chapters being skipped or filtered out",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Ensure the progressive rendering system in useProgressivePanels displays all panels from the complete story without truncation",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "status": "pending"
     }
   ],
-  "new_feature_requests": [],
-  "projectName": "Spider-Verse Comic Viewer",
+  "gameProjectType": "none",
+  "projectName": "Restore all 18 missing comic panels and ensure complete story display",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

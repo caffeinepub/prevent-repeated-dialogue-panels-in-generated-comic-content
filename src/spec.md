@@ -1,10 +1,11 @@
 # Specification
 
 ## Summary
-**Goal:** Restore 13 missing Spider-Verse comic panel images to complete the comic viewer gallery.
+**Goal:** Restore all 18 missing comic panels to complete the Spider-Verse story display.
 
 **Planned changes:**
-- Render 13 regenerated Spider-Verse comic panel images (panels 7-19, excluding panel 20) as static assets in frontend/public/assets/generated
-- Ensure all panel images are correctly referenced in the comic data structure
+- Add 18 missing comic panel images (panels 1-6 and 20-31) to frontend assets
+- Verify all chapters from comicData.ts render without filtering or exclusion
+- Ensure progressive rendering displays all panels without truncation
 
-**User-visible outcome:** Users can view the complete Spider-Verse comic without missing image warnings for panels 7-19.
+**User-visible outcome:** Users can view the complete Spider-Verse story from beginning to end with all panels visible in sequence.
