@@ -1,4 +1,41 @@
 {
   "kind": "feature_evidence_report",
-  "features": []
+  "features": [
+    {
+      "featureId": "feature-identify-and-fix-the-bug-causing-18-panels-to-be-incorrectly-removed-or-filtered-from-the-comic-viewer-display",
+      "featureTitle": "Identify and fix the bug causing 18 panels to be incorrectly removed or filtered from the comic viewer display",
+      "files": [
+        "frontend/src/lib/deduplication.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-ensure-the-repetition-removal-feature-only-removes-duplicate-text-content-and-never-removes-entire-panels-from-the-display",
+      "featureTitle": "Ensure the repetition removal feature only removes duplicate text content and never removes entire panels from the display",
+      "files": [
+        "frontend/src/lib/deduplication.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    }
+  ]
 }

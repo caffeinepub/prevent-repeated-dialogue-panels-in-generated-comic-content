@@ -1,45 +1,31 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-22T23:17:28.785Z",
+  "generatedAt": "2026-02-23T01:20:02.175Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
     "total": 3,
-    "implemented": 0,
+    "implemented": 2,
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Add the 18 missing comic panel images to the frontend assets so all panels from the complete story are rendered without gaps",
-        "status": "missing",
+        "summary": "Identify and fix the bug causing 18 panels to be incorrectly removed or filtered from the comic viewer display",
+        "status": "implemented",
         "plannedFiles": [
-          "frontend/public/assets/generated/panel-1.dim_800x600.png",
-          "frontend/public/assets/generated/panel-2.dim_800x600.png",
-          "frontend/public/assets/generated/panel-3.dim_800x600.png",
-          "frontend/public/assets/generated/panel-4.dim_800x600.png",
-          "frontend/public/assets/generated/panel-5.dim_800x600.png",
-          "frontend/public/assets/generated/panel-6.dim_800x600.png",
-          "frontend/public/assets/generated/panel-20.dim_800x600.png",
-          "frontend/public/assets/generated/panel-21.dim_800x600.png",
-          "frontend/public/assets/generated/panel-22.dim_800x600.png",
-          "frontend/public/assets/generated/panel-23.dim_800x600.png",
-          "frontend/public/assets/generated/panel-24.dim_800x600.png",
-          "frontend/public/assets/generated/panel-25.dim_800x600.png",
-          "frontend/public/assets/generated/panel-26.dim_800x600.png",
-          "frontend/public/assets/generated/panel-27.dim_800x600.png",
-          "frontend/public/assets/generated/panel-28.dim_800x600.png",
-          "frontend/public/assets/generated/panel-29.dim_800x600.png",
-          "frontend/public/assets/generated/panel-30.dim_800x600.png",
-          "frontend/public/assets/generated/panel-31.dim_800x600.png",
-          "frontend/src/lib/comicData.ts"
+          "frontend/src/components/ComicViewer.tsx",
+          "frontend/src/lib/deduplication.ts",
+          "frontend/src/hooks/useProgressivePanels.ts"
         ],
-        "matchedFiles": []
+        "matchedFiles": [
+          "frontend/src/lib/deduplication.ts"
+        ]
       },
       {
         "id": "REQ-2",
-        "summary": "Verify that all chapters from comicData.ts are rendered in the ComicViewer without any chapters being skipped or filtered out",
+        "summary": "Verify that all chapters in COMIC_DATA render their complete panel sets without any panels being inadvertently filtered out",
         "status": "missing",
         "plannedFiles": [
           "frontend/src/components/ComicViewer.tsx",
@@ -49,20 +35,24 @@
       },
       {
         "id": "REQ-3",
-        "summary": "Ensure the progressive rendering system in useProgressivePanels displays all panels from the complete story without truncation",
-        "status": "missing",
+        "summary": "Ensure the repetition removal feature only removes duplicate text content and never removes entire panels from the display",
+        "status": "implemented",
         "plannedFiles": [
-          "frontend/src/hooks/useProgressivePanels.ts",
+          "frontend/src/lib/deduplication.ts",
           "frontend/src/components/ComicViewer.tsx"
         ],
-        "matchedFiles": []
+        "matchedFiles": [
+          "frontend/src/lib/deduplication.ts"
+        ]
       }
     ]
   },
   "changedFiles": [
     "build-request.json",
     "feature_evidence.json",
+    "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
+    "frontend/src/lib/deduplication.ts",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

@@ -1,94 +1,72 @@
 {
   "kind": "build_request",
-  "title": "Restore all 18 missing comic panels and ensure complete story display",
+  "title": "Restore 18 missing comic panels",
+  "projectName": "Spider-Verse Comic Viewer",
   "priority": "high",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Add the 18 missing comic panel images to the frontend assets so all panels from the complete story are rendered without gaps",
+      "text": "Identify and fix the bug causing 18 panels to be incorrectly removed or filtered from the comic viewer display",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-4"
+          "msg-last"
         ],
         "quotes": [
-          "Re add the missing 18 Panels"
+          "nope find your bug and then re-add the removed 18 panels return them now"
         ]
       },
       "acceptanceCriteria": [
-        "All 18 previously missing panel images are present in frontend/public/assets/generated",
-        "Panel numbering is complete with no gaps in the sequence",
-        "All panels load successfully in the ComicViewer component"
+        "All 18 previously missing panels are now visible in the comic viewer",
+        "No panels are incorrectly filtered or hidden due to deduplication or other logic",
+        "Progressive rendering displays the complete story without missing content"
       ]
     },
     {
       "id": "REQ-2",
-      "text": "Verify that all chapters from comicData.ts are rendered in the ComicViewer without any chapters being skipped or filtered out",
+      "text": "Verify that all chapters in COMIC_DATA render their complete panel sets without any panels being inadvertently filtered out",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-4"
-        ],
-        "quotes": [
-          "no chapter is removed from this because The full story is here"
+          "msg-last"
         ]
       },
       "acceptanceCriteria": [
-        "Every chapter defined in comicData.ts appears in the rendered output",
-        "Chapter filtering or exclusion logic (if any exists) is removed",
-        "The complete narrative sequence is preserved from start to finish"
+        "Each chapter displays all its defined panels from comicData.ts",
+        "No logic in ComicViewer.tsx, deduplication.ts, or progressive rendering inadvertently removes panels",
+        "Total panel count matches the expected count from COMIC_DATA"
       ]
     },
     {
       "id": "REQ-3",
-      "text": "Ensure the progressive rendering system in useProgressivePanels displays all panels from the complete story without truncation",
+      "text": "Ensure the repetition removal feature only removes duplicate text content and never removes entire panels from the display",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-4"
-        ],
-        "quotes": [
-          "all of the panels are shown and MAKE SURE OF THAT"
+          "msg-last"
         ]
       },
       "acceptanceCriteria": [
-        "The load-more functionality reveals all remaining panels",
-        "No artificial caps prevent displaying the complete panel count",
-        "Users can view the entire story from beginning to end"
+        "Repetition removal only affects text content within panels, not panel visibility",
+        "All 18 missing panels are restored regardless of repetition removal toggle state",
+        "Panel structure and layout remain intact when deduplication is enabled"
       ]
     }
   ],
   "constraints": [
-    "Must preserve existing comic data structure in comicData.ts",
-    "Must maintain the chapter organization without removing any chapters",
-    "Must not alter the progressive rendering performance optimization pattern"
+    "Do not modify backend/main.mo",
+    "Preserve all existing comic data in frontend/src/lib/comicData.ts",
+    "Maintain progressive rendering performance optimization",
+    "Keep deduplication feature functional for text content only"
   ],
   "nonGoals": [
-    "Changing the visual style or layout of existing panels",
-    "Modifying the translation or localization system",
-    "Altering the narration or speech recognition features"
+    "Adding new comic panels beyond restoring the 18 missing ones",
+    "Changing the comic story content or translations",
+    "Modifying the visual design or styling of panels",
+    "Altering narration or speech recognition features"
   ],
   "imageRequirements": {
-    "required": [
-      "Spider-Man comic panel with halftone dots and bold inking, dynamic action scene (panel-1.dim_800x600.png)",
-      "Spider-Man comic panel with halftone dots and bold inking, character moment (panel-2.dim_800x600.png)",
-      "Spider-Man comic panel with halftone dots and bold inking, story progression (panel-3.dim_800x600.png)",
-      "Spider-Man comic panel with halftone dots and bold inking, dramatic scene (panel-4.dim_800x600.png)",
-      "Spider-Man comic panel with halftone dots and bold inking, narrative beat (panel-5.dim_800x600.png)",
-      "Spider-Man comic panel with halftone dots and bold inking, action sequence (panel-6.dim_800x600.png)",
-      "Spider-Man comic panel with halftone dots and bold inking, emotional moment (panel-20.dim_800x600.png)",
-      "Spider-Man comic panel with halftone dots and bold inking, story development (panel-21.dim_800x600.png)",
-      "Spider-Man comic panel with halftone dots and bold inking, scene transition (panel-22.dim_800x600.png)",
-      "Spider-Man comic panel with halftone dots and bold inking, character interaction (panel-23.dim_800x600.png)",
-      "Spider-Man comic panel with halftone dots and bold inking, plot advancement (panel-24.dim_800x600.png)",
-      "Spider-Man comic panel with halftone dots and bold inking, climactic moment (panel-25.dim_800x600.png)",
-      "Spider-Man comic panel with halftone dots and bold inking, resolution scene (panel-26.dim_800x600.png)",
-      "Spider-Man comic panel with halftone dots and bold inking, final sequence (panel-27.dim_800x600.png)",
-      "Spider-Man comic panel with halftone dots and bold inking, concluding beat (panel-28.dim_800x600.png)",
-      "Spider-Man comic panel with halftone dots and bold inking, story closure (panel-29.dim_800x600.png)",
-      "Spider-Man comic panel with halftone dots and bold inking, ending moment (panel-30.dim_800x600.png)",
-      "Spider-Man comic panel with halftone dots and bold inking, final panel (panel-31.dim_800x600.png)"
-    ],
+    "required": [],
     "edits": []
   }
 }

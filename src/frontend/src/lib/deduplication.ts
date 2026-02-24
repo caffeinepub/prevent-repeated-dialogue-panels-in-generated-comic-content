@@ -4,6 +4,7 @@ import type { ComicPanel, PanelPart } from './comicModel';
  * Extended deduplication utilities supporting both simple text lines
  * and structured panel parts, with functions to suppress repeated content
  * while preserving panel order and counting total lines.
+ * CRITICAL: Deduplication only affects text content, never removes entire panels.
  */
 
 /**
@@ -37,7 +38,8 @@ function panelPartToKey(part: PanelPart): string {
 
 /**
  * Deduplicate panel parts across all panels, removing repeated identical lines
- * while preserving panel structure and order.
+ * while preserving ALL panel structures and order.
+ * IMPORTANT: This function NEVER removes entire panels, only duplicate text content within them.
  */
 export function deduplicatePanelParts(panels: ComicPanel[]): ComicPanel[] {
   const seen = new Set<string>();
@@ -52,11 +54,15 @@ export function deduplicatePanelParts(panels: ComicPanel[]): ComicPanel[] {
       return true;
     });
     
+    // CRITICAL FIX: Always return the panel, even if all text parts were deduplicated
+    // Panels with illustrations or empty panels after deduplication must still be preserved
     return {
       ...panel,
       parts: deduplicatedParts
     };
-  }).filter(panel => panel.parts.length > 0 || panel.illustrationSrc);
+  });
+  // REMOVED: .filter(panel => panel.parts.length > 0 || panel.illustrationSrc);
+  // This filter was incorrectly removing entire panels when all their text was deduplicated
 }
 
 /**
