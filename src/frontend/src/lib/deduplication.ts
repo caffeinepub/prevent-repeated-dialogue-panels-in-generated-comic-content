@@ -1,4 +1,4 @@
-import type { ComicPanel, PanelPart } from './comicModel';
+import type { ComicPanel, PanelPart } from "./comicModel";
 
 /**
  * Extended deduplication utilities supporting both simple text lines
@@ -12,7 +12,7 @@ import type { ComicPanel, PanelPart } from './comicModel';
  */
 export function deduplicateTextLines(lines: string[]): string[] {
   const seen = new Set<string>();
-  return lines.filter(line => {
+  return lines.filter((line) => {
     if (seen.has(line)) {
       return false;
     }
@@ -26,12 +26,12 @@ export function deduplicateTextLines(lines: string[]): string[] {
  */
 function panelPartToKey(part: PanelPart): string {
   switch (part.type) {
-    case 'caption':
-    case 'sfx':
-    case 'scene':
+    case "caption":
+    case "sfx":
+    case "scene":
       return `${part.type}:${part.text}`;
-    case 'dialogue':
-    case 'thought':
+    case "dialogue":
+    case "thought":
       return `${part.type}:${part.speaker}:${part.text}`;
   }
 }
@@ -43,9 +43,9 @@ function panelPartToKey(part: PanelPart): string {
  */
 export function deduplicatePanelParts(panels: ComicPanel[]): ComicPanel[] {
   const seen = new Set<string>();
-  
-  return panels.map(panel => {
-    const deduplicatedParts = panel.parts.filter(part => {
+
+  return panels.map((panel) => {
+    const deduplicatedParts = panel.parts.filter((part) => {
       const key = panelPartToKey(part);
       if (seen.has(key)) {
         return false;
@@ -53,12 +53,12 @@ export function deduplicatePanelParts(panels: ComicPanel[]): ComicPanel[] {
       seen.add(key);
       return true;
     });
-    
+
     // CRITICAL FIX: Always return the panel, even if all text parts were deduplicated
     // Panels with illustrations or empty panels after deduplication must still be preserved
     return {
       ...panel,
-      parts: deduplicatedParts
+      parts: deduplicatedParts,
     };
   });
   // REMOVED: .filter(panel => panel.parts.length > 0 || panel.illustrationSrc);

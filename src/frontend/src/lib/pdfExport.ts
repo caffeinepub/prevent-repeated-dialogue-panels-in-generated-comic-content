@@ -1,7 +1,7 @@
-import type { ComicPanel, Chapter } from './comicModel';
-import { deduplicatePanelParts } from './deduplication';
-import { getPanelTimestamp } from './timeline';
-import { t } from './i18n';
+import type { Chapter, ComicPanel } from "./comicModel";
+import { deduplicatePanelParts } from "./deduplication";
+import { t } from "./i18n";
+import { getPanelTimestamp } from "./timeline";
 
 export async function exportComicToPDF(
   storyPanels: ComicPanel[],
@@ -9,11 +9,11 @@ export async function exportComicToPDF(
   language: string,
   authorName: string,
   timelineMode: boolean,
-  chapters?: Chapter[]
+  chapters?: Chapter[],
 ): Promise<void> {
   const allPanels = [...storyPanels, ...creditsPanels];
   const deduplicatedPanels = deduplicatePanelParts(allPanels);
-  
+
   const storyCount = storyPanels.length;
   const deduplicatedStory = deduplicatedPanels.slice(0, storyCount);
   const deduplicatedCredits = deduplicatedPanels.slice(storyCount);
@@ -24,22 +24,24 @@ export async function exportComicToPDF(
     language,
     authorName,
     timelineMode,
-    chapters
+    chapters,
   );
-  
-  const printWindow = window.open('', '_blank');
+
+  const printWindow = window.open("", "_blank");
   if (!printWindow) {
-    throw new Error('Failed to open print window. Please allow popups for this site.');
+    throw new Error(
+      "Failed to open print window. Please allow popups for this site.",
+    );
   }
-  
+
   printWindow.document.write(htmlContent);
   printWindow.document.close();
-  
-  await new Promise(resolve => {
-    printWindow.addEventListener('load', resolve);
+
+  await new Promise((resolve) => {
+    printWindow.addEventListener("load", resolve);
     setTimeout(resolve, 1000);
   });
-  
+
   printWindow.print();
 }
 
@@ -49,20 +51,19 @@ async function generatePrintableHTML(
   language: string,
   authorName: string,
   timelineMode: boolean,
-  chapters?: Chapter[]
+  chapters?: Chapter[],
 ): Promise<string> {
-  const title = t('pdf.title', language);
-  const subtitle = t('pdf.subtitle', language);
-  const authorLabel = t('pdf.author', language);
-  const generatedText = t('pdf.generated', language);
-  const storyLabel = t('pdf.story', language);
-  const creditsLabel = t('pdf.credits', language);
-  const panelLabel = t('pdf.panel', language);
-  const chapterLabel = t('pdf.chapter', language);
-  const authorNotProvided = t('author.notProvided', language);
-  
+  const title = t("pdf.title", language);
+  const subtitle = t("pdf.subtitle", language);
+  const authorLabel = t("pdf.author", language);
+  const generatedText = t("pdf.generated", language);
+  const storyLabel = t("pdf.story", language);
+  const creditsLabel = t("pdf.credits", language);
+  const panelLabel = t("pdf.panel", language);
+  const chapterLabel = t("pdf.chapter", language);
+
   // Use provided author name or default to "Andy Romero Escobar J."
-  const pdfAuthor = authorName || 'Andy Romero Escobar J.';
+  const pdfAuthor = authorName || "Andy Romero Escobar J.";
 
   return `
 <!DOCTYPE html>
@@ -272,15 +273,19 @@ async function generatePrintableHTML(
   
   <div class="story-section">
     <h2 class="section-title">${escapeHtml(storyLabel)}</h2>
-    ${chapters ? renderChaptersHTML(chapters, storyPanels, timelineMode, chapterLabel, panelLabel) : storyPanels.map((panel, index) => renderPanelHTML(panel, index + 1, timelineMode, panelLabel)).join('\n')}
+    ${chapters ? renderChaptersHTML(chapters, storyPanels, timelineMode, chapterLabel, panelLabel) : storyPanels.map((panel, index) => renderPanelHTML(panel, index + 1, timelineMode, panelLabel)).join("\n")}
   </div>
   
-  ${creditsPanels.length > 0 ? `
+  ${
+    creditsPanels.length > 0
+      ? `
   <div class="credits">
     <h2 class="section-title">${escapeHtml(creditsLabel)}</h2>
-    ${creditsPanels.map(panel => renderPanelHTML(panel, null, false, panelLabel)).join('\n')}
+    ${creditsPanels.map((panel) => renderPanelHTML(panel, null, false, panelLabel)).join("\n")}
   </div>
-  ` : ''}
+  `
+      : ""
+  }
 </body>
 </html>
   `.trim();
@@ -288,61 +293,69 @@ async function generatePrintableHTML(
 
 function renderChaptersHTML(
   chapters: Chapter[],
-  allPanels: ComicPanel[],
+  _allPanels: ComicPanel[],
   timelineMode: boolean,
   chapterLabel: string,
-  panelLabel: string
+  panelLabel: string,
 ): string {
   let panelIndex = 0;
-  return chapters.map(chapter => {
-    const chapterPanels = chapter.panels;
-    const chapterHTML = chapterPanels.map(panel => {
-      panelIndex++;
-      return renderPanelHTML(panel, panelIndex, timelineMode, panelLabel);
-    }).join('\n');
-    
-    return `
+  return chapters
+    .map((chapter) => {
+      const chapterPanels = chapter.panels;
+      const chapterHTML = chapterPanels
+        .map((panel) => {
+          panelIndex++;
+          return renderPanelHTML(panel, panelIndex, timelineMode, panelLabel);
+        })
+        .join("\n");
+
+      return `
       <h3 class="chapter-title">${escapeHtml(chapterLabel)} ${escapeHtml(chapter.id.toUpperCase())}: ${escapeHtml(chapter.title)}</h3>
       ${chapterHTML}
     `;
-  }).join('\n');
+    })
+    .join("\n");
 }
 
 function renderPanelHTML(
   panel: ComicPanel,
   panelNumber: number | null,
   timelineMode: boolean,
-  panelLabel: string
+  panelLabel: string,
 ): string {
-  const timestamp = timelineMode && panel.timestamp !== undefined
-    ? `<div class="timestamp">${getPanelTimestamp(panel)}</div>`
-    : '';
-  
-  const panelNumberHTML = panelNumber !== null
-    ? `<div class="panel-number">${escapeHtml(panelLabel)} ${panelNumber}</div>`
-    : '';
-  
+  const timestamp =
+    timelineMode && panel.timestamp !== undefined
+      ? `<div class="timestamp">${getPanelTimestamp(panel)}</div>`
+      : "";
+
+  const panelNumberHTML =
+    panelNumber !== null
+      ? `<div class="panel-number">${escapeHtml(panelLabel)} ${panelNumber}</div>`
+      : "";
+
   const illustration = panel.illustrationSrc
-    ? `<img src="${escapeHtml(panel.illustrationSrc)}" alt="${escapeHtml(panel.illustrationAlt || '')}" />`
-    : '';
-  
-  const parts = panel.parts.map(part => {
-    switch (part.type) {
-      case 'caption':
-        return `<div class="caption">${escapeHtml(part.text)}</div>`;
-      case 'dialogue':
-        return `<div class="dialogue">${part.speaker ? `<div class="speaker">${escapeHtml(part.speaker)}:</div>` : ''}${escapeHtml(part.text)}</div>`;
-      case 'thought':
-        return `<div class="thought">${part.speaker ? `<div class="speaker">${escapeHtml(part.speaker)} thinks:</div>` : ''}${escapeHtml(part.text)}</div>`;
-      case 'sfx':
-        return `<div class="sfx">${escapeHtml(part.text)}</div>`;
-      case 'scene':
-        return `<div class="scene">${escapeHtml(part.text)}</div>`;
-      default:
-        return '';
-    }
-  }).join('\n');
-  
+    ? `<img src="${escapeHtml(panel.illustrationSrc)}" alt="${escapeHtml(panel.illustrationAlt || "")}" />`
+    : "";
+
+  const parts = panel.parts
+    .map((part) => {
+      switch (part.type) {
+        case "caption":
+          return `<div class="caption">${escapeHtml(part.text)}</div>`;
+        case "dialogue":
+          return `<div class="dialogue">${part.speaker ? `<div class="speaker">${escapeHtml(part.speaker)}:</div>` : ""}${escapeHtml(part.text)}</div>`;
+        case "thought":
+          return `<div class="thought">${part.speaker ? `<div class="speaker">${escapeHtml(part.speaker)} thinks:</div>` : ""}${escapeHtml(part.text)}</div>`;
+        case "sfx":
+          return `<div class="sfx">${escapeHtml(part.text)}</div>`;
+        case "scene":
+          return `<div class="scene">${escapeHtml(part.text)}</div>`;
+        default:
+          return "";
+      }
+    })
+    .join("\n");
+
   return `
     <div class="panel">
       ${panelNumberHTML}
@@ -354,7 +367,7 @@ function renderPanelHTML(
 }
 
 function escapeHtml(text: string): string {
-  const div = document.createElement('div');
+  const div = document.createElement("div");
   div.textContent = text;
   return div.innerHTML;
 }

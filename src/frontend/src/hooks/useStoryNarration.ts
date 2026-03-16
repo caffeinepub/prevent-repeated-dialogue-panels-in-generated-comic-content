@@ -1,7 +1,7 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
-import type { NarrationScriptItem } from '@/lib/narration';
+import type { NarrationScriptItem } from "@/lib/narration";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-export type NarrationStatus = 'idle' | 'playing' | 'paused';
+export type NarrationStatus = "idle" | "playing" | "paused";
 
 export interface VoiceConfig {
   milesVoice?: SpeechSynthesisVoice;
@@ -31,11 +31,14 @@ interface UseStoryNarrationReturn {
  * Provides browser capability detection, status management, playback controls,
  * and per-speaker voice selection.
  */
-export function useStoryNarration({ script, voiceConfig }: UseStoryNarrationOptions): UseStoryNarrationReturn {
-  const [status, setStatus] = useState<NarrationStatus>('idle');
+export function useStoryNarration({
+  script,
+  voiceConfig,
+}: UseStoryNarrationOptions): UseStoryNarrationReturn {
+  const [status, setStatus] = useState<NarrationStatus>("idle");
   const [error, setError] = useState<string | null>(null);
-  const [isSupported] = useState(() => 'speechSynthesis' in window);
-  
+  const [isSupported] = useState(() => "speechSynthesis" in window);
+
   const currentIndexRef = useRef(0);
   const utterancesRef = useRef<SpeechSynthesisUtterance[]>([]);
   const isPausedRef = useRef(false);
@@ -51,31 +54,31 @@ export function useStoryNarration({ script, voiceConfig }: UseStoryNarrationOpti
 
   const stop = useCallback(() => {
     if (!isSupported) return;
-    
+
     window.speechSynthesis.cancel();
     currentIndexRef.current = 0;
     utterancesRef.current = [];
     isPausedRef.current = false;
-    setStatus('idle');
+    setStatus("idle");
     setError(null);
   }, [isSupported]);
 
   const speakNext = useCallback(() => {
     if (!isSupported || currentIndexRef.current >= script.length) {
       // Finished narrating all lines
-      setStatus('idle');
+      setStatus("idle");
       currentIndexRef.current = 0;
       return;
     }
 
     const item = script[currentIndexRef.current];
     const utterance = new SpeechSynthesisUtterance(item.text);
-    
+
     // Apply voice selection based on speaker
     if (voiceConfig) {
-      if (item.speaker === 'Miles' && voiceConfig.milesVoice) {
+      if (item.speaker === "Miles" && voiceConfig.milesVoice) {
         utterance.voice = voiceConfig.milesVoice;
-      } else if (item.speaker === 'Jefferson' && voiceConfig.jeffersonVoice) {
+      } else if (item.speaker === "Jefferson" && voiceConfig.jeffersonVoice) {
         utterance.voice = voiceConfig.jeffersonVoice;
       } else if (voiceConfig.defaultVoice) {
         utterance.voice = voiceConfig.defaultVoice;
@@ -89,7 +92,7 @@ export function useStoryNarration({ script, voiceConfig }: UseStoryNarrationOpti
         utterance.pitch = Math.max(0, Math.min(2, voiceConfig.pitch));
       }
     }
-    
+
     utterance.onend = () => {
       currentIndexRef.current++;
       if (!isPausedRef.current) {
@@ -99,7 +102,7 @@ export function useStoryNarration({ script, voiceConfig }: UseStoryNarrationOpti
 
     utterance.onerror = (event) => {
       setError(`Narration error: ${event.error}`);
-      setStatus('idle');
+      setStatus("idle");
       currentIndexRef.current = 0;
     };
 
@@ -109,41 +112,43 @@ export function useStoryNarration({ script, voiceConfig }: UseStoryNarrationOpti
 
   const start = useCallback(() => {
     if (!isSupported) {
-      setError('Text-to-speech is not supported in your browser. Please try Chrome, Edge, or Safari.');
+      setError(
+        "Text-to-speech is not supported in your browser. Please try Chrome, Edge, or Safari.",
+      );
       return;
     }
 
     if (script.length === 0) {
-      setError('No content to narrate.');
+      setError("No content to narrate.");
       return;
     }
 
     // Stop any existing narration
     window.speechSynthesis.cancel();
-    
+
     setError(null);
-    setStatus('playing');
+    setStatus("playing");
     currentIndexRef.current = 0;
     utterancesRef.current = [];
     isPausedRef.current = false;
-    
+
     speakNext();
   }, [isSupported, script, speakNext]);
 
   const pause = useCallback(() => {
-    if (!isSupported || status !== 'playing') return;
-    
+    if (!isSupported || status !== "playing") return;
+
     window.speechSynthesis.pause();
     isPausedRef.current = true;
-    setStatus('paused');
+    setStatus("paused");
   }, [isSupported, status]);
 
   const resume = useCallback(() => {
-    if (!isSupported || status !== 'paused') return;
-    
+    if (!isSupported || status !== "paused") return;
+
     window.speechSynthesis.resume();
     isPausedRef.current = false;
-    setStatus('playing');
+    setStatus("playing");
   }, [isSupported, status]);
 
   return {

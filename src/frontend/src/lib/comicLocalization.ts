@@ -1,16 +1,16 @@
-import type { ComicPanel, PanelPart, Chapter } from './comicModel';
-import { normalizeLanguageTag } from './i18n';
+import type { Chapter, ComicPanel, PanelPart } from "./comicModel";
+import { normalizeLanguageTag } from "./i18n";
 
 /**
  * Resolve localized text for a panel part with English fallback.
  */
 function localizePartText(part: PanelPart, lang: string): string {
   const resolvedLang = normalizeLanguageTag(lang);
-  
-  if (resolvedLang === 'en' || !part.translations) {
+
+  if (resolvedLang === "en" || !part.translations) {
     return part.text;
   }
-  
+
   return part.translations[resolvedLang] || part.text;
 }
 
@@ -19,17 +19,17 @@ function localizePartText(part: PanelPart, lang: string): string {
  */
 function localizePanelPart(part: PanelPart, lang: string): PanelPart {
   const localizedText = localizePartText(part, lang);
-  
+
   switch (part.type) {
-    case 'caption':
+    case "caption":
       return { ...part, text: localizedText };
-    case 'dialogue':
+    case "dialogue":
       return { ...part, text: localizedText };
-    case 'thought':
+    case "thought":
       return { ...part, text: localizedText };
-    case 'sfx':
+    case "sfx":
       return { ...part, text: localizedText };
-    case 'scene':
+    case "scene":
       return { ...part, text: localizedText };
   }
 }
@@ -40,15 +40,18 @@ function localizePanelPart(part: PanelPart, lang: string): PanelPart {
 export function localizePanel(panel: ComicPanel, lang: string): ComicPanel {
   return {
     ...panel,
-    parts: panel.parts.map(part => localizePanelPart(part, lang)),
+    parts: panel.parts.map((part) => localizePanelPart(part, lang)),
   };
 }
 
 /**
  * Create localized copies of all panels.
  */
-export function localizePanels(panels: ComicPanel[], lang: string): ComicPanel[] {
-  return panels.map(panel => localizePanel(panel, lang));
+export function localizePanels(
+  panels: ComicPanel[],
+  lang: string,
+): ComicPanel[] {
+  return panels.map((panel) => localizePanel(panel, lang));
 }
 
 /**
@@ -56,11 +59,11 @@ export function localizePanels(panels: ComicPanel[], lang: string): ComicPanel[]
  */
 export function localizeChapterTitle(chapter: Chapter, lang: string): string {
   const resolvedLang = normalizeLanguageTag(lang);
-  
-  if (resolvedLang === 'en' || !chapter.titleTranslations) {
+
+  if (resolvedLang === "en" || !chapter.titleTranslations) {
     return chapter.title;
   }
-  
+
   return chapter.titleTranslations[resolvedLang] || chapter.title;
 }
 
@@ -79,5 +82,5 @@ export function localizeChapter(chapter: Chapter, lang: string): Chapter {
  * Create localized copies of all chapters.
  */
 export function localizeChapters(chapters: Chapter[], lang: string): Chapter[] {
-  return chapters.map(chapter => localizeChapter(chapter, lang));
+  return chapters.map((chapter) => localizeChapter(chapter, lang));
 }

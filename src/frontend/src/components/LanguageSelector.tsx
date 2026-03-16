@@ -1,7 +1,13 @@
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useAppPreferences } from '@/contexts/AppPreferencesContext';
-import { getAvailableLanguages } from '@/lib/i18n';
-import { Globe } from 'lucide-react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useAppPreferences } from "@/contexts/AppPreferencesContext";
+import { getAvailableLanguages } from "@/lib/i18n";
+import { Globe } from "lucide-react";
 
 export function LanguageSelector() {
   const { language, setLanguage } = useAppPreferences();

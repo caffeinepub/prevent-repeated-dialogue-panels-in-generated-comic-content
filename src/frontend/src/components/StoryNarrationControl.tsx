@@ -1,20 +1,26 @@
-import { useMemo, useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Play, Pause, Square, Volume2 } from 'lucide-react';
-import { useStoryNarration, type VoiceConfig } from '@/hooks/useStoryNarration';
-import { useSpeechSynthesisVoices } from '@/hooks/useSpeechSynthesisVoices';
-import { useComicSettings } from '@/contexts/ComicSettingsContext';
-import { useAppPreferences } from '@/contexts/AppPreferencesContext';
-import { deriveNarrationScript } from '@/lib/narration';
-import { localizeChapters } from '@/lib/comicLocalization';
-import { flattenChapters } from '@/lib/comicModel';
-import { COMIC_CHAPTERS } from '@/lib/comicData';
-import { useI18n } from '@/hooks/useI18n';
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useAppPreferences } from "@/contexts/AppPreferencesContext";
+import { useComicSettings } from "@/contexts/ComicSettingsContext";
+import { useI18n } from "@/hooks/useI18n";
+import { useSpeechSynthesisVoices } from "@/hooks/useSpeechSynthesisVoices";
+import { type VoiceConfig, useStoryNarration } from "@/hooks/useStoryNarration";
+import { COMIC_CHAPTERS } from "@/lib/comicData";
+import { localizeChapters } from "@/lib/comicLocalization";
+import { flattenChapters } from "@/lib/comicModel";
+import { deriveNarrationScript } from "@/lib/narration";
+import { Pause, Play, Square, Volume2 } from "lucide-react";
+import { useMemo, useState } from "react";
 
-const DEFAULT_VOICE_SENTINEL = '__default__';
+const DEFAULT_VOICE_SENTINEL = "__default__";
 
 export function StoryNarrationControl() {
   const { repetitionRemovalEnabled } = useComicSettings();
@@ -22,9 +28,15 @@ export function StoryNarrationControl() {
   const { t } = useI18n();
   const { voices, isLoading, isReady } = useSpeechSynthesisVoices();
 
-  const [milesVoiceId, setMilesVoiceId] = useState<string>(DEFAULT_VOICE_SENTINEL);
-  const [jeffersonVoiceId, setJeffersonVoiceId] = useState<string>(DEFAULT_VOICE_SENTINEL);
-  const [defaultVoiceId, setDefaultVoiceId] = useState<string>(DEFAULT_VOICE_SENTINEL);
+  const [milesVoiceId, setMilesVoiceId] = useState<string>(
+    DEFAULT_VOICE_SENTINEL,
+  );
+  const [jeffersonVoiceId, setJeffersonVoiceId] = useState<string>(
+    DEFAULT_VOICE_SENTINEL,
+  );
+  const [defaultVoiceId, setDefaultVoiceId] = useState<string>(
+    DEFAULT_VOICE_SENTINEL,
+  );
 
   // Derive narration script with localization
   const narrationScript = useMemo(() => {
@@ -35,42 +47,45 @@ export function StoryNarrationControl() {
 
   const voiceConfig = useMemo<VoiceConfig>(() => {
     const config: VoiceConfig = {};
-    
+
     if (milesVoiceId && milesVoiceId !== DEFAULT_VOICE_SENTINEL) {
-      config.milesVoice = voices.find(v => v.voiceURI === milesVoiceId);
+      config.milesVoice = voices.find((v) => v.voiceURI === milesVoiceId);
     }
     if (jeffersonVoiceId && jeffersonVoiceId !== DEFAULT_VOICE_SENTINEL) {
-      config.jeffersonVoice = voices.find(v => v.voiceURI === jeffersonVoiceId);
+      config.jeffersonVoice = voices.find(
+        (v) => v.voiceURI === jeffersonVoiceId,
+      );
     }
     if (defaultVoiceId && defaultVoiceId !== DEFAULT_VOICE_SENTINEL) {
-      config.defaultVoice = voices.find(v => v.voiceURI === defaultVoiceId);
+      config.defaultVoice = voices.find((v) => v.voiceURI === defaultVoiceId);
     }
-    
+
     return config;
   }, [voices, milesVoiceId, jeffersonVoiceId, defaultVoiceId]);
 
-  const { status, isSupported, error, start, pause, resume, stop } = useStoryNarration({
-    script: narrationScript,
-    voiceConfig,
-  });
+  const { status, isSupported, error, start, pause, resume, stop } =
+    useStoryNarration({
+      script: narrationScript,
+      voiceConfig,
+    });
 
-  const isPlaying = status === 'playing';
-  const isPaused = status === 'paused';
-  const isIdle = status === 'idle';
+  const isPlaying = status === "playing";
+  const isPaused = status === "paused";
+  const isIdle = status === "idle";
 
   return (
     <div className="comic-panel space-y-4">
       <div className="flex items-center gap-3">
         <Volume2 className="w-6 h-6 text-primary" />
         <h3 className="font-heading text-xl uppercase tracking-tight text-foreground">
-          {t('narration.title')}
+          {t("narration.title")}
         </h3>
       </div>
 
       {!isSupported && (
         <Alert variant="destructive" className="border-4">
           <AlertDescription className="font-bold">
-            {t('narration.browserError')}
+            {t("narration.browserError")}
           </AlertDescription>
         </Alert>
       )}
@@ -83,30 +98,44 @@ export function StoryNarrationControl() {
 
       {isSupported && (
         <div className="space-y-3 p-4 bg-muted/30 border-4 border-border rounded-none">
-          <h4 className="font-bold uppercase text-sm tracking-wide">{t('narration.voiceStyle')}</h4>
-          
+          <h4 className="font-bold uppercase text-sm tracking-wide">
+            {t("narration.voiceStyle")}
+          </h4>
+
           {isLoading && (
-            <p className="text-sm text-muted-foreground">{t('narration.loadingVoices')}</p>
+            <p className="text-sm text-muted-foreground">
+              {t("narration.loadingVoices")}
+            </p>
           )}
-          
+
           {!isLoading && !isReady && (
             <Alert className="border-4">
               <AlertDescription className="font-medium">
-                {t('narration.noVoices')}
+                {t("narration.noVoices")}
               </AlertDescription>
             </Alert>
           )}
-          
+
           {isReady && (
             <div className="grid gap-3 sm:grid-cols-3">
               <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-wide">{t('narration.milesVoice')}</label>
+                <label
+                  htmlFor="miles-voice"
+                  className="text-xs font-bold uppercase tracking-wide"
+                >
+                  {t("narration.milesVoice")}
+                </label>
                 <Select value={milesVoiceId} onValueChange={setMilesVoiceId}>
-                  <SelectTrigger className="border-3 font-medium">
-                    <SelectValue placeholder={t('narration.default')} />
+                  <SelectTrigger
+                    id="miles-voice"
+                    className="border-3 font-medium"
+                  >
+                    <SelectValue placeholder={t("narration.default")} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value={DEFAULT_VOICE_SENTINEL}>{t('narration.default')}</SelectItem>
+                    <SelectItem value={DEFAULT_VOICE_SENTINEL}>
+                      {t("narration.default")}
+                    </SelectItem>
                     {voices.map((voice) => (
                       <SelectItem key={voice.voiceURI} value={voice.voiceURI}>
                         {voice.name} {voice.lang && `(${voice.lang})`}
@@ -117,13 +146,26 @@ export function StoryNarrationControl() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-wide">{t('narration.jeffersonVoice')}</label>
-                <Select value={jeffersonVoiceId} onValueChange={setJeffersonVoiceId}>
-                  <SelectTrigger className="border-3 font-medium">
-                    <SelectValue placeholder={t('narration.default')} />
+                <label
+                  htmlFor="jefferson-voice"
+                  className="text-xs font-bold uppercase tracking-wide"
+                >
+                  {t("narration.jeffersonVoice")}
+                </label>
+                <Select
+                  value={jeffersonVoiceId}
+                  onValueChange={setJeffersonVoiceId}
+                >
+                  <SelectTrigger
+                    id="jefferson-voice"
+                    className="border-3 font-medium"
+                  >
+                    <SelectValue placeholder={t("narration.default")} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value={DEFAULT_VOICE_SENTINEL}>{t('narration.default')}</SelectItem>
+                    <SelectItem value={DEFAULT_VOICE_SENTINEL}>
+                      {t("narration.default")}
+                    </SelectItem>
                     {voices.map((voice) => (
                       <SelectItem key={voice.voiceURI} value={voice.voiceURI}>
                         {voice.name} {voice.lang && `(${voice.lang})`}
@@ -134,13 +176,26 @@ export function StoryNarrationControl() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-wide">{t('narration.othersVoice')}</label>
-                <Select value={defaultVoiceId} onValueChange={setDefaultVoiceId}>
-                  <SelectTrigger className="border-3 font-medium">
-                    <SelectValue placeholder={t('narration.default')} />
+                <label
+                  htmlFor="default-voice"
+                  className="text-xs font-bold uppercase tracking-wide"
+                >
+                  {t("narration.othersVoice")}
+                </label>
+                <Select
+                  value={defaultVoiceId}
+                  onValueChange={setDefaultVoiceId}
+                >
+                  <SelectTrigger
+                    id="default-voice"
+                    className="border-3 font-medium"
+                  >
+                    <SelectValue placeholder={t("narration.default")} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value={DEFAULT_VOICE_SENTINEL}>{t('narration.default')}</SelectItem>
+                    <SelectItem value={DEFAULT_VOICE_SENTINEL}>
+                      {t("narration.default")}
+                    </SelectItem>
                     {voices.map((voice) => (
                       <SelectItem key={voice.voiceURI} value={voice.voiceURI}>
                         {voice.name} {voice.lang && `(${voice.lang})`}
@@ -151,9 +206,9 @@ export function StoryNarrationControl() {
               </div>
             </div>
           )}
-          
+
           <p className="text-xs text-muted-foreground">
-            {t('narration.voiceHelp')}
+            {t("narration.voiceHelp")}
           </p>
         </div>
       )}
@@ -167,7 +222,7 @@ export function StoryNarrationControl() {
           className="font-bold uppercase tracking-wide border-4 shadow-comic"
         >
           <Play className="w-5 h-5 mr-2" />
-          {t('narration.start')}
+          {t("narration.start")}
         </Button>
 
         {(isPlaying || isPaused) && (
@@ -179,7 +234,7 @@ export function StoryNarrationControl() {
             className="font-bold uppercase tracking-wide border-4 shadow-comic"
           >
             <Pause className="w-5 h-5 mr-2" />
-            {isPlaying ? t('narration.pause') : t('narration.resume')}
+            {isPlaying ? t("narration.pause") : t("narration.resume")}
           </Button>
         )}
 
@@ -192,26 +247,31 @@ export function StoryNarrationControl() {
             className="font-bold uppercase tracking-wide border-4 shadow-comic"
           >
             <Square className="w-5 h-5 mr-2" />
-            {t('narration.stop')}
+            {t("narration.stop")}
           </Button>
         )}
 
         <Badge
-          variant={isPlaying ? 'default' : isPaused ? 'secondary' : 'outline'}
+          variant={isPlaying ? "default" : isPaused ? "secondary" : "outline"}
           className="text-sm font-bold border-3 px-4 py-2 shadow-[2px_2px_0_oklch(var(--border))] uppercase tracking-wide"
         >
-          {isPlaying ? `▶ ${t('narration.playing')}` : isPaused ? `⏸ ${t('narration.paused')}` : `⏹ ${t('narration.idle')}`}
+          {isPlaying
+            ? `▶ ${t("narration.playing")}`
+            : isPaused
+              ? `⏸ ${t("narration.paused")}`
+              : `⏹ ${t("narration.idle")}`}
         </Badge>
       </div>
 
       <p className="text-sm text-muted-foreground font-medium">
         {isSupported ? (
           <>
-            {t('narration.description')}
-            {repetitionRemovalEnabled && ` ${t('narration.descriptionWithDedup')}`}
+            {t("narration.description")}
+            {repetitionRemovalEnabled &&
+              ` ${t("narration.descriptionWithDedup")}`}
           </>
         ) : (
-          t('narration.notSupported')
+          t("narration.notSupported")
         )}
       </p>
     </div>

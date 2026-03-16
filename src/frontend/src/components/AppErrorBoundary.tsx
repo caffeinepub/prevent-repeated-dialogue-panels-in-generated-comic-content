@@ -1,7 +1,8 @@
-import React, { Component, ReactNode } from 'react';
-import { Button } from '@/components/ui/button';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { AlertCircle, RefreshCw } from 'lucide-react';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { AlertCircle, RefreshCw } from "lucide-react";
+import type React from "react";
+import { Component, type ReactNode } from "react";
 
 interface Props {
   children: ReactNode;
@@ -27,7 +28,7 @@ export class AppErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error('App Error Boundary caught an error:', error, errorInfo);
+    console.error("App Error Boundary caught an error:", error, errorInfo);
   }
 
   handleReset = () => {
@@ -54,11 +55,15 @@ export class AppErrorBoundary extends Component<Props, State> {
 
             <Alert variant="destructive" className="border-4">
               <AlertCircle className="h-5 w-5" />
-              <AlertTitle className="font-heading text-lg uppercase">Error Details</AlertTitle>
+              <AlertTitle className="font-heading text-lg uppercase">
+                Error Details
+              </AlertTitle>
               <AlertDescription className="mt-2">
-                <p className="font-bold mb-2">The app encountered an unexpected error:</p>
+                <p className="font-bold mb-2">
+                  The app encountered an unexpected error:
+                </p>
                 <pre className="text-xs bg-destructive/10 p-3 border-2 border-destructive/20 overflow-auto max-h-32">
-                  {this.state.error?.message || 'Unknown error'}
+                  {this.state.error?.message || "Unknown error"}
                 </pre>
               </AlertDescription>
             </Alert>
@@ -83,7 +88,8 @@ export class AppErrorBoundary extends Component<Props, State> {
             </div>
 
             <p className="text-center text-sm text-muted-foreground">
-              If this problem persists, try clearing your browser cache or using a different browser.
+              If this problem persists, try clearing your browser cache or using
+              a different browser.
             </p>
           </div>
         </div>

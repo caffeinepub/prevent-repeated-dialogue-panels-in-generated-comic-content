@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from "react";
 
 interface UseSpeechSynthesisVoicesReturn {
   voices: SpeechSynthesisVoice[];
@@ -15,7 +15,7 @@ export function useSpeechSynthesisVoices(): UseSpeechSynthesisVoicesReturn {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!('speechSynthesis' in window)) {
+    if (!("speechSynthesis" in window)) {
       setIsLoading(false);
       return;
     }
@@ -30,10 +30,10 @@ export function useSpeechSynthesisVoices(): UseSpeechSynthesisVoicesReturn {
     loadVoices();
 
     // Listen for voiceschanged event (some browsers load voices asynchronously)
-    window.speechSynthesis.addEventListener('voiceschanged', loadVoices);
+    window.speechSynthesis.addEventListener("voiceschanged", loadVoices);
 
     return () => {
-      window.speechSynthesis.removeEventListener('voiceschanged', loadVoices);
+      window.speechSynthesis.removeEventListener("voiceschanged", loadVoices);
     };
   }, []);
 

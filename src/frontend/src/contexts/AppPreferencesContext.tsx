@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  type ReactNode,
+} from "react";
 
 interface AppPreferences {
   language: string;
@@ -12,10 +18,12 @@ interface AppPreferencesContextValue extends AppPreferences {
   setTimelineMode: (enabled: boolean) => void;
 }
 
-const AppPreferencesContext = createContext<AppPreferencesContextValue | undefined>(undefined);
+const AppPreferencesContext = createContext<
+  AppPreferencesContextValue | undefined
+>(undefined);
 
-const STORAGE_KEY = 'spider-verse-preferences';
-const DEFAULT_LANGUAGE = 'en';
+const STORAGE_KEY = "spider-verse-preferences";
+const DEFAULT_LANGUAGE = "en";
 
 function validateLanguageTag(tag: string): string {
   // Basic BCP-47 validation - allow alphanumeric and hyphens
@@ -34,16 +42,16 @@ export function AppPreferencesProvider({ children }: { children: ReactNode }) {
         const parsed = JSON.parse(stored);
         return {
           language: validateLanguageTag(parsed.language || DEFAULT_LANGUAGE),
-          authorName: parsed.authorName || '',
+          authorName: parsed.authorName || "",
           timelineMode: parsed.timelineMode || false,
         };
       }
     } catch (error) {
-      console.error('Failed to load preferences:', error);
+      console.error("Failed to load preferences:", error);
     }
     return {
       language: DEFAULT_LANGUAGE,
-      authorName: '',
+      authorName: "",
       timelineMode: false,
     };
   });
@@ -52,21 +60,21 @@ export function AppPreferencesProvider({ children }: { children: ReactNode }) {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(preferences));
     } catch (error) {
-      console.error('Failed to save preferences:', error);
+      console.error("Failed to save preferences:", error);
     }
   }, [preferences]);
 
   const setLanguage = (lang: string) => {
     const validated = validateLanguageTag(lang);
-    setPreferences(prev => ({ ...prev, language: validated }));
+    setPreferences((prev) => ({ ...prev, language: validated }));
   };
 
   const setAuthorName = (name: string) => {
-    setPreferences(prev => ({ ...prev, authorName: name.trim() }));
+    setPreferences((prev) => ({ ...prev, authorName: name.trim() }));
   };
 
   const setTimelineMode = (enabled: boolean) => {
-    setPreferences(prev => ({ ...prev, timelineMode: enabled }));
+    setPreferences((prev) => ({ ...prev, timelineMode: enabled }));
   };
 
   return (
@@ -86,7 +94,9 @@ export function AppPreferencesProvider({ children }: { children: ReactNode }) {
 export function useAppPreferences() {
   const context = useContext(AppPreferencesContext);
   if (!context) {
-    throw new Error('useAppPreferences must be used within AppPreferencesProvider');
+    throw new Error(
+      "useAppPreferences must be used within AppPreferencesProvider",
+    );
   }
   return context;
 }

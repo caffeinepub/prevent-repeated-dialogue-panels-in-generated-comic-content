@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from "react";
 
 /**
  * Hook to track missing illustration assets across the app.
@@ -12,7 +12,7 @@ export function useMissingIllustrations() {
       setMissingFiles((prev) => {
         const next = new Set(prev);
         // Extract just the filename from the path and sanitize
-        const filename = (src || '').split('/').pop() || src || 'unknown';
+        const filename = (src || "").split("/").pop() || src || "unknown";
         // Cap the set size to prevent memory issues
         if (next.size < 100) {
           next.add(filename);
@@ -20,7 +20,7 @@ export function useMissingIllustrations() {
         return next;
       });
     } catch (err) {
-      console.error('Error reporting missing illustration:', err);
+      console.error("Error reporting missing illustration:", err);
     }
   }, []);
 
@@ -32,6 +32,6 @@ export function useMissingIllustrations() {
     missingFiles: Array.from(missingFiles),
     reportMissing,
     clearMissing,
-    hasMissing: missingFiles.size > 0
+    hasMissing: missingFiles.size > 0,
   };
 }

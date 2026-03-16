@@ -1,6 +1,6 @@
-import { useMemo } from 'react';
-import { useAppPreferences } from '@/contexts/AppPreferencesContext';
-import { t as translate, type TranslationKey } from '@/lib/i18n';
+import { useAppPreferences } from "@/contexts/AppPreferencesContext";
+import { type TranslationKey, t as translate } from "@/lib/i18n";
+import { useMemo } from "react";
 
 export function useI18n() {
   const { language } = useAppPreferences();

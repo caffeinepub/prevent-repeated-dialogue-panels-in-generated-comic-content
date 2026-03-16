@@ -1,8 +1,8 @@
-import { Moon, Sun } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useTheme } from 'next-themes';
-import { LanguageSelector } from './LanguageSelector';
-import { useI18n } from '@/hooks/useI18n';
+import { Button } from "@/components/ui/button";
+import { useI18n } from "@/hooks/useI18n";
+import { Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
+import { LanguageSelector } from "./LanguageSelector";
 
 export function Header() {
   const { theme, setTheme } = useTheme();
@@ -15,11 +15,11 @@ export function Header() {
           <div className="flex-1">
             <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl uppercase tracking-tight leading-none">
               <span className="text-primary drop-shadow-[2px_2px_0_oklch(var(--background))]">
-                🕷️ {t('header.title')}
+                🕷️ {t("header.title")}
               </span>
             </h1>
             <p className="text-xs md:text-sm font-bold uppercase tracking-wider text-muted-foreground mt-2">
-              {t('header.subtitle')}
+              {t("header.subtitle")}
             </p>
           </div>
           <div className="flex items-center gap-3">
@@ -27,12 +27,12 @@ export function Header() {
             <Button
               variant="outline"
               size="icon"
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="border-4 shadow-comic hover:shadow-comic-lg transition-all"
             >
               <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
               <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              <span className="sr-only">{t('header.toggleTheme')}</span>
+              <span className="sr-only">{t("header.toggleTheme")}</span>
             </Button>
           </div>
         </div>

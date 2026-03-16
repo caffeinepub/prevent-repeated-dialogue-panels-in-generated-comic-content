@@ -7,32 +7,32 @@
     /* Classic comic book color palette - Light Mode */
     --background: 92% 0.02 85; /* Aged paper cream */
     --foreground: 20% 0.01 85; /* Deep ink black */
-    
+
     --card: 95% 0.02 85;
     --card-foreground: 20% 0.01 85;
-    
+
     --popover: 95% 0.02 85;
     --popover-foreground: 20% 0.01 85;
-    
+
     --primary: 45% 0.25 25; /* Bold comic red */
     --primary-foreground: 98% 0.01 85;
-    
+
     --secondary: 85% 0.05 85;
     --secondary-foreground: 20% 0.01 85;
-    
+
     --muted: 88% 0.03 85;
     --muted-foreground: 45% 0.01 85;
-    
+
     --accent: 55% 0.22 250; /* Vibrant comic blue */
     --accent-foreground: 98% 0.01 85;
-    
+
     --destructive: 50% 0.25 15;
     --destructive-foreground: 98% 0.01 85;
-    
+
     --border: 30% 0.02 85;
     --input: 85% 0.03 85;
     --ring: 45% 0.25 25;
-    
+
     --radius: 0rem; /* Sharp comic edges */
   }
 
@@ -40,28 +40,28 @@
     /* Dark mode - Noir comic aesthetic */
     --background: 18% 0.02 85;
     --foreground: 95% 0.01 85;
-    
+
     --card: 20% 0.02 85;
     --card-foreground: 95% 0.01 85;
-    
+
     --popover: 20% 0.02 85;
     --popover-foreground: 95% 0.01 85;
-    
+
     --primary: 55% 0.25 25;
     --primary-foreground: 18% 0.01 85;
-    
+
     --secondary: 25% 0.03 85;
     --secondary-foreground: 95% 0.01 85;
-    
+
     --muted: 25% 0.03 85;
     --muted-foreground: 70% 0.01 85;
-    
+
     --accent: 60% 0.22 250;
     --accent-foreground: 18% 0.01 85;
-    
+
     --destructive: 55% 0.25 15;
     --destructive-foreground: 95% 0.01 85;
-    
+
     --border: 75% 0.02 85;
     --input: 25% 0.03 85;
     --ring: 55% 0.25 25;
@@ -74,33 +74,32 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Impact', 'Arial Black', sans-serif;
+    font-family: "Impact", "Arial Black", sans-serif;
   }
 }
 
 /* Comic Typography */
 @layer components {
   .font-heading {
-    font-family: 'Bangers', 'Impact', cursive;
+    font-family: "Bangers", "Impact", cursive;
     letter-spacing: 0.05em;
   }
 
   /* Comic Page - Aged paper effect */
   .comic-page {
     @apply bg-background border-4 border-border shadow-[8px_8px_0_oklch(var(--border))];
-    background-image: 
-      url('/assets/generated/paper-grain-texture.dim_1024x1024.png'),
-      url('/assets/generated/halftone-texture.dim_1024x1024.png');
+    background-image: url("/assets/generated/paper-grain-texture.dim_1024x1024.png"),
+      url("/assets/generated/halftone-texture.dim_1024x1024.png");
     background-blend-mode: multiply, overlay;
     background-size: 200px, 100px;
     position: relative;
   }
 
   .comic-page::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
-    background-image: url('/assets/generated/ink-overlay.dim_2048x2048.png');
+    background-image: url("/assets/generated/ink-overlay.dim_2048x2048.png");
     background-size: cover;
     opacity: 0.03;
     pointer-events: none;
@@ -125,7 +124,7 @@
   }
 
   .speech-bubble::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -12px;
     left: 20px;
@@ -137,7 +136,7 @@
   }
 
   .speech-bubble::before {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -8px;
     left: 22px;
@@ -157,7 +156,7 @@
 
   /* SFX text - explosive sound effects */
   .sfx-text {
-    text-shadow: 
+    text-shadow:
       3px 3px 0 oklch(var(--border)),
       -1px -1px 0 oklch(var(--border)),
       1px -1px 0 oklch(var(--border)),

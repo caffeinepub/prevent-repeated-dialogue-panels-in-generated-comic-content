@@ -1,5 +1,5 @@
-import { CHARACTERS } from '@/lib/characters';
-import { useI18n } from '@/hooks/useI18n';
+import { useI18n } from "@/hooks/useI18n";
+import { CHARACTERS } from "@/lib/characters";
 
 export function CharactersGallery() {
   const { t } = useI18n();
@@ -7,9 +7,9 @@ export function CharactersGallery() {
   return (
     <section className="space-y-6">
       <h2 className="font-heading text-2xl md:text-3xl uppercase text-foreground tracking-tight">
-        {t('section.characters')}
+        {t("section.characters")}
       </h2>
-      
+
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
         {CHARACTERS.map((character) => (
           <div
@@ -24,8 +24,12 @@ export function CharactersGallery() {
                 onError={(e) => {
                   // Fallback to placeholder on error to prevent gallery breaking
                   const target = e.target as HTMLImageElement;
-                  if (target.src !== '/assets/generated/character-aaron.dim_768x768.png') {
-                    target.src = '/assets/generated/character-aaron.dim_768x768.png';
+                  if (
+                    target.src !==
+                    "/assets/generated/character-aaron.dim_768x768.png"
+                  ) {
+                    target.src =
+                      "/assets/generated/character-aaron.dim_768x768.png";
                   }
                 }}
               />

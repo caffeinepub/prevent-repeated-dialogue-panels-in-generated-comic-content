@@ -1,11 +1,13 @@
-import { Heart } from 'lucide-react';
-import { useI18n } from '@/hooks/useI18n';
+import { useI18n } from "@/hooks/useI18n";
+import { Heart } from "lucide-react";
 
 export function Footer() {
   const { t } = useI18n();
   const currentYear = new Date().getFullYear();
   const appIdentifier = encodeURIComponent(
-    typeof window !== 'undefined' ? window.location.hostname : 'spider-verse-comic'
+    typeof window !== "undefined"
+      ? window.location.hostname
+      : "spider-verse-comic",
   );
 
   return (
@@ -13,12 +15,12 @@ export function Footer() {
       <div className="container mx-auto px-4 py-6">
         <div className="flex flex-col items-center justify-center gap-2 text-center">
           <p className="text-sm text-muted-foreground">
-            © {currentYear} {t('footer.copyright')}
+            © {currentYear} {t("footer.copyright")}
           </p>
           <p className="text-sm flex items-center gap-1">
-            {t('footer.builtWith')}{' '}
-            <Heart className="h-4 w-4 fill-primary text-primary inline" />{' '}
-            {t('footer.using')}{' '}
+            {t("footer.builtWith")}{" "}
+            <Heart className="h-4 w-4 fill-primary text-primary inline" />{" "}
+            {t("footer.using")}{" "}
             <a
               href={`https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${appIdentifier}`}
               target="_blank"
@@ -29,9 +31,9 @@ export function Footer() {
             </a>
           </p>
           <p className="text-xs text-muted-foreground mt-2">
-            {t('footer.credits')}
+            {t("footer.credits")}
             <br />
-            {t('footer.creditsLine2')}
+            {t("footer.creditsLine2")}
           </p>
         </div>
       </div>

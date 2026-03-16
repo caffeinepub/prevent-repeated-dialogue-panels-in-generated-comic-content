@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Download, Loader2 } from 'lucide-react';
-import { exportComicToPDF } from '@/lib/pdfExport';
-import { COMIC_CHAPTERS, CREDITS_PANELS } from '@/lib/comicData';
-import { flattenChapters } from '@/lib/comicModel';
-import { localizeChapters, localizePanels } from '@/lib/comicLocalization';
-import { useAppPreferences } from '@/contexts/AppPreferencesContext';
-import { toast } from 'sonner';
-import { useI18n } from '@/hooks/useI18n';
+import { Button } from "@/components/ui/button";
+import { useAppPreferences } from "@/contexts/AppPreferencesContext";
+import { useI18n } from "@/hooks/useI18n";
+import { COMIC_CHAPTERS, CREDITS_PANELS } from "@/lib/comicData";
+import { localizeChapters, localizePanels } from "@/lib/comicLocalization";
+import { flattenChapters } from "@/lib/comicModel";
+import { exportComicToPDF } from "@/lib/pdfExport";
+import { Download, Loader2 } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export function ExportPdfButton() {
   const [isExporting, setIsExporting] = useState(false);
@@ -28,12 +28,14 @@ export function ExportPdfButton() {
         language,
         authorName,
         timelineMode,
-        localizedChapters
+        localizedChapters,
       );
-      toast.success(t('controls.exportSuccess'));
+      toast.success(t("controls.exportSuccess"));
     } catch (error) {
-      console.error('PDF export failed:', error);
-      toast.error(error instanceof Error ? error.message : t('controls.exportError'));
+      console.error("PDF export failed:", error);
+      toast.error(
+        error instanceof Error ? error.message : t("controls.exportError"),
+      );
     } finally {
       setIsExporting(false);
     }
@@ -50,12 +52,12 @@ export function ExportPdfButton() {
       {isExporting ? (
         <>
           <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-          {t('controls.exporting')}
+          {t("controls.exporting")}
         </>
       ) : (
         <>
           <Download className="mr-2 h-5 w-5" />
-          {t('controls.exportPdf')}
+          {t("controls.exportPdf")}
         </>
       )}
     </Button>

@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Copy, Trash2 } from 'lucide-react';
-import { toast } from 'sonner';
-import { useI18n } from '@/hooks/useI18n';
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { useI18n } from "@/hooks/useI18n";
+import { Copy, Trash2 } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
 
 interface TranscriptPanelProps {
   transcript: string;
@@ -12,20 +12,26 @@ interface TranscriptPanelProps {
   onClear: () => void;
 }
 
-export function TranscriptPanel({ transcript, interimTranscript, onClear }: TranscriptPanelProps) {
+export function TranscriptPanel({
+  transcript,
+  interimTranscript,
+  onClear,
+}: TranscriptPanelProps) {
   const { t } = useI18n();
   const [isCopying, setIsCopying] = useState(false);
 
-  const wordCount = transcript.split(/\s+/).filter(word => word.length > 0).length;
+  const wordCount = transcript
+    .split(/\s+/)
+    .filter((word) => word.length > 0).length;
 
   const handleCopy = async () => {
     setIsCopying(true);
     try {
       await navigator.clipboard.writeText(transcript);
-      toast.success(t('transcript.copied'));
+      toast.success(t("transcript.copied"));
     } catch (error) {
-      console.error('Failed to copy:', error);
-      toast.error(t('transcript.copyError'));
+      console.error("Failed to copy:", error);
+      toast.error(t("transcript.copyError"));
     } finally {
       setIsCopying(false);
     }
@@ -36,10 +42,13 @@ export function TranscriptPanel({ transcript, interimTranscript, onClear }: Tran
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <h3 className="font-heading text-xl uppercase tracking-tight text-foreground">
-            {t('transcript.title')}
+            {t("transcript.title")}
           </h3>
-          <Badge variant="outline" className="text-xs font-bold border-2 px-3 py-1">
-            {wordCount} {t('transcript.words')}
+          <Badge
+            variant="outline"
+            className="text-xs font-bold border-2 px-3 py-1"
+          >
+            {wordCount} {t("transcript.words")}
           </Badge>
         </div>
         <div className="flex gap-2">
@@ -51,7 +60,7 @@ export function TranscriptPanel({ transcript, interimTranscript, onClear }: Tran
             className="font-bold uppercase text-xs border-3"
           >
             <Copy className="w-4 h-4 mr-1" />
-            {t('transcript.copy')}
+            {t("transcript.copy")}
           </Button>
           <Button
             onClick={onClear}
@@ -61,7 +70,7 @@ export function TranscriptPanel({ transcript, interimTranscript, onClear }: Tran
             className="font-bold uppercase text-xs border-3"
           >
             <Trash2 className="w-4 h-4 mr-1" />
-            {t('transcript.clear')}
+            {t("transcript.clear")}
           </Button>
         </div>
       </div>

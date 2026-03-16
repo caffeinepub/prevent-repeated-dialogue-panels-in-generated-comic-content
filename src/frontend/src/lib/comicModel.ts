@@ -2,41 +2,46 @@
  * Structured comic panel data model with distinct panel types, parts, chapters, and localization support.
  */
 
-export type PanelKind = 'story' | 'credits';
+export type PanelKind = "story" | "credits";
 
 export interface CaptionPart {
-  type: 'caption';
+  type: "caption";
   text: string;
   translations?: Record<string, string>;
 }
 
 export interface DialoguePart {
-  type: 'dialogue';
+  type: "dialogue";
   speaker: string;
   text: string;
   translations?: Record<string, string>;
 }
 
 export interface ThoughtPart {
-  type: 'thought';
+  type: "thought";
   speaker: string;
   text: string;
   translations?: Record<string, string>;
 }
 
 export interface SfxPart {
-  type: 'sfx';
+  type: "sfx";
   text: string;
   translations?: Record<string, string>;
 }
 
 export interface SceneLabelPart {
-  type: 'scene';
+  type: "scene";
   text: string;
   translations?: Record<string, string>;
 }
 
-export type PanelPart = CaptionPart | DialoguePart | ThoughtPart | SfxPart | SceneLabelPart;
+export type PanelPart =
+  | CaptionPart
+  | DialoguePart
+  | ThoughtPart
+  | SfxPart
+  | SceneLabelPart;
 
 export interface ComicPanel {
   kind: PanelKind;
@@ -58,14 +63,14 @@ export interface Chapter {
  * Extract all text lines from a panel for deduplication purposes.
  */
 export function extractPanelTextLines(panel: ComicPanel): string[] {
-  return panel.parts.map(part => {
+  return panel.parts.map((part) => {
     switch (part.type) {
-      case 'caption':
-      case 'sfx':
-      case 'scene':
+      case "caption":
+      case "sfx":
+      case "scene":
         return part.text;
-      case 'dialogue':
-      case 'thought':
+      case "dialogue":
+      case "thought":
         return `${part.speaker}: ${part.text}`;
     }
   });
@@ -82,5 +87,5 @@ export function extractAllTextLines(panels: ComicPanel[]): string[] {
  * Flatten chapters into a continuous panel array.
  */
 export function flattenChapters(chapters: Chapter[]): ComicPanel[] {
-  return chapters.flatMap(chapter => chapter.panels);
+  return chapters.flatMap((chapter) => chapter.panels);
 }
