@@ -33,6 +33,13 @@ import {
 } from "./ComicParts";
 import { VerifiedPanelImage } from "./VerifiedPanelImage";
 
+const TOTAL_IMAGES = 19;
+
+function getIllustrationSrc(globalIndex: number): string {
+  const imageNum = (globalIndex % TOTAL_IMAGES) + 1;
+  return `/assets/generated/spiderverse-panel-${String(imageNum).padStart(2, "0")}.dim_1024x768.png`;
+}
+
 function renderPanelPart(part: PanelPart, index: number, isOverlay = false) {
   const overlayClasses = isOverlay ? "comic-bubble-overlay" : "";
 
@@ -133,11 +140,12 @@ export function ComicViewer() {
   const displayedLineCount = countPanelTextLines(displayedPanels);
   const removedCount = originalLineCount - displayedLineCount;
 
-  // Build chapter-aware display structure
+  // Build chapter-aware display structure with global offsets for unique image assignment
   const chaptersWithPanels = useMemo(() => {
     const result: Array<{
       chapter: Chapter;
       panels: typeof visibleStoryPanels;
+      globalOffset: number;
     }> = [];
     let panelIndex = 0;
 
@@ -146,8 +154,7 @@ export function ComicViewer() {
         panelIndex,
         panelIndex + chapter.panels.length,
       );
-      // Always include chapter even if empty (will show warning)
-      result.push({ chapter, panels: chapterPanels });
+      result.push({ chapter, panels: chapterPanels, globalOffset: panelIndex });
       panelIndex += chapter.panels.length;
     }
 
@@ -218,52 +225,59 @@ export function ComicViewer() {
             </h2>
 
             {/* Render chapters with panels */}
-            {chaptersWithPanels.map(({ chapter, panels }, chapterIdx) => (
-              <div key={chapter.id} className="mb-8">
-                <h3 className="font-heading text-xl md:text-2xl uppercase mb-4 text-primary tracking-tight border-b-4 border-border pb-2">
-                  {t("stats.chapter")} {chapterIdx + 1}: {chapter.title}
-                </h3>
+            {chaptersWithPanels.map(
+              ({ chapter, panels, globalOffset }, chapterIdx) => (
+                <div key={chapter.id} className="mb-8">
+                  <h3 className="font-heading text-xl md:text-2xl uppercase mb-4 text-primary tracking-tight border-b-4 border-border pb-2">
+                    {t("stats.chapter")} {chapterIdx + 1}: {chapter.title}
+                  </h3>
 
-                {panels.length === 0 ? (
-                  <Alert className="border-3">
-                    <AlertCircle className="h-4 w-4" />
-                    <AlertDescription>
-                      {t("viewer.emptyChapter")} ({chapter.title})
-                    </AlertDescription>
-                  </Alert>
-                ) : (
-                  <div className="comic-gutter flex flex-col">
-                    {panels.map((panel, panelIdx) => {
-                      const bubbleParts =
-                        panel.parts?.filter(
-                          (p) => p.type === "dialogue" || p.type === "thought",
-                        ) || [];
-                      const otherParts =
-                        panel.parts?.filter(
-                          (p) => p.type !== "dialogue" && p.type !== "thought",
-                        ) || [];
-                      const timestamp = timelineMode
-                        ? getPanelTimestamp(panel)
-                        : null;
+                  {panels.length === 0 ? (
+                    <Alert className="border-3">
+                      <AlertCircle className="h-4 w-4" />
+                      <AlertDescription>
+                        {t("viewer.emptyChapter")} ({chapter.title})
+                      </AlertDescription>
+                    </Alert>
+                  ) : (
+                    <div className="comic-gutter flex flex-col">
+                      {panels.map((panel, panelIdx) => {
+                        const bubbleParts =
+                          panel.parts?.filter(
+                            (p) =>
+                              p.type === "dialogue" || p.type === "thought",
+                          ) || [];
+                        const otherParts =
+                          panel.parts?.filter(
+                            (p) =>
+                              p.type !== "dialogue" && p.type !== "thought",
+                          ) || [];
+                        const timestamp = timelineMode
+                          ? getPanelTimestamp(panel)
+                          : null;
 
-                      return (
-                        <ComicPanel
-                          key={`${chapter.id}-${panelIdx}`}
-                          variant={
-                            panel.parts?.some((p) => p.type === "sfx")
-                              ? "highlight"
-                              : "default"
-                          }
-                        >
-                          {timestamp && (
-                            <div className="text-xs font-bold uppercase tracking-wide text-muted-foreground mb-2 bg-muted/50 px-2 py-1 inline-block">
-                              ⏱ {timestamp}
-                            </div>
-                          )}
-                          {panel.illustrationSrc ? (
+                        // Compute a globally-unique image for this panel so no image repeats adjacently
+                        const globalPanelIndex = globalOffset + panelIdx;
+                        const illustrationSrc =
+                          getIllustrationSrc(globalPanelIndex);
+
+                        return (
+                          <ComicPanel
+                            key={`${chapter.id}-${panelIdx}`}
+                            variant={
+                              panel.parts?.some((p) => p.type === "sfx")
+                                ? "highlight"
+                                : "default"
+                            }
+                          >
+                            {timestamp && (
+                              <div className="text-xs font-bold uppercase tracking-wide text-muted-foreground mb-2 bg-muted/50 px-2 py-1 inline-block">
+                                ⏱ {timestamp}
+                              </div>
+                            )}
                             <div className="relative mb-4 aspect-[4/3]">
                               <VerifiedPanelImage
-                                src={panel.illustrationSrc}
+                                src={illustrationSrc}
                                 alt={
                                   panel.illustrationAlt ||
                                   "Comic panel illustration"
@@ -279,23 +293,17 @@ export function ComicViewer() {
                                 </div>
                               )}
                             </div>
-                          ) : (
-                            <>
-                              {bubbleParts.map((part, partIndex) =>
-                                renderPanelPart(part, partIndex, false),
-                              )}
-                            </>
-                          )}
-                          {otherParts.map((part, partIndex) =>
-                            renderPanelPart(part, partIndex, false),
-                          )}
-                        </ComicPanel>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            ))}
+                            {otherParts.map((part, partIndex) =>
+                              renderPanelPart(part, partIndex, false),
+                            )}
+                          </ComicPanel>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              ),
+            )}
 
             {/* Load More Controls */}
             {canLoadMore && (
