@@ -33,10 +33,14 @@ import {
 } from "./ComicParts";
 import { VerifiedPanelImage } from "./VerifiedPanelImage";
 
-const TOTAL_IMAGES = 19;
+// Images panel-07 through panel-19 = 13 unique images
+const PANEL_IMAGE_COUNT = 13;
+// Step of 7 is coprime to 13, ensuring all 13 images are visited before any repeats
+const STEP = 7;
 
 function getIllustrationSrc(globalIndex: number): string {
-  const imageNum = (globalIndex % TOTAL_IMAGES) + 1;
+  const idx = (globalIndex * STEP) % PANEL_IMAGE_COUNT;
+  const imageNum = idx + 7; // maps 0..12 -> panel-07..panel-19
   return `/assets/generated/spiderverse-panel-${String(imageNum).padStart(2, "0")}.dim_1024x768.png`;
 }
 
@@ -89,27 +93,22 @@ export function ComicViewer() {
   const { t } = useI18n();
   const { missingFiles, reportMissing, hasMissing } = useMissingIllustrations();
 
-  // Localize chapters
   const localizedChapters = useMemo(() => {
     return localizeChapters(COMIC_CHAPTERS, language);
   }, [language]);
 
-  // Flatten to get all story panels
   const allStoryPanels = useMemo(() => {
     return flattenChapters(localizedChapters);
   }, [localizedChapters]);
 
-  // Localize credits
   const localizedCredits = useMemo(() => {
     return localizePanels(CREDITS_PANELS, language);
   }, [language]);
 
-  // Combine all panels
   const allPanels = useMemo(() => {
     return [...allStoryPanels, ...localizedCredits];
   }, [allStoryPanels, localizedCredits]);
 
-  // Apply deduplication if enabled
   const displayedPanels = useMemo(() => {
     return repetitionRemovalEnabled
       ? deduplicatePanelParts(allPanels)
@@ -123,7 +122,6 @@ export function ComicViewer() {
   );
   const displayedCreditPanels = displayedPanels.slice(storyPanelCount);
 
-  // Progressive rendering for story panels
   const { visibleCount, canLoadMore, loadMore, loadAll } = useProgressivePanels(
     {
       totalCount: displayedStoryPanels.length,
@@ -140,7 +138,6 @@ export function ComicViewer() {
   const displayedLineCount = countPanelTextLines(displayedPanels);
   const removedCount = originalLineCount - displayedLineCount;
 
-  // Build chapter-aware display structure with global offsets for unique image assignment
   const chaptersWithPanels = useMemo(() => {
     const result: Array<{
       chapter: Chapter;
@@ -163,7 +160,6 @@ export function ComicViewer() {
 
   return (
     <div className="space-y-6">
-      {/* Missing Assets Warning - Collapsible */}
       {hasMissing && (
         <Collapsible>
           <Alert variant="destructive" className="border-4">
@@ -192,7 +188,6 @@ export function ComicViewer() {
         </Collapsible>
       )}
 
-      {/* Stats */}
       <div className="flex flex-wrap gap-3">
         <Badge
           variant="outline"
@@ -216,7 +211,6 @@ export function ComicViewer() {
         )}
       </div>
 
-      {/* Comic Page Container */}
       <div className="comic-page rounded-none p-6 md:p-8">
         <ScrollArea className="h-[700px] pr-4">
           <div className="comic-gutter flex flex-col">
@@ -224,7 +218,6 @@ export function ComicViewer() {
               {t("section.storyPanels")}
             </h2>
 
-            {/* Render chapters with panels */}
             {chaptersWithPanels.map(
               ({ chapter, panels, globalOffset }, chapterIdx) => (
                 <div key={chapter.id} className="mb-8">
@@ -256,7 +249,6 @@ export function ComicViewer() {
                           ? getPanelTimestamp(panel)
                           : null;
 
-                        // Compute a globally-unique image for this panel so no image repeats adjacently
                         const globalPanelIndex = globalOffset + panelIdx;
                         const illustrationSrc =
                           getIllustrationSrc(globalPanelIndex);
@@ -305,7 +297,6 @@ export function ComicViewer() {
               ),
             )}
 
-            {/* Load More Controls */}
             {canLoadMore && (
               <div className="flex flex-col items-center gap-4 py-8 border-t-4 border-border">
                 <p className="font-heading text-lg uppercase text-muted-foreground">
@@ -333,7 +324,6 @@ export function ComicViewer() {
               </div>
             )}
 
-            {/* Credits Section */}
             {displayedCreditPanels.length > 0 && !canLoadMore && (
               <div className="pt-8 border-t-4 border-border">
                 <h2 className="font-heading text-2xl md:text-3xl uppercase mb-6 text-foreground tracking-tight">
